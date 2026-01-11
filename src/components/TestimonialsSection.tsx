@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { Star, Quote } from "lucide-react";
 
 const testimonials = [
@@ -53,53 +54,54 @@ const TestimonialsSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section header */}
-        <div className="text-center mb-16 space-y-4">
+        <ScrollReveal className="text-center mb-16 space-y-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold">
             What Our <span className="text-gradient-saffron">Users Say</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Thousands of happy customers trust BoloAstro for their astrology needs.
           </p>
-        </div>
+        </ScrollReveal>
         
         {/* Testimonials grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
           {testimonials.map((testimonial, index) => (
-            <Card 
-              key={index}
-              variant="testimonial"
-              className="hover:border-saffron/40 transition-all duration-300"
-            >
-              <CardContent className="p-6 space-y-4">
-                {/* Quote icon */}
-                <Quote className="w-8 h-8 text-saffron/40" />
-                
-                {/* Text */}
-                <p className="text-foreground/90 leading-relaxed italic">
-                  "{testimonial.text}"
-                </p>
-                
-                {/* Rating */}
-                <div className="flex gap-1">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-gold fill-gold" />
-                  ))}
-                </div>
-                
-                {/* Author */}
-                <div className="flex items-center gap-3 pt-2">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-saffron to-gold flex items-center justify-center text-cosmic-dark font-bold">
-                    {testimonial.avatar}
+            <StaggerItem key={index}>
+              <Card 
+                variant="testimonial"
+                className="hover:border-saffron/40 transition-all duration-300 h-full"
+              >
+                <CardContent className="p-6 space-y-4">
+                  {/* Quote icon */}
+                  <Quote className="w-8 h-8 text-saffron/40" />
+                  
+                  {/* Text */}
+                  <p className="text-foreground/90 leading-relaxed italic">
+                    "{testimonial.text}"
+                  </p>
+                  
+                  {/* Rating */}
+                  <div className="flex gap-1">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-gold fill-gold" />
+                    ))}
                   </div>
-                  <div>
-                    <div className="font-semibold text-foreground">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.location}</div>
+                  
+                  {/* Author */}
+                  <div className="flex items-center gap-3 pt-2">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-saffron to-gold flex items-center justify-center text-cosmic-dark font-bold">
+                      {testimonial.avatar}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-foreground">{testimonial.name}</div>
+                      <div className="text-sm text-muted-foreground">{testimonial.location}</div>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 
 const faqs = [
   {
@@ -47,33 +48,36 @@ const FAQSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section header */}
-        <div className="text-center mb-16 space-y-4">
+        <ScrollReveal className="text-center mb-16 space-y-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold">
             Frequently Asked <span className="text-gradient-saffron">Questions</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Got questions? We've got answers. Find everything you need to know about BoloAstro.
           </p>
-        </div>
+        </ScrollReveal>
         
         {/* FAQ Accordion */}
         <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
-                value={`item-${index}`}
-                className="bg-glass rounded-xl border border-border/40 px-6 data-[state=open]:border-saffron/40"
-              >
-                <AccordionTrigger className="text-left font-semibold hover:text-saffron transition-colors py-5">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <StaggerContainer staggerDelay={0.08}>
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, index) => (
+                <StaggerItem key={index}>
+                  <AccordionItem 
+                    value={`item-${index}`}
+                    className="bg-glass rounded-xl border border-border/40 px-6 data-[state=open]:border-saffron/40"
+                  >
+                    <AccordionTrigger className="text-left font-semibold hover:text-saffron transition-colors py-5">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground pb-5">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                </StaggerItem>
+              ))}
+            </Accordion>
+          </StaggerContainer>
         </div>
       </div>
     </section>

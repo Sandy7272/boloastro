@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { 
   Moon, 
   Sun, 
@@ -68,7 +69,7 @@ const ServicesSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section header */}
-        <div className="text-center mb-16 space-y-4">
+        <ScrollReveal className="text-center mb-16 space-y-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold">
             What We <span className="text-gradient-saffron">Offer</span>
           </h2>
@@ -76,35 +77,36 @@ const ServicesSection = () => {
             Discover the ancient wisdom of Vedic astrology, powered by modern AI technology. 
             Get accurate predictions for every aspect of your life.
           </p>
-        </div>
+        </ScrollReveal>
         
         {/* Services grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={0.08}>
           {services.map((service, index) => (
-            <Card 
-              key={index} 
-              variant="service"
-              className="group cursor-pointer"
-            >
-              <CardContent className="p-6 space-y-4">
-                {/* Icon */}
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <service.icon className="w-7 h-7 text-saffron" />
-                </div>
-                
-                {/* Title */}
-                <h3 className="text-lg font-display font-semibold text-foreground group-hover:text-saffron transition-colors">
-                  {service.title}
-                </h3>
-                
-                {/* Description */}
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-              </CardContent>
-            </Card>
+            <StaggerItem key={index}>
+              <Card 
+                variant="service"
+                className="group cursor-pointer h-full"
+              >
+                <CardContent className="p-6 space-y-4">
+                  {/* Icon */}
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <service.icon className="w-7 h-7 text-saffron" />
+                  </div>
+                  
+                  {/* Title */}
+                  <h3 className="text-lg font-display font-semibold text-foreground group-hover:text-saffron transition-colors">
+                    {service.title}
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {service.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
