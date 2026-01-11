@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { User, TrendingUp, Heart, Calendar } from "lucide-react";
 
 const reports = [
@@ -35,7 +36,7 @@ const SampleReportsSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section header */}
-        <div className="text-center mb-16 space-y-4">
+        <ScrollReveal className="text-center mb-16 space-y-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold">
             Sample <span className="text-gradient-saffron">Reports</span>
           </h2>
@@ -43,40 +44,41 @@ const SampleReportsSection = () => {
             Here's a preview of the detailed astrology reports you'll receive. 
             Each report is personalized based on your unique birth chart.
           </p>
-        </div>
+        </ScrollReveal>
         
         {/* Reports grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6" staggerDelay={0.12}>
           {reports.map((report, index) => (
-            <Card 
-              key={index} 
-              variant="cosmic"
-              className="group cursor-pointer hover:border-saffron/40 hover:shadow-xl hover:shadow-saffron/10 transition-all duration-300"
-            >
-              <CardContent className="p-8">
-                <div className="flex gap-6">
-                  {/* Icon */}
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-saffron/20 to-gold/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    <report.icon className="w-8 h-8 text-saffron" />
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="space-y-3">
-                    <div className="inline-block px-3 py-1 rounded-full bg-gold/20 text-gold text-xs font-medium">
-                      {report.highlight}
+            <StaggerItem key={index}>
+              <Card 
+                variant="cosmic"
+                className="group cursor-pointer hover:border-saffron/40 hover:shadow-xl hover:shadow-saffron/10 transition-all duration-300 h-full"
+              >
+                <CardContent className="p-8">
+                  <div className="flex gap-6">
+                    {/* Icon */}
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-saffron/20 to-gold/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <report.icon className="w-8 h-8 text-saffron" />
                     </div>
-                    <h3 className="text-xl font-display font-semibold text-foreground group-hover:text-saffron transition-colors">
-                      {report.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {report.description}
-                    </p>
+                    
+                    {/* Content */}
+                    <div className="space-y-3">
+                      <div className="inline-block px-3 py-1 rounded-full bg-gold/20 text-gold text-xs font-medium">
+                        {report.highlight}
+                      </div>
+                      <h3 className="text-xl font-display font-semibold text-foreground group-hover:text-saffron transition-colors">
+                        {report.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {report.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

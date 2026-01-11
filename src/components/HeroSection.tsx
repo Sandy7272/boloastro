@@ -1,5 +1,6 @@
 import { MessageCircle, Sparkles, Star, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import zodiacWheel from "@/assets/zodiac-wheel.png";
 
 const HeroSection = () => {
@@ -28,27 +29,52 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
-          <div className="text-center lg:text-left space-y-8">
+          <motion.div 
+            className="text-center lg:text-left space-y-8"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
+          >
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-saffron/10 border border-saffron/30">
+            <motion.div 
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-saffron/10 border border-saffron/30"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               <Sparkles className="w-4 h-4 text-saffron" />
               <span className="text-sm text-saffron font-medium">AI-Powered Vedic Astrology</span>
-            </div>
+            </motion.div>
             
             {/* Headline */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
+            <motion.h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
               <span className="text-gradient-saffron">BoloAstro</span>
               <span className="block mt-2 text-foreground">Your Personal AI Astrologer</span>
-            </h1>
+            </motion.h1>
             
             {/* Subtext */}
-            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0">
+            <motion.p 
+              className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               Get accurate kundali, daily horoscope & instant astrology answers on WhatsApp. 
               <span className="text-foreground/80"> Apni kismat jaano, ghar baithe!</span>
-            </p>
+            </motion.p>
             
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
               <Button variant="whatsapp" size="xl" className="group">
                 <MessageCircle className="w-5 h-5 group-hover:animate-pulse" />
                 Chat on WhatsApp
@@ -57,10 +83,15 @@ const HeroSection = () => {
                 <Moon className="w-5 h-5" />
                 Generate Free Kundali
               </Button>
-            </div>
+            </motion.div>
             
             {/* Trust indicators */}
-            <div className="flex items-center gap-6 justify-center lg:justify-start text-sm text-muted-foreground">
+            <motion.div 
+              className="flex items-center gap-6 justify-center lg:justify-start text-sm text-muted-foreground"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+            >
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((i) => (
@@ -80,11 +111,16 @@ const HeroSection = () => {
                 ))}
                 <span className="ml-1">4.9/5</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
           
           {/* Right content - Zodiac wheel */}
-          <div className="relative flex items-center justify-center">
+          <motion.div 
+            className="relative flex items-center justify-center"
+            initial={{ opacity: 0, x: 50, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+          >
             {/* Glow effect */}
             <div className="absolute inset-0 bg-gradient-radial from-saffron/20 via-transparent to-transparent blur-3xl" />
             
@@ -103,7 +139,12 @@ const HeroSection = () => {
             </div>
             
             {/* Floating WhatsApp mockup hint */}
-            <div className="absolute -bottom-4 -right-4 md:bottom-10 md:right-0 bg-glass rounded-2xl p-4 animate-float" style={{ animationDelay: '0.5s' }}>
+            <motion.div 
+              className="absolute -bottom-4 -right-4 md:bottom-10 md:right-0 bg-glass rounded-2xl p-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center">
                   <MessageCircle className="w-5 h-5 text-white" />
@@ -113,8 +154,8 @@ const HeroSection = () => {
                   <p className="text-xs text-muted-foreground">Online • Typing...</p>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
       
