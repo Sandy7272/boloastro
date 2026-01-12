@@ -3,7 +3,8 @@ import { MessageCircle, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 
-const WHATSAPP_LINK = "https://wa.me/919876543210?text=Hi%20BoloAstro!%20I%20want%20to%20know%20my%20horoscope";
+const WHATSAPP_LINK =
+  "https://wa.me/917261969798?text=Hi%20BoloAstro!%20I%20want%20to%20know%20my%20horoscope";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -43,13 +44,23 @@ const Navbar = () => {
         }`}
       >
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center justify-between h-18 md:h-22 py-3">
-            {/* Logo */}
-            <a href="/" className="flex items-center gap-3 group">
-              <img 
-                src={logo} 
-                alt="BoloAstro - Chat With Your Destiny" 
-                className="h-14 md:h-16 lg:h-20 w-auto object-contain logo-glow transition-all duration-300 group-hover:scale-105"
+          <div className="flex items-center justify-between h-20 md:h-24 py-3">
+            
+            {/* LOGO */}
+            <a href="/" className="flex items-center group">
+              <img
+                src={logo}
+                alt="BoloAstro - Chat With Your Destiny"
+                className="
+                  h-36
+                  md:h-40
+                  lg:h-44
+                  w-auto
+                  object-contain
+                  transition-transform
+                  duration-300
+                  group-hover:scale-105
+                "
               />
             </a>
 
@@ -69,20 +80,20 @@ const Navbar = () => {
 
             {/* CTA Buttons */}
             <div className="hidden md:flex items-center gap-4">
-              <Button 
-                variant="heroOutline" 
+              <Button
+                variant="heroOutline"
                 size="default"
                 onClick={() => scrollToSection("#services")}
                 className="font-semibold"
               >
                 Free Kundali
               </Button>
-              <Button 
-                variant="whatsapp" 
-                size="default"
-                asChild
-              >
-                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
+              <Button variant="whatsapp" size="default" asChild>
+                <a
+                  href={WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <MessageCircle className="w-4 h-4" />
                   WhatsApp
                 </a>
@@ -95,15 +106,21 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        <div 
+        <div
           className={`lg:hidden overflow-hidden transition-all duration-300 ${
-            isMobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+            isMobileMenuOpen
+              ? "max-h-screen opacity-100"
+              : "max-h-0 opacity-0"
           }`}
         >
           <div className="bg-cosmic-dark/98 backdrop-blur-2xl border-t border-gold/10">
@@ -117,16 +134,22 @@ const Navbar = () => {
                   {link.name}
                 </button>
               ))}
+
               <div className="flex flex-col gap-3 pt-4 border-t border-border/30 mt-4">
-                <Button 
-                  variant="heroOutline" 
+                <Button
+                  variant="heroOutline"
                   className="w-full"
                   onClick={() => scrollToSection("#services")}
                 >
                   Free Kundali
                 </Button>
+
                 <Button variant="whatsapp" className="w-full" asChild>
-                  <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={WHATSAPP_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <MessageCircle className="w-4 h-4" />
                     Chat on WhatsApp
                   </a>
@@ -137,7 +160,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Sticky WhatsApp Button */}
+      {/* Floating WhatsApp */}
       <a
         href={WHATSAPP_LINK}
         target="_blank"

@@ -2,7 +2,7 @@ import { MessageCircle, Star, Moon, Sun, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-const WHATSAPP_LINK = "https://wa.me/919876543210?text=Hi%20BoloAstro!%20I%20want%20to%20know%20my%20horoscope";
+const WHATSAPP_LINK = "https://wa.me/917261969798?text=Hi%20BoloAstro!%20I%20want%20to%20know%20my%20horoscope";
 
 const HeroSection = () => {
   const scrollToSection = (id: string) => {

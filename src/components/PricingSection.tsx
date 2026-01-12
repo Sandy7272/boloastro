@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { Check, Star, Sparkles, Crown } from "lucide-react";
 
-const WHATSAPP_BASE = "https://wa.me/919876543210?text=";
+const WHATSAPP_BASE = "https://wa.me/917261969798?text=";
 
 const plans = [
   {

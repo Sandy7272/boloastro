@@ -2,7 +2,7 @@ import { MessageCircle, Clock, Shield, Smartphone, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 
-const WHATSAPP_LINK = "https://wa.me/919876543210?text=Hi%20BoloAstro!%20I%20want%20to%20start%20my%20astrology%20journey";
+const WHATSAPP_LINK = "https://wa.me/917261969798?text=Hi%20BoloAstro!%20I%20want%20to%20start%20my%20astrology%20journey";
 
 const features = [
   {

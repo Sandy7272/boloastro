@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import logo from "@/assets/logo.png";
 
-const WHATSAPP_LINK = "https://wa.me/919876543210?text=Hi%20BoloAstro!%20I%20want%20to%20know%20my%20horoscope";
+const WHATSAPP_LINK = "https://wa.me/917261969798?text=Hi%20BoloAstro!%20I%20want%20to%20know%20my%20horoscope";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -106,7 +106,7 @@ const Footer = () => {
                 <li>
                   <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-gold transition-colors">
                     <MessageCircle className="w-4 h-4 text-gold" />
-                    <span>WhatsApp: +91 98765 43210</span>
+                    <span>WhatsApp: +91 7261 969798</span>
                   </a>
                 </li>
                 <li className="flex items-center gap-3">
@@ -115,17 +115,17 @@ const Footer = () => {
                 </li>
                 <li className="flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-gold" />
-                  <span>Mumbai, India</span>
+                  <span>Pune, India</span>
                 </li>
               </ul>
               
               {/* Social icons */}
               <div className="flex gap-3 pt-2">
                 {[
-                  { name: 'Facebook', letter: 'F', url: 'https://facebook.com/boloastro' },
-                  { name: 'Instagram', letter: 'I', url: 'https://instagram.com/boloastro' },
-                  { name: 'Twitter', letter: 'X', url: 'https://twitter.com/boloastro' },
-                  { name: 'YouTube', letter: 'Y', url: 'https://youtube.com/@boloastro' },
+                  { name: 'Facebook', letter: 'F', url: 'https://facebook.com/boloastro'},
+                  { name: 'Instagram', letter: 'I', url: 'https://instagram.com/boloastro'},
+                  { name: 'Twitter', letter: 'X', url: 'https://twitter.com/boloastro'},
+                  { name: 'YouTube', letter: 'Y', url: 'https://youtube.com/@boloastro'},
                 ].map((social) => (
                   <a 
                     key={social.name}
