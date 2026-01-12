@@ -49,7 +49,7 @@ const Navbar = () => {
               <img 
                 src={logo} 
                 alt="BoloAstro - Chat With Your Destiny" 
-                className="h-12 md:h-14 w-auto object-contain logo-glow transition-all duration-300 group-hover:scale-105"
+                className="h-14 md:h-16 lg:h-20 w-auto object-contain logo-glow transition-all duration-300 group-hover:scale-105"
               />
             </a>
 
