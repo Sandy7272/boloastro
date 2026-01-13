@@ -67,20 +67,24 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden" id="services">
-      <div className="absolute inset-0 stars-bg opacity-20" />
+    <section className="py-28 lg:py-36 relative overflow-hidden" id="services">
+      {/* Background effects */}
+      <div className="nebula-bg opacity-50" />
+      <div className="absolute inset-0 stars-bg opacity-25" />
       
-      {/* Decorative gradient */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-radial from-gold/5 to-transparent blur-3xl" />
+      {/* Decorative gradients */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-radial from-gold/8 to-transparent blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-radial from-saffron/5 to-transparent blur-3xl" />
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Section header */}
-        <ScrollReveal className="text-center mb-16 lg:mb-20 space-y-5">
-          <p className="text-gold font-medium uppercase tracking-widest text-sm">Our Services</p>
+        <ScrollReveal className="text-center mb-20 lg:mb-24 space-y-6">
+          <div className="ornament-divider mb-8">✦</div>
+          <p className="text-gold font-semibold uppercase tracking-[0.2em] text-sm">Our Services</p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold">
             What We <span className="text-gradient-saffron">Offer</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Discover the ancient wisdom of Vedic astrology, powered by modern AI technology. 
             Get accurate predictions for every aspect of your life.
           </p>
@@ -92,29 +96,29 @@ const ServicesSection = () => {
             <StaggerItem key={index}>
               <Card 
                 variant="service"
-                className="group cursor-pointer h-full hover-lift"
+                className="group cursor-pointer h-full card-premium hover-lift"
               >
-                <CardContent className="p-6 lg:p-7 space-y-5 flex flex-col h-full">
-                  {/* Icon */}
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-gold/20 to-saffron/10 border border-gold/20 flex items-center justify-center group-hover:scale-110 group-hover:border-gold/40 transition-all duration-300">
-                    <service.icon className="w-7 h-7 text-gold" />
+                <CardContent className="p-7 lg:p-8 space-y-6 flex flex-col h-full relative z-10">
+                  {/* Icon container */}
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold/25 to-saffron/15 border border-gold/25 flex items-center justify-center group-hover:scale-110 group-hover:border-gold/50 group-hover:shadow-lg group-hover:shadow-gold/20 transition-all duration-400">
+                    <service.icon className="w-8 h-8 text-gold group-hover:text-gold-light transition-colors" />
                   </div>
                   
                   {/* Title */}
-                  <h3 className="text-lg font-display font-semibold text-foreground group-hover:text-gold transition-colors duration-300">
+                  <h3 className="text-xl font-display font-semibold text-foreground group-hover:text-gold transition-colors duration-300">
                     {service.title}
                   </h3>
                   
                   {/* Description */}
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
+                  <p className="text-base text-muted-foreground leading-relaxed flex-grow">
                     {service.description}
                   </p>
                   
                   {/* CTA Button */}
                   <Button 
                     variant="ghost" 
-                    size="sm" 
-                    className="w-full mt-auto text-gold hover:text-cosmic-dark hover:bg-gold/90 border border-gold/30 hover:border-gold transition-all duration-300"
+                    size="default" 
+                    className="w-full mt-auto text-gold hover:text-cosmic-dark hover:bg-gradient-to-r hover:from-gold hover:to-saffron border border-gold/40 hover:border-gold rounded-xl font-semibold transition-all duration-300"
                     asChild
                   >
                     <a href={`${WHATSAPP_LINK}${service.query}`} target="_blank" rel="noopener noreferrer">
