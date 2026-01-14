@@ -149,9 +149,9 @@ const Footer = () => {
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
               <p>© {currentYear} BoloAstro. All rights reserved.</p>
               <div className="flex gap-6">
-                <a href="#" className="hover:text-gold transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-gold transition-colors">Terms of Service</a>
-                <a href="#" className="hover:text-gold transition-colors">Refund Policy</a>
+                <a href="/privacy" className="hover:text-gold transition-colors">Privacy Policy</a>
+                <a href="/terms" className="hover:text-gold transition-colors">Terms of Service</a>
+                <a href="/refund" className="hover:text-gold transition-colors">Refund Policy</a>
               </div>
             </div>
           </div>
