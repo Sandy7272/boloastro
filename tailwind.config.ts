@@ -91,6 +91,13 @@ export default {
           brown: "hsl(var(--logo-brown))",
           bronze: "hsl(var(--logo-bronze))",
         },
+        pastel: {
+          lavender: "hsl(var(--pastel-lavender))",
+          peach: "hsl(var(--pastel-peach))",
+          mint: "hsl(var(--pastel-mint))",
+          sky: "hsl(var(--pastel-sky))",
+          rose: "hsl(var(--pastel-rose))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
