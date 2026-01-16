@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import HomeDashboard from "@/components/HomeDashboard";
 import ServicesSection from "@/components/ServicesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import WhatsAppSection from "@/components/WhatsAppSection";
@@ -12,10 +13,11 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-cosmic-dark">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <Navbar />
       <main>
         <HeroSection />
+        <HomeDashboard />
         <ServicesSection />
         <HowItWorksSection />
         <WhatsAppSection />

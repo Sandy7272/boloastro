@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,30 +14,49 @@ import Refund from "./pages/Refund";
 import NotFound from "./pages/NotFound";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import ScrollProgress from "./components/ScrollProgress";
+import BottomNav from "./components/ui/bottom-nav";
+import OnboardingScreen from "./components/OnboardingScreen";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <ScrollProgress />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/refund" element={<Refund />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <FloatingWhatsApp />
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const hasOnboarded = localStorage.getItem("boloastro_onboarded");
+    if (!hasOnboarded) {
+      setShowOnboarding(true);
+    }
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <ScrollProgress />
+        
+        {showOnboarding && (
+          <OnboardingScreen onComplete={() => setShowOnboarding(false)} />
+        )}
+        
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/refund" element={<Refund />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <FloatingWhatsApp />
+          <BottomNav />
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
