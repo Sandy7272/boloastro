@@ -36,11 +36,11 @@ const App = () => {
         <Sonner />
         <ScrollProgress />
         
-        {showOnboarding && (
-          <OnboardingScreen onComplete={() => setShowOnboarding(false)} />
-        )}
-        
         <BrowserRouter>
+          {showOnboarding && (
+            <OnboardingScreen onComplete={() => setShowOnboarding(false)} />
+          )}
+          
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
