@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
-import { User, TrendingUp, Heart, Calendar } from "lucide-react";
+import { User, TrendingUp, Heart, Calendar, Eye, FileText } from "lucide-react";
+import ReportPreviewModal from "@/components/ReportPreviewModal";
 
 const reports = [
   {
@@ -25,11 +28,13 @@ const reports = [
     icon: Calendar,
     title: "Yearly Predictions",
     description: "Month-by-month forecast covering health, wealth, relationships, and opportunities.",
-    highlight: "2024-2025 Varshphal",
+    highlight: "2025-2026 Varshphal",
   },
 ];
 
 const SampleReportsSection = () => {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
   return (
     <section className="py-20 relative overflow-hidden" id="reports">
       <div className="absolute inset-0 bg-gradient-to-b from-cosmic-light/20 via-transparent to-cosmic-light/20" />
@@ -44,6 +49,18 @@ const SampleReportsSection = () => {
             Here's a preview of the detailed astrology reports you'll receive. 
             Each report is personalized based on your unique birth chart.
           </p>
+          
+          {/* Preview Button */}
+          <Button
+            onClick={() => setIsPreviewOpen(true)}
+            variant="outline"
+            size="lg"
+            className="mt-4 gap-2 rounded-xl border-primary/30 hover:border-primary/50 hover:bg-primary/10"
+          >
+            <Eye className="w-5 h-5" />
+            Preview Sample Report
+            <FileText className="w-4 h-4 text-muted-foreground" />
+          </Button>
         </ScrollReveal>
         
         {/* Reports grid */}
@@ -53,6 +70,7 @@ const SampleReportsSection = () => {
               <Card 
                 variant="cosmic"
                 className="group cursor-pointer hover:border-saffron/40 hover:shadow-xl hover:shadow-saffron/10 transition-all duration-300 h-full"
+                onClick={() => setIsPreviewOpen(true)}
               >
                 <CardContent className="p-8">
                   <div className="flex gap-6">
@@ -72,6 +90,10 @@ const SampleReportsSection = () => {
                       <p className="text-muted-foreground leading-relaxed">
                         {report.description}
                       </p>
+                      <p className="text-sm text-primary/70 flex items-center gap-1">
+                        <Eye className="w-3.5 h-3.5" />
+                        Click to preview
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -80,6 +102,12 @@ const SampleReportsSection = () => {
           ))}
         </StaggerContainer>
       </div>
+      
+      {/* Report Preview Modal */}
+      <ReportPreviewModal 
+        isOpen={isPreviewOpen} 
+        onClose={() => setIsPreviewOpen(false)} 
+      />
     </section>
   );
 };
