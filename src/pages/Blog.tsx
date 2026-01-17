@@ -1,69 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Search, Calendar, Clock, ArrowRight, Tag } from "lucide-react";
+import { Search, Calendar, Clock, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
-
-const categories = ["All", "Kundali", "Rashifal", "Marriage", "Career", "Remedies", "Nakshatra"];
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "How Kundali Works: A Complete Guide to Vedic Birth Charts",
-    excerpt: "Learn about the 12 houses, planets, and their significance in your Janam Kundali.",
-    category: "Kundali",
-    date: "Jan 10, 2024",
-    readTime: "8 min read",
-    image: "🌟",
-  },
-  {
-    id: 2,
-    title: "Best Nakshatra for Marriage in 2024",
-    excerpt: "Discover the most auspicious Nakshatras for marriage ceremonies this year.",
-    category: "Marriage",
-    date: "Jan 8, 2024",
-    readTime: "6 min read",
-    image: "💒",
-  },
-  {
-    id: 3,
-    title: "Saturn Transit 2024: Effects on All Zodiac Signs",
-    excerpt: "Complete guide to Shani's movement and its impact on your career and relationships.",
-    category: "Rashifal",
-    date: "Jan 5, 2024",
-    readTime: "10 min read",
-    image: "🪐",
-  },
-  {
-    id: 4,
-    title: "Powerful Remedies for Mangal Dosha",
-    excerpt: "Effective solutions to reduce the negative effects of Mars in your horoscope.",
-    category: "Remedies",
-    date: "Jan 3, 2024",
-    readTime: "7 min read",
-    image: "🔱",
-  },
-  {
-    id: 5,
-    title: "Career Astrology: Best Professions by Zodiac Sign",
-    excerpt: "Find out which careers are most suitable based on your birth chart.",
-    category: "Career",
-    date: "Dec 28, 2023",
-    readTime: "9 min read",
-    image: "💼",
-  },
-  {
-    id: 6,
-    title: "Understanding Your Nakshatra: Complete Guide",
-    excerpt: "Deep dive into the 27 Nakshatras and their characteristics.",
-    category: "Nakshatra",
-    date: "Dec 25, 2023",
-    readTime: "12 min read",
-    image: "⭐",
-  },
-];
+import { blogPosts, categories } from "@/data/blogPosts";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -178,8 +121,10 @@ const Blog = () => {
                           <Calendar className="w-3 h-3" />
                           {post.date}
                         </span>
-                        <Button variant="ghost" size="sm" className="text-gold hover:text-gold/80 p-0">
-                          Read More <ArrowRight className="w-4 h-4 ml-1" />
+                        <Button variant="ghost" size="sm" className="text-gold hover:text-gold/80 p-0" asChild>
+                          <Link to={`/blog/${post.id}`}>
+                            Read More <ArrowRight className="w-4 h-4 ml-1" />
+                          </Link>
                         </Button>
                       </div>
                     </div>
