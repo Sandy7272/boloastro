@@ -27,7 +27,7 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <section className="py-24 lg:py-32" id="how-it-works">
+    <section className="py-24 lg:py-32" id="how-it-works" aria-labelledby="how-it-works-heading">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Header */}
         <motion.div 
@@ -37,10 +37,10 @@ const HowItWorksSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4" role="doc-subtitle">
             {t('howItWorks.badge')}
           </p>
-          <h2 className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
+          <h2 id="how-it-works-heading" className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
             {t('howItWorks.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
@@ -49,9 +49,9 @@ const HowItWorksSection = () => {
         </motion.div>
 
         {/* Steps */}
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-5xl mx-auto">
+        <ol className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-5xl mx-auto list-none" aria-label="Steps to get started">
           {steps.map((step, index) => (
-            <motion.div 
+            <motion.li 
               key={index}
               className="relative text-center"
               initial={{ opacity: 0, y: 30 }}
@@ -61,29 +61,30 @@ const HowItWorksSection = () => {
             >
               {/* Connector line */}
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-16 left-[60%] w-full h-px bg-gradient-to-r from-border to-transparent" />
+                <div className="hidden md:block absolute top-16 left-[60%] w-full h-px bg-gradient-to-r from-border to-transparent" aria-hidden="true" />
               )}
 
               {/* Step number & Icon */}
               <div className="relative inline-block mb-6">
-                <div className="w-32 h-32 rounded-2xl bg-card border border-border flex items-center justify-center">
-                  <step.icon className="w-12 h-12 text-primary" />
+                <div className="w-32 h-32 rounded-2xl bg-card border border-border flex items-center justify-center" aria-hidden="true">
+                  <step.icon className="w-12 h-12 text-primary" aria-hidden="true" />
                 </div>
-                <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-lg">
+                <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-lg" aria-hidden="true">
                   {step.step}
                 </div>
               </div>
 
               {/* Content */}
               <h3 className="text-xl font-semibold text-foreground mb-3">
+                <span className="sr-only">Step {step.step}: </span>
                 {step.title}
               </h3>
               <p className="text-muted-foreground leading-relaxed max-w-xs mx-auto">
                 {step.description}
               </p>
-            </motion.div>
+            </motion.li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );
