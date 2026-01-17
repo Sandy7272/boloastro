@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { FileText, Download, Lock, Eye, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { FileText, Lock, Star, ChevronLeft, ChevronRight, Loader2, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useKundaliPDF } from "@/hooks/useKundaliPDF";
+import { useToast } from "@/hooks/use-toast";
 
 interface SamplePDFModalProps {
   isOpen: boolean;
@@ -127,6 +129,24 @@ const previewPages = [
 
 const SamplePDFModal: React.FC<SamplePDFModalProps> = ({ isOpen, onClose }) => {
   const [currentPage, setCurrentPage] = useState(0);
+  const { toast } = useToast();
+  
+  // PDF download hook - uses real data from session if available, else sample data
+  const { downloadPDF, isGenerating, hasRealData } = useKundaliPDF({
+    onSuccess: () => {
+      toast({
+        title: "PDF Downloaded! 🎉",
+        description: "Your Kundali report has been saved.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Download Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
   
   const nextPage = () => setCurrentPage((p) => Math.min(p + 1, previewPages.length - 1));
   const prevPage = () => setCurrentPage((p) => Math.max(p - 1, 0));
@@ -239,29 +259,51 @@ const SamplePDFModal: React.FC<SamplePDFModalProps> = ({ isOpen, onClose }) => {
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
                 <Star className="w-5 h-5" />
               </div>
-              <div className="flex-1">
-                <h4 className="font-semibold">Get Your Complete Report</h4>
-                <p className="text-sm text-white/80 mb-3">
-                  20 pages • Personalized predictions • Remedies • Muhurat dates
-                </p>
-                <div className="flex gap-2">
-                  <Button 
-                    size="sm" 
-                    className="bg-white text-amber-600 hover:bg-white/90"
-                    asChild
-                  >
-                    <a 
-                      href="https://wa.me/917261969798?text=Hi%20BoloAstro!%20I%20want%20the%20Premium%20Kundali%20Report" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                <div className="flex-1">
+                  <h4 className="font-semibold">Get Your Complete Report</h4>
+                  <p className="text-sm text-white/80 mb-3">
+                    20 pages • Personalized predictions • Remedies • Muhurat dates
+                  </p>
+                  <div className="flex gap-2 flex-wrap">
+                    {/* Download PDF Button */}
+                    <Button 
+                      size="sm" 
+                      className="bg-white text-amber-600 hover:bg-white/90 gap-1"
+                      onClick={() => downloadPDF()}
+                      disabled={isGenerating}
                     >
-                      Get Premium Report - ₹199
-                    </a>
-                  </Button>
+                      {isGenerating ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Download className="w-4 h-4" />
+                      )}
+                      {isGenerating 
+                        ? "Generating..." 
+                        : hasRealData() 
+                          ? "Download Your Report" 
+                          : "Download Sample PDF"
+                      }
+                    </Button>
+                    
+                    {/* WhatsApp Button */}
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      className="border-white/30 text-white hover:bg-white/10"
+                      asChild
+                    >
+                      <a 
+                        href="https://wa.me/917261969798?text=Hi%20BoloAstro!%20I%20want%20the%20Premium%20Kundali%20Report" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        WhatsApp - ₹199
+                      </a>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </DialogContent>
     </Dialog>

@@ -19,7 +19,7 @@ import { motion } from "framer-motion";
 import { 
   Sun, Moon, Star, Heart, Briefcase, 
   Activity, Calendar, Clock, MapPin, MessageCircle,
-  ArrowLeft, Edit3, Sparkles
+  ArrowLeft, Edit3, Sparkles, Download, Loader2, FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,6 +27,8 @@ import { ZODIAC_SIGNS } from "@/components/ui/planetary-icons";
 import { useTranslation } from "react-i18next";
 import { getWhatsAppLinkWithDetails } from "@/config/constants";
 import { trackWhatsAppClick, trackTeaserView } from "@/lib/analytics";
+import { useKundaliPDF } from "@/hooks/useKundaliPDF";
+import { useToast } from "@/hooks/use-toast";
 import type { KundaliData } from "@/pdf/types";
 
 interface BirthDetails {
@@ -154,6 +156,7 @@ const generatePredictions = (t: (key: string) => string, kundaliData?: KundaliDa
 
 const KundaliTeaserResults = ({ details, onReset, lang = "en", kundaliData }: KundaliTeaserResultsProps) => {
   const { t } = useTranslation();
+  const { toast } = useToast();
   
   // Use real API data if available, otherwise fallback
   const results = kundaliData 
@@ -161,6 +164,27 @@ const KundaliTeaserResults = ({ details, onReset, lang = "en", kundaliData }: Ku
     : generateFallbackResults(details);
   
   const predictions = generatePredictions(t, kundaliData);
+  
+  // PDF download hook
+  const { downloadPDF, isGenerating } = useKundaliPDF({
+    onSuccess: () => {
+      toast({
+        title: "PDF Downloaded! 🎉",
+        description: "Your Kundali report has been saved.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Download Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleDownloadPDF = () => {
+    downloadPDF(kundaliData || undefined);
+  };
 
   // Generate WhatsApp link with all details
   const whatsAppLink = getWhatsAppLinkWithDetails({
@@ -373,6 +397,24 @@ const KundaliTeaserResults = ({ details, onReset, lang = "en", kundaliData }: Ku
                 {t("teaser.whatsappCta") || "Pandit ji se baat karein"}
               </a>
             </Button>
+
+            {/* PDF Download Button - only show when we have real data */}
+            {kundaliData && (
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-14 px-8 rounded-xl text-lg gap-2 w-full sm:w-auto border-primary/30"
+                onClick={handleDownloadPDF}
+                disabled={isGenerating}
+              >
+                {isGenerating ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <FileText className="w-5 h-5" />
+                )}
+                {isGenerating ? "Generating..." : "Download PDF Report"}
+              </Button>
+            )}
             
             <p className="text-xs text-muted-foreground">
               {t("teaser.prefilled") || "Your details are pre-filled. No need to type again!"}
