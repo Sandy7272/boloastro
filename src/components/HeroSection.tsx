@@ -13,7 +13,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle, Clock } from "lucide-react";
+import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle, Clock, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -183,6 +183,26 @@ const HeroSection = () => {
   const handleReset = () => {
     setShowResults(false);
     // Keep submitted data in state so form stays prefilled
+  };
+
+  // Clear the entire form
+  const handleClearForm = () => {
+    setFormData({
+      name: "",
+      dateOfBirth: "",
+      timeOfBirth: "",
+      timeFormat: "12h",
+      timePeriod: "AM",
+      placeOfBirth: "",
+    });
+    setValidation({
+      name: { isValid: false, touched: false },
+      dateOfBirth: { isValid: false, touched: false },
+      timeOfBirth: { isValid: false, touched: false },
+      placeOfBirth: { isValid: false, touched: false },
+    });
+    setSubmittedData(null);
+    setKundaliData(null);
   };
 
   // Get validation icon for a field
@@ -467,18 +487,30 @@ const HeroSection = () => {
                       )}
                     </div>
 
-                    {/* Submit Button */}
-                    <Button 
-                      type="submit" 
-                      size="lg" 
-                      className="w-full btn-gold text-xl py-7 rounded-xl gap-3 mt-6 focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                      disabled={!isFormValid()}
-                      aria-disabled={!isFormValid()}
-                    >
-                      <MessageCircle className="w-6 h-6" aria-hidden="true" />
-                      {t("form.submit")}
-                      <ArrowRight className="w-6 h-6" aria-hidden="true" />
-                    </Button>
+                    {/* Form Actions */}
+                    <div className="flex gap-3 mt-6">
+                      <Button 
+                        type="button"
+                        variant="outline"
+                        size="lg"
+                        className="px-4 py-7 rounded-xl"
+                        onClick={handleClearForm}
+                        aria-label="Clear form"
+                      >
+                        <RotateCcw className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      <Button 
+                        type="submit" 
+                        size="lg" 
+                        className="flex-1 btn-gold text-xl py-7 rounded-xl gap-3 focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        disabled={!isFormValid()}
+                        aria-disabled={!isFormValid()}
+                      >
+                        <MessageCircle className="w-6 h-6" aria-hidden="true" />
+                        {t("form.submit")}
+                        <ArrowRight className="w-6 h-6" aria-hidden="true" />
+                      </Button>
+                    </div>
                   </form>
 
                   <p className="text-sm text-muted-foreground text-center mt-6">
