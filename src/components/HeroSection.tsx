@@ -23,6 +23,9 @@ import KundaliTeaserResults from "@/components/KundaliTeaserResults";
 import OmLoader from "@/components/OmLoader";
 import { trackFormSubmit } from "@/lib/analytics";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useGenerateKundali } from "@/hooks/useGenerateKundali";
+import { useToast } from "@/hooks/use-toast";
+import type { KundaliData } from "@/pdf/types";
 
 // Storage key for sessionStorage persistence
 const STORAGE_KEY = "boloastro_birth_details";
@@ -67,7 +70,11 @@ const HeroSection = () => {
   
   // Results display state
   const [showResults, setShowResults] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [kundaliData, setKundaliData] = useState<KundaliData | null>(null);
+  
+  // API hook for generating kundali
+  const { mutateAsync: generateKundali, isPending: isLoading } = useGenerateKundali();
+  const { toast } = useToast();
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
 
   // Load saved data from sessionStorage on mount
@@ -149,7 +156,7 @@ const HeroSection = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Mark all fields as touched for validation display
@@ -170,15 +177,44 @@ const HeroSection = () => {
     // Save to sessionStorage for persistence within session
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
     
-    // Show loading state with Om animation
-    setIsLoading(true);
     setSubmittedData(formData);
     
-    // Simulate kundali generation time (2-3 seconds for spiritual effect)
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      // Convert time to 24h format if needed
+      let time24h = formData.timeOfBirth;
+      if (formData.timeFormat === "12h" && formData.timeOfBirth) {
+        const [hours, minutes] = formData.timeOfBirth.split(":");
+        let hour = parseInt(hours, 10);
+        if (formData.timePeriod === "PM" && hour !== 12) {
+          hour += 12;
+        } else if (formData.timePeriod === "AM" && hour === 12) {
+          hour = 0;
+        }
+        time24h = `${hour.toString().padStart(2, "0")}:${minutes}`;
+      }
+      
+      // Call the edge function to generate kundali
+      const data = await generateKundali({
+        name: formData.name,
+        dob: formData.dateOfBirth,
+        time: time24h,
+        place: formData.placeOfBirth,
+      });
+      
+      setKundaliData(data);
       setShowResults(true);
-    }, 2500);
+      
+      // Also save kundali data to session storage for PDF generation
+      sessionStorage.setItem("boloastro_kundali_data", JSON.stringify(data));
+      
+    } catch (error) {
+      console.error("Failed to generate kundali:", error);
+      toast({
+        title: "कुंडली बनाने में समस्या",
+        description: error instanceof Error ? error.message : "कृपया पुनः प्रयास करें",
+        variant: "destructive",
+      });
+    }
   };
 
   // Reset to show form again (Edit details)
@@ -249,6 +285,7 @@ const HeroSection = () => {
                 details={submittedData} 
                 onReset={handleReset}
                 lang={i18n.language}
+                kundaliData={kundaliData}
               />
             </motion.div>
           ) : (
