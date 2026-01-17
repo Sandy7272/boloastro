@@ -23,6 +23,62 @@ export const getWhatsAppLink = (message?: string) => {
   return `${WHATSAPP_CONFIG.baseUrl}${WHATSAPP_CONFIG.number}?text=${msg}`;
 };
 
+// Birth details interface for WhatsApp link generation
+interface BirthDetailsForWhatsApp {
+  name: string;
+  dateOfBirth: string;
+  timeOfBirth: string;
+  placeOfBirth: string;
+  lang?: string;
+}
+
+/**
+ * Generate WhatsApp link with birth details pre-filled
+ * Creates a clean, formatted message with all user details
+ * @param details - User's birth details including name, dob, time, place, and optional language
+ * @returns Encoded WhatsApp URL ready for redirect
+ */
+export const getWhatsAppLinkWithDetails = (details: BirthDetailsForWhatsApp): string => {
+  // Format date for display (DD-MM-YYYY format preferred in India)
+  const formatDate = (dateStr: string): string => {
+    try {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "2-digit", 
+        year: "numeric"
+      });
+    } catch {
+      return dateStr;
+    }
+  };
+
+  // Format time for display (12-hour format)
+  const formatTime = (timeStr: string): string => {
+    try {
+      const [hours, minutes] = timeStr.split(":");
+      const h = parseInt(hours);
+      const ampm = h >= 12 ? "PM" : "AM";
+      const h12 = h % 12 || 12;
+      return `${h12}:${minutes} ${ampm}`;
+    } catch {
+      return timeStr;
+    }
+  };
+
+  // Build clean message with newlines (%0A for URL encoding)
+  const message = `Namaste Pandit ji 🙏
+Name: ${details.name}
+DOB: ${formatDate(details.dateOfBirth)}
+Time: ${formatTime(details.timeOfBirth)}
+Place: ${details.placeOfBirth}
+Language: ${details.lang || "en"}
+
+Please send detailed kundali and remedies.`;
+
+  return `${WHATSAPP_CONFIG.baseUrl}${WHATSAPP_CONFIG.number}?text=${encodeURIComponent(message)}`;
+};
+
 // Pre-defined WhatsApp messages for different services
 export const WHATSAPP_MESSAGES = {
   default: "Hi BoloAstro! I want to know my horoscope",

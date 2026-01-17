@@ -31,6 +31,25 @@ const resources = {
         clear: "Clear Saved Data",
         next: "Next",
         back: "Back",
+        // Phase 1: Validation error messages
+        nameError: "Please enter your name (कृपया नाम दर्ज करें)",
+        dobError: "Select date of birth (जन्म तिथि चुनें)",
+        timeError: "Select time of birth (जन्म समय चुनें)",
+        placeError: "Enter place of birth (जन्म स्थान दर्ज करें)",
+        timeHint: "Tip: Check your birth certificate",
+      },
+      // Phase 1: Teaser Results
+      teaser: {
+        editDetails: "Edit Details",
+        quickInsights: "Quick Insights",
+        getFullReport: "Get Detailed Kundali Report",
+        ctaDescription: "Get complete Kundali with Dasha analysis, Mangal Dosha check, Marriage timing, Career predictions, and personalized remedies.",
+        whatsappCta: "Pandit ji se baat karein",
+        prefilled: "Your details are pre-filled. No need to type again!",
+        generateAnother: "Generate for someone else",
+        loveTip: "Favorable period for relationships ahead",
+        careerTip: "Good opportunities for growth coming",
+        healthTip: "Focus on mental wellness and rest",
       },
       // Kundali Results
       results: {
@@ -224,6 +243,25 @@ const resources = {
         clear: "सहेजा डेटा मिटाएं",
         next: "आगे",
         back: "पीछे",
+        // Phase 1: Validation errors
+        nameError: "कृपया अपना नाम दर्ज करें",
+        dobError: "जन्म तिथि चुनें",
+        timeError: "जन्म समय चुनें",
+        placeError: "जन्म स्थान दर्ज करें",
+        timeHint: "टिप: जन्म प्रमाणपत्र देखें",
+      },
+      // Phase 1: Teaser Results
+      teaser: {
+        editDetails: "विवरण बदलें",
+        quickInsights: "त्वरित जानकारी",
+        getFullReport: "विस्तृत कुंडली रिपोर्ट प्राप्त करें",
+        ctaDescription: "दशा विश्लेषण, मंगल दोष जांच, विवाह समय, करियर भविष्यवाणी और उपाय के साथ संपूर्ण कुंडली प्राप्त करें।",
+        whatsappCta: "पंडित जी से बात करें",
+        prefilled: "आपकी जानकारी पहले से भरी है!",
+        generateAnother: "किसी और के लिए बनाएं",
+        loveTip: "रिश्तों के लिए अनुकूल समय आ रहा है",
+        careerTip: "विकास के अच्छे अवसर आ रहे हैं",
+        healthTip: "मानसिक स्वास्थ्य और आराम पर ध्यान दें",
       },
       results: {
         title: "कुंडली",
@@ -391,6 +429,25 @@ const resources = {
         clear: "सेव्ह केलेला डेटा हटवा",
         next: "पुढे",
         back: "मागे",
+        // Phase 1: Validation errors
+        nameError: "कृपया तुमचे नाव टाका",
+        dobError: "जन्म तारीख निवडा",
+        timeError: "जन्म वेळ निवडा",
+        placeError: "जन्म ठिकाण टाका",
+        timeHint: "टीप: जन्म प्रमाणपत्र पहा",
+      },
+      // Phase 1: Teaser Results
+      teaser: {
+        editDetails: "तपशील बदला",
+        quickInsights: "त्वरित माहिती",
+        getFullReport: "तपशीलवार कुंडली अहवाल मिळवा",
+        ctaDescription: "दशा विश्लेषण, मंगळ दोष तपासणी, विवाह वेळ, करिअर भविष्य आणि उपायांसह संपूर्ण कुंडली मिळवा.",
+        whatsappCta: "पंडित जींशी बोला",
+        prefilled: "तुमची माहिती आधीच भरलेली आहे!",
+        generateAnother: "दुसऱ्यासाठी बनवा",
+        loveTip: "नातेसंबंधांसाठी अनुकूल काळ येत आहे",
+        careerTip: "वाढीच्या चांगल्या संधी येत आहेत",
+        healthTip: "मानसिक आरोग्य आणि विश्रांतीवर लक्ष द्या",
       },
       results: {
         title: "कुंडली",
