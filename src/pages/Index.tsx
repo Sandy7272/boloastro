@@ -11,6 +11,7 @@
 
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import TrustSection from "@/components/TrustSection";
 import DailyPanchang from "@/components/DailyPanchang";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -19,7 +20,6 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
-import DecorativeSeparator from "@/components/ui/decorative-separator";
 import SEO, { SEO_CONFIGS } from "@/components/SEO";
 import SkipToContent from "@/components/SkipToContent";
 
@@ -100,39 +100,30 @@ const Index = () => {
         {/* 1. Hero with form */}
         <HeroSection />
         
-        {/* Daily Panchang - Phase 2 addition */}
-        <section className="py-6 container mx-auto px-4">
+        {/* 2. Trust Section - builds credibility */}
+        <TrustSection />
+        
+        {/* 3. Daily Panchang */}
+        <section className="py-8 container mx-auto px-4">
           <DailyPanchang />
         </section>
         
-        <DecorativeSeparator size="lg" className="my-8" />
-        
-        {/* 2. How it works */}
+        {/* 4. How it works */}
         <HowItWorksSection />
         
-        <DecorativeSeparator className="my-4" />
-        
-        {/* 3. Services */}
+        {/* 5. Services */}
         <ServicesSection />
         
-        <DecorativeSeparator className="my-4" />
-        
-        {/* 4. Why trust us */}
+        {/* 6. Why trust us (detailed) */}
         <WhyBoloAstroSection />
         
-        <DecorativeSeparator className="my-4" />
-        
-        {/* 5. Testimonials */}
+        {/* 7. Testimonials */}
         <TestimonialsSection />
         
-        <DecorativeSeparator className="my-4" />
-        
-        {/* 6. Pricing */}
+        {/* 8. Pricing */}
         <PricingSection />
         
-        <DecorativeSeparator className="my-4" />
-        
-        {/* 7. FAQ */}
+        {/* 9. FAQ */}
         <FAQSection />
       </main>
       
