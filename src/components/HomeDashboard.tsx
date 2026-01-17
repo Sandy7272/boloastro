@@ -11,6 +11,7 @@ import { ZodiacIcon, ZODIAC_SIGNS } from "@/components/ui/planetary-icons";
 import ConstellationBackground from "@/components/ui/constellation-background";
 import BirthDetailsForm from "@/components/BirthDetailsForm";
 import KundaliResults from "@/components/KundaliResults";
+import DailyPanchang from "@/components/DailyPanchang";
 import { getWhatsAppLink, WHATSAPP_MESSAGES } from "@/config/constants";
 
 interface BirthDetails {
@@ -94,11 +95,20 @@ const HomeDashboard = () => {
           className="text-center space-y-3"
         >
           <h1 className="text-3xl md:text-4xl font-display font-bold">
-            Welcome to <span className="text-gradient-saffron">BoloAstro</span>
+            Namaste 🙏 <span className="text-gradient-saffron">BoloAstro</span>
           </h1>
           <p className="text-muted-foreground max-w-md mx-auto">
             Your personal AI astrologer. Explore your destiny with Vedic wisdom.
           </p>
+        </motion.div>
+
+        {/* Daily Panchang Widget */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+        >
+          <DailyPanchang compact />
         </motion.div>
 
         {/* Generate Kundali CTA */}
