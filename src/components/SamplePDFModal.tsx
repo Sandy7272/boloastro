@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { FileText, Lock, Star, ChevronLeft, ChevronRight, Loader2, Download } from "lucide-react";
+import { FileText, Lock, Star, ChevronLeft, ChevronRight, Loader2, Download, List, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useKundaliPDF } from "@/hooks/useKundaliPDF";
 import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
 
 interface SamplePDFModalProps {
   isOpen: boolean;
@@ -470,13 +478,49 @@ const SamplePDFModal: React.FC<SamplePDFModalProps> = ({ isOpen, onClose }) => {
         </DialogHeader>
         
         <div className="p-4 space-y-4">
+          {/* Table of Contents Dropdown */}
+          <div className="flex items-center justify-between">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2 text-amber-700 border-amber-200 hover:bg-amber-50">
+                  <List className="w-4 h-4" />
+                  <span className="hidden sm:inline">Contents</span>
+                  <ChevronDown className="w-3 h-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56 max-h-[300px] overflow-y-auto">
+                <DropdownMenuLabel className="text-amber-700">Jump to Section</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {previewPages.map((p, i) => (
+                  <DropdownMenuItem
+                    key={p.id}
+                    onClick={() => setCurrentPage(i)}
+                    className={`flex items-center justify-between cursor-pointer ${
+                      i === currentPage ? 'bg-amber-50 text-amber-700' : ''
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground w-5">{p.id}.</span>
+                      <span>{p.title}</span>
+                    </span>
+                    {p.isBlurred && <Lock className="w-3 h-3 text-muted-foreground" />}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            <span className="text-sm font-medium text-amber-700">
+              Page {page.id} of 20
+            </span>
+          </div>
+          
           {/* Page Preview */}
           <div className="relative bg-gradient-to-b from-amber-50 to-orange-50 rounded-lg border-2 border-amber-200 overflow-hidden">
             {/* Page Header */}
             <div className="flex items-center justify-between px-4 py-2 border-b border-amber-200 bg-amber-100/50">
               <span className="text-xs text-amber-700">ॐ BoloAstro</span>
               <span className="text-xs text-amber-600">{page.title}</span>
-              <span className="text-xs text-muted-foreground">Page {page.id}/20</span>
+              <span className="text-xs text-muted-foreground">{page.titleHindi}</span>
             </div>
             
             {/* Page Content */}
