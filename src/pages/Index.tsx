@@ -1,6 +1,16 @@
+/**
+ * Index Page - Phase 2: Added DailyPanchang below hero
+ * 
+ * Main landing page for BoloAstro with:
+ * - Hero section with form
+ * - Daily Panchang (new in Phase 2)
+ * - How it works, Services, Trust, Testimonials, Pricing, FAQ sections
+ */
+
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import DailyPanchang from "@/components/DailyPanchang";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import ServicesSection from "@/components/ServicesSection";
 import WhyBoloAstroSection from "@/components/WhyBoloAstroSection";
@@ -8,6 +18,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
+import DecorativeSeparator from "@/components/ui/decorative-separator";
 
 // Structured Data for SEO
 const organizationSchema = {
@@ -89,20 +100,37 @@ const Index = () => {
         {/* 1. Hero with form */}
         <HeroSection />
         
+        {/* Daily Panchang - Phase 2 addition */}
+        <section className="py-6 container mx-auto px-4">
+          <DailyPanchang />
+        </section>
+        
+        <DecorativeSeparator size="lg" className="my-8" />
+        
         {/* 2. How it works */}
         <HowItWorksSection />
+        
+        <DecorativeSeparator className="my-4" />
         
         {/* 3. Services */}
         <ServicesSection />
         
+        <DecorativeSeparator className="my-4" />
+        
         {/* 4. Why trust us */}
         <WhyBoloAstroSection />
+        
+        <DecorativeSeparator className="my-4" />
         
         {/* 5. Testimonials */}
         <TestimonialsSection />
         
+        <DecorativeSeparator className="my-4" />
+        
         {/* 6. Pricing */}
         <PricingSection />
+        
+        <DecorativeSeparator className="my-4" />
         
         {/* 7. FAQ */}
         <FAQSection />
