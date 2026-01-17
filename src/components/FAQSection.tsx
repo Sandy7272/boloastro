@@ -36,7 +36,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="py-24 lg:py-32 bg-card/50" id="faq">
+    <section className="py-24 lg:py-32 bg-card/50" id="faq" aria-labelledby="faq-heading">
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify(faqSchema)}
@@ -52,10 +52,10 @@ const FAQSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4" role="doc-subtitle">
             {t("faq.badge")}
           </p>
-          <h2 className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
+          <h2 id="faq-heading" className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
             {t("faq.title")}
           </h2>
           <p className="text-muted-foreground text-lg">
@@ -70,6 +70,8 @@ const FAQSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          role="region"
+          aria-label="Frequently Asked Questions"
         >
           <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, index) => (
@@ -78,7 +80,7 @@ const FAQSection = () => {
                 value={`item-${index}`}
                 className="bg-background border border-border rounded-xl px-6 data-[state=open]:border-primary/30"
               >
-                <AccordionTrigger className="text-left font-semibold hover:text-primary transition-colors py-5 text-foreground">
+                <AccordionTrigger className="text-left font-semibold hover:text-primary transition-colors py-5 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">

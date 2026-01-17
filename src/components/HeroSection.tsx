@@ -191,9 +191,13 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center pt-28 pb-20 relative">
+    <section 
+      className="min-h-screen flex items-center pt-28 pb-20 relative"
+      id="main-content"
+      aria-labelledby="hero-heading"
+    >
       {/* Clean gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card/50" aria-hidden="true" />
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <AnimatePresence mode="wait">
@@ -204,6 +208,8 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
+              role="region"
+              aria-label="Your Kundali Results"
             >
               <KundaliTeaserResults 
                 details={submittedData} 
@@ -227,33 +233,33 @@ const HeroSection = () => {
                 transition={{ duration: 0.6 }}
               >
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20" role="status">
                   <span className="text-sm text-primary font-medium">{t("hero.badge")}</span>
                 </div>
                 
                 {/* Headline */}
-                <div className="space-y-4">
-                  <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-foreground leading-tight">
+                <header className="space-y-4">
+                  <h1 id="hero-heading" className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-foreground leading-tight">
                     {t("hero.headline")}{" "}
                     <span className="text-gradient-gold">{t("hero.headlineHighlight")}</span>
                   </h1>
                   <p className="text-xl text-muted-foreground max-w-lg">
                     {t("hero.subheadline")}
                   </p>
-                </div>
+                </header>
 
                 {/* Trust indicators */}
-                <div className="flex flex-wrap items-center gap-8 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                <div className="flex flex-wrap items-center gap-8 text-sm text-muted-foreground" role="list" aria-label="Trust indicators">
+                  <div className="flex items-center gap-2" role="listitem">
+                    <div className="w-2 h-2 rounded-full bg-green-500" aria-hidden="true" />
                     <span>{t("hero.users")}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-primary">★★★★★</span>
+                  <div className="flex items-center gap-2" role="listitem">
+                    <span className="text-primary" aria-label="5 out of 5 stars">★★★★★</span>
                     <span>{t("hero.rating")}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-primary" />
+                  <div className="flex items-center gap-2" role="listitem">
+                    <div className="w-2 h-2 rounded-full bg-primary" aria-hidden="true" />
                     <span>{t("hero.instant")}</span>
                   </div>
                 </div>
@@ -262,12 +268,13 @@ const HeroSection = () => {
                 <div className="lg:hidden">
                   <Button 
                     size="lg" 
-                    className="w-full btn-gold text-lg py-6 rounded-xl gap-2"
-                    onClick={() => document.getElementById('mobile-form')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="w-full btn-gold text-lg py-6 rounded-xl gap-2 focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    onClick={() => document.getElementById('birth-details-form')?.scrollIntoView({ behavior: 'smooth' })}
+                    aria-label="Go to birth details form"
                   >
-                    <MessageCircle className="w-5 h-5" />
+                    <MessageCircle className="w-5 h-5" aria-hidden="true" />
                     {t("hero.cta")}
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-5 h-5" aria-hidden="true" />
                   </Button>
                 </div>
               </motion.div>
@@ -277,11 +284,11 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                id="mobile-form"
+                id="birth-details-form"
               >
-                <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
+                <div className="bg-card border border-border rounded-2xl p-8 shadow-lg" role="region" aria-labelledby="form-title">
                   <div className="text-center mb-8">
-                    <h2 className="text-2xl font-semibold text-foreground mb-2">
+                    <h2 id="form-title" className="text-2xl font-semibold text-foreground mb-2">
                       {t("hero.formTitle")}
                     </h2>
                     <p className="text-muted-foreground text-sm">
@@ -289,11 +296,15 @@ const HeroSection = () => {
                     </p>
                   </div>
 
-                  <form onSubmit={handleSubmit} className="space-y-5">
+                  <form onSubmit={handleSubmit} className="space-y-5" aria-describedby="form-instructions" noValidate>
+                    <p id="form-instructions" className="sr-only">
+                      Fill in your birth details to get your personalized Kundali. All fields are required.
+                    </p>
+                    
                     {/* Name Field */}
                     <div className="space-y-2">
                       <Label htmlFor="name" className="text-sm font-medium flex items-center justify-between">
-                        <span>{t("form.fullName")}</span>
+                        <span>{t("form.fullName")} <span className="text-red-500" aria-hidden="true">*</span></span>
                         {getValidationIcon("name")}
                       </Label>
                       <Input
@@ -306,16 +317,19 @@ const HeroSection = () => {
                         className={getInputClass("name")}
                         required
                         autoComplete="name"
+                        aria-required="true"
+                        aria-invalid={validation.name.touched && !validation.name.isValid}
+                        aria-describedby={validation.name.touched && !validation.name.isValid ? "name-error" : undefined}
                       />
                       {validation.name.touched && !validation.name.isValid && (
-                        <p className="text-xs text-red-500">{t("form.nameError") || "कृपया अपना नाम दर्ज करें (Please enter your name)"}</p>
+                        <p id="name-error" className="text-xs text-red-500" role="alert">{t("form.nameError") || "कृपया अपना नाम दर्ज करें (Please enter your name)"}</p>
                       )}
                     </div>
 
                     {/* Date of Birth Field */}
                     <div className="space-y-2">
                       <Label htmlFor="dob" className="text-sm font-medium flex items-center justify-between">
-                        <span>{t("form.dateOfBirth")}</span>
+                        <span>{t("form.dateOfBirth")} <span className="text-red-500" aria-hidden="true">*</span></span>
                         {getValidationIcon("dateOfBirth")}
                       </Label>
                       <Input
@@ -327,16 +341,19 @@ const HeroSection = () => {
                         className={getInputClass("dateOfBirth")}
                         required
                         max={new Date().toISOString().split("T")[0]}
+                        aria-required="true"
+                        aria-invalid={validation.dateOfBirth.touched && !validation.dateOfBirth.isValid}
+                        aria-describedby={validation.dateOfBirth.touched && !validation.dateOfBirth.isValid ? "dob-error" : undefined}
                       />
                       {validation.dateOfBirth.touched && !validation.dateOfBirth.isValid && (
-                        <p className="text-xs text-red-500">{t("form.dobError") || "जन्म तिथि चुनें (Select date of birth)"}</p>
+                        <p id="dob-error" className="text-xs text-red-500" role="alert">{t("form.dobError") || "जन्म तिथि चुनें (Select date of birth)"}</p>
                       )}
                     </div>
 
                     {/* Time of Birth Field */}
                     <div className="space-y-2">
                       <Label htmlFor="tob" className="text-sm font-medium flex items-center justify-between">
-                        <span>{t("form.timeOfBirth")}</span>
+                        <span>{t("form.timeOfBirth")} <span className="text-red-500" aria-hidden="true">*</span></span>
                         {getValidationIcon("timeOfBirth")}
                       </Label>
                       <Input
@@ -347,8 +364,11 @@ const HeroSection = () => {
                         onBlur={() => handleFieldBlur("timeOfBirth")}
                         className={getInputClass("timeOfBirth")}
                         required
+                        aria-required="true"
+                        aria-invalid={validation.timeOfBirth.touched && !validation.timeOfBirth.isValid}
+                        aria-describedby="tob-hint"
                       />
-                      <p className="text-xs text-muted-foreground">
+                      <p id="tob-hint" className="text-xs text-muted-foreground">
                         {t("form.timeHint") || "Tip: Check birth certificate / जन्म प्रमाणपत्र देखें"}
                       </p>
                     </div>
@@ -356,7 +376,7 @@ const HeroSection = () => {
                     {/* Place of Birth Field */}
                     <div className="space-y-2">
                       <Label htmlFor="pob" className="text-sm font-medium flex items-center justify-between">
-                        <span>{t("form.placeOfBirth")}</span>
+                        <span>{t("form.placeOfBirth")} <span className="text-red-500" aria-hidden="true">*</span></span>
                         {getValidationIcon("placeOfBirth")}
                       </Label>
                       <Input
@@ -369,9 +389,12 @@ const HeroSection = () => {
                         className={getInputClass("placeOfBirth")}
                         required
                         autoComplete="address-level2"
+                        aria-required="true"
+                        aria-invalid={validation.placeOfBirth.touched && !validation.placeOfBirth.isValid}
+                        aria-describedby={validation.placeOfBirth.touched && !validation.placeOfBirth.isValid ? "pob-error" : undefined}
                       />
                       {validation.placeOfBirth.touched && !validation.placeOfBirth.isValid && (
-                        <p className="text-xs text-red-500">{t("form.placeError") || "जन्म स्थान दर्ज करें (Enter place of birth)"}</p>
+                        <p id="pob-error" className="text-xs text-red-500" role="alert">{t("form.placeError") || "जन्म स्थान दर्ज करें (Enter place of birth)"}</p>
                       )}
                     </div>
 
@@ -379,12 +402,13 @@ const HeroSection = () => {
                     <Button 
                       type="submit" 
                       size="lg" 
-                      className="w-full btn-gold text-lg py-6 rounded-xl gap-2 mt-6"
+                      className="w-full btn-gold text-lg py-6 rounded-xl gap-2 mt-6 focus:ring-2 focus:ring-primary focus:ring-offset-2"
                       disabled={!isFormValid()}
+                      aria-disabled={!isFormValid()}
                     >
-                      <MessageCircle className="w-5 h-5" />
+                      <MessageCircle className="w-5 h-5" aria-hidden="true" />
                       {t("form.submit")}
-                      <ArrowRight className="w-5 h-5" />
+                      <ArrowRight className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </form>
 

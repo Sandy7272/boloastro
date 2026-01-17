@@ -54,7 +54,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="py-24 lg:py-32 bg-card/50" id="services">
+    <section className="py-24 lg:py-32 bg-card/50" id="services" aria-labelledby="services-heading">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Header */}
         <motion.div 
@@ -64,10 +64,10 @@ const ServicesSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4" role="doc-subtitle">
             {t('services.badge')}
           </p>
-          <h2 className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
+          <h2 id="services-heading" className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
             {t('services.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
@@ -76,23 +76,25 @@ const ServicesSection = () => {
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6 max-w-4xl mx-auto" role="list" aria-label="Our astrology services">
           {services.map((service, index) => (
             <motion.a
               key={index}
               href={`${WHATSAPP_LINK}${service.query}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group"
+              className="group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.08 }}
+              role="listitem"
+              aria-label={`${service.title} - ${service.description}. Opens WhatsApp chat.`}
             >
-              <div className="bg-background border border-border rounded-xl p-6 lg:p-8 text-center hover-lift cursor-pointer group-hover:border-primary/30">
+              <div className="bg-background border border-border rounded-xl p-6 lg:p-8 text-center hover-lift cursor-pointer group-hover:border-primary/30 h-full">
                 {/* Icon */}
-                <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <service.icon className="w-7 h-7 text-primary" />
+                <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors" aria-hidden="true">
+                  <service.icon className="w-7 h-7 text-primary" aria-hidden="true" />
                 </div>
 
                 {/* Title */}

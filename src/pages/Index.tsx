@@ -21,6 +21,7 @@ import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import DecorativeSeparator from "@/components/ui/decorative-separator";
 import SEO, { SEO_CONFIGS } from "@/components/SEO";
+import SkipToContent from "@/components/SkipToContent";
 
 // Structured Data for SEO - Organization
 const organizationSchema = {
@@ -88,13 +89,14 @@ const websiteSchema = {
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SkipToContent />
       <SEO 
         {...SEO_CONFIGS.home}
         structuredData={[organizationSchema, softwareApplicationSchema, websiteSchema]}
       />
 
       <Navbar />
-      <main>
+      <main role="main">
         {/* 1. Hero with form */}
         <HeroSection />
         
