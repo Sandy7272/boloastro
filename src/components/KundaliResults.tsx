@@ -2,13 +2,17 @@ import { motion } from "framer-motion";
 import { 
   Sun, Moon, Star, Sparkles, Heart, Briefcase, 
   TrendingUp, Calendar, Clock, MapPin, MessageCircle,
-  Download, Share2, ChevronRight
+  Download, Share2, ChevronRight, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlanetaryIcon, PLANETS, ZODIAC_SIGNS } from "@/components/ui/planetary-icons";
 import { getWhatsAppLink, WHATSAPP_MESSAGES } from "@/config/constants";
 import NorthIndianChart from "@/components/NorthIndianChart";
+import { useKundaliPDF } from "@/hooks/useKundaliPDF";
+import { useToast } from "@/hooks/use-toast";
+import type { KundaliData } from "@/pdf/types";
+
 interface BirthDetails {
   name: string;
   date: string;
@@ -19,6 +23,7 @@ interface BirthDetails {
 interface KundaliResultsProps {
   details: BirthDetails;
   onReset: () => void;
+  kundaliData?: KundaliData | null;
 }
 
 // Simulated results based on birth details
@@ -44,8 +49,31 @@ const generateResults = (details: BirthDetails) => {
   };
 };
 
-const KundaliResults = ({ details, onReset }: KundaliResultsProps) => {
+const KundaliResults = ({ details, onReset, kundaliData }: KundaliResultsProps) => {
   const results = generateResults(details);
+  const { toast } = useToast();
+  
+  // PDF download hook
+  const { downloadPDF, isGenerating, hasRealData } = useKundaliPDF({
+    onSuccess: () => {
+      toast({
+        title: "PDF Downloaded! 🎉",
+        description: "Your Kundali report has been downloaded successfully.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Download Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleDownloadPDF = () => {
+    // Use provided kundaliData if available, otherwise the hook will use sessionStorage
+    downloadPDF(kundaliData || undefined);
+  };
   
   const quickInsights = [
     { 
@@ -276,9 +304,19 @@ const KundaliResults = ({ details, onReset }: KundaliResultsProps) => {
           <Share2 className="w-4 h-4 mr-2" />
           Share
         </Button>
-        <Button variant="ghost" size="sm" className="text-muted-foreground">
-          <Download className="w-4 h-4 mr-2" />
-          Download PDF
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="text-muted-foreground"
+          onClick={handleDownloadPDF}
+          disabled={isGenerating}
+        >
+          {isGenerating ? (
+            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+          ) : (
+            <Download className="w-4 h-4 mr-2" />
+          )}
+          {isGenerating ? "Generating..." : "Download PDF"}
         </Button>
       </div>
     </motion.div>
