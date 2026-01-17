@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { MessageCircle, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import LanguageToggle from "@/components/LanguageToggle";
 import logo from "@/assets/logo.png";
 
 const WHATSAPP_LINK = "https://wa.me/917261969798?text=Hi%20BoloAstro!%20I%20want%20to%20know%20my%20horoscope";
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -26,11 +29,11 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: "Services", href: "#services" },
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Testimonials", href: "#testimonials" },
-    { name: "FAQ", href: "#faq" },
+    { name: t('nav.services'), href: "#services" },
+    { name: t('nav.howItWorks'), href: "#how-it-works" },
+    { name: t('nav.pricing'), href: "#pricing" },
+    { name: t('nav.testimonials'), href: "#testimonials" },
+    { name: t('nav.faq'), href: "#faq" },
   ];
 
   return (
@@ -45,12 +48,12 @@ const Navbar = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-20">
             
-            {/* LOGO */}
+            {/* LOGO - Bigger size */}
             <a href="/" className="flex items-center">
               <img
                 src={logo}
-                alt="BoloAstro"
-                className="h-12 md:h-14 w-auto object-contain"
+                alt="BoloAstro - AI Vedic Astrology"
+                className="h-14 md:h-16 lg:h-20 w-auto object-contain"
               />
             </a>
 
@@ -58,7 +61,7 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
                 <button
-                  key={link.name}
+                  key={link.href}
                   onClick={() => scrollToSection(link.href)}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
@@ -67,15 +70,16 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* CTA Button */}
+            {/* Language Toggle & CTA Button */}
             <div className="hidden md:flex items-center gap-3">
+              <LanguageToggle />
               <Button 
                 className="btn-gold rounded-lg px-5"
                 asChild
               >
                 <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-4 h-4 mr-2" />
-                  Chat Now
+                  {t('nav.chatNow')}
                 </a>
               </Button>
             </div>
@@ -101,13 +105,18 @@ const Navbar = () => {
             <div className="container mx-auto px-4 py-6 space-y-2">
               {navLinks.map((link) => (
                 <button
-                  key={link.name}
+                  key={link.href}
                   onClick={() => scrollToSection(link.href)}
                   className="block w-full text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-card font-medium"
                 >
                   {link.name}
                 </button>
               ))}
+
+              {/* Language Toggle in Mobile */}
+              <div className="py-3 px-4">
+                <LanguageToggle />
+              </div>
 
               <div className="pt-4 border-t border-border mt-4">
                 <Button 
@@ -116,7 +125,7 @@ const Navbar = () => {
                 >
                   <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="w-5 h-5 mr-2" />
-                    Chat on WhatsApp
+                    {t('nav.chatOnWhatsApp')}
                   </a>
                 </Button>
               </div>

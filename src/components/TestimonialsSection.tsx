@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const testimonials = [
   {
@@ -47,6 +48,8 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 lg:py-32 bg-card/50" id="testimonials">
       <div className="container mx-auto px-4 lg:px-8">
@@ -58,12 +61,14 @@ const TestimonialsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">Testimonials</p>
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">
+            {t('testimonials.badge')}
+          </p>
           <h2 className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
-            What Users Say
+            {t('testimonials.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Trusted by thousands of satisfied customers across India.
+            {t('testimonials.subtitle')}
           </p>
         </motion.div>
 

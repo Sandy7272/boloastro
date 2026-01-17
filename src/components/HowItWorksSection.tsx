@@ -1,28 +1,31 @@
 import { MessageCircle, Calendar, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-
-const steps = [
-  {
-    icon: Calendar,
-    step: "1",
-    title: "Enter Birth Details",
-    description: "Share your date, time, and place of birth for accurate analysis.",
-  },
-  {
-    icon: Sparkles,
-    step: "2",
-    title: "AI Analyzes Kundali",
-    description: "Our AI processes your birth chart using authentic Vedic methods.",
-  },
-  {
-    icon: MessageCircle,
-    step: "3",
-    title: "Get Instant Guidance",
-    description: "Receive detailed predictions and ask unlimited follow-up questions.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const HowItWorksSection = () => {
+  const { t } = useTranslation();
+
+  const steps = [
+    {
+      icon: Calendar,
+      step: "1",
+      title: t('howItWorks.step1Title'),
+      description: t('howItWorks.step1Desc'),
+    },
+    {
+      icon: Sparkles,
+      step: "2",
+      title: t('howItWorks.step2Title'),
+      description: t('howItWorks.step2Desc'),
+    },
+    {
+      icon: MessageCircle,
+      step: "3",
+      title: t('howItWorks.step3Title'),
+      description: t('howItWorks.step3Desc'),
+    },
+  ];
+
   return (
     <section className="py-24 lg:py-32" id="how-it-works">
       <div className="container mx-auto px-4 lg:px-8">
@@ -34,12 +37,14 @@ const HowItWorksSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">How It Works</p>
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">
+            {t('howItWorks.badge')}
+          </p>
           <h2 className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
-            Simple 3-Step Process
+            {t('howItWorks.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Getting your astrology reading takes less than a minute.
+            {t('howItWorks.subtitle')}
           </p>
         </motion.div>
 

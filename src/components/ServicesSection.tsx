@@ -7,49 +7,52 @@ import {
   Sparkles 
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const WHATSAPP_LINK = "https://wa.me/917261969798?text=Hi%20BoloAstro!%20I%20want%20to%20know%20about%20";
 
-const services = [
-  {
-    icon: Moon,
-    title: "Kundali",
-    description: "Complete Vedic birth chart analysis",
-    query: "kundali",
-  },
-  {
-    icon: Heart,
-    title: "Love & Marriage",
-    description: "Partner compatibility & timing",
-    query: "marriage%20prediction",
-  },
-  {
-    icon: Briefcase,
-    title: "Career",
-    description: "Job changes & growth insights",
-    query: "career%20guidance",
-  },
-  {
-    icon: Coins,
-    title: "Money",
-    description: "Financial forecasts & advice",
-    query: "wealth%20forecast",
-  },
-  {
-    icon: Sparkles,
-    title: "Remedies",
-    description: "Solutions for planetary issues",
-    query: "remedies",
-  },
-  {
-    icon: Sun,
-    title: "Horoscope",
-    description: "Daily & monthly predictions",
-    query: "daily%20horoscope",
-  },
-];
-
 const ServicesSection = () => {
+  const { t } = useTranslation();
+
+  const services = [
+    {
+      icon: Moon,
+      title: t('services.kundali'),
+      description: t('services.kundaliDesc'),
+      query: "kundali",
+    },
+    {
+      icon: Heart,
+      title: t('services.loveMarriage'),
+      description: t('services.loveMarriageDesc'),
+      query: "marriage%20prediction",
+    },
+    {
+      icon: Briefcase,
+      title: t('services.career'),
+      description: t('services.careerDesc'),
+      query: "career%20guidance",
+    },
+    {
+      icon: Coins,
+      title: t('services.money'),
+      description: t('services.moneyDesc'),
+      query: "wealth%20forecast",
+    },
+    {
+      icon: Sparkles,
+      title: t('services.remedies'),
+      description: t('services.remediesDesc'),
+      query: "remedies",
+    },
+    {
+      icon: Sun,
+      title: t('services.horoscope'),
+      description: t('services.horoscopeDesc'),
+      query: "daily%20horoscope",
+    },
+  ];
+
   return (
     <section className="py-24 lg:py-32 bg-card/50" id="services">
       <div className="container mx-auto px-4 lg:px-8">
@@ -61,12 +64,14 @@ const ServicesSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">Our Services</p>
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">
+            {t('services.badge')}
+          </p>
           <h2 className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
-            What We Offer
+            {t('services.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Expert guidance for every aspect of your life.
+            {t('services.subtitle')}
           </p>
         </motion.div>
 
