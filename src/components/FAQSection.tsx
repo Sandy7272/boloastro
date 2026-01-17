@@ -1,10 +1,18 @@
+/**
+ * FAQSection - Phase 4: Indian Questions in Hinglish
+ * 
+ * Features:
+ * - Hinglish questions that Indian users actually ask
+ * - Simple accordion design
+ * - SEO FAQ schema
+ */
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
 
@@ -36,40 +44,37 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="py-24 lg:py-32 bg-card/50" id="faq" aria-labelledby="faq-heading">
+    <section 
+      className="py-16 lg:py-20 bg-card/50" 
+      id="faq" 
+      aria-labelledby="faq-heading"
+    >
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify(faqSchema)}
         </script>
       </Helmet>
 
-      <div className="container mx-auto px-4 lg:px-8">
+      <div className="container mx-auto px-4">
         {/* Header */}
-        <motion.div 
-          className="text-center mb-16 max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4" role="doc-subtitle">
+        <div className="text-center mb-10 max-w-2xl mx-auto">
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-3">
             {t("faq.badge")}
           </p>
-          <h2 id="faq-heading" className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
+          <h2 
+            id="faq-heading" 
+            className="text-3xl lg:text-4xl font-semibold text-foreground mb-3"
+          >
             {t("faq.title")}
           </h2>
           <p className="text-muted-foreground text-lg">
             {t("faq.subtitle")}
           </p>
-        </motion.div>
+        </div>
 
         {/* FAQ Accordion */}
-        <motion.div 
-          className="max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <div 
+          className="max-w-2xl mx-auto"
           role="region"
           aria-label="Frequently Asked Questions"
         >
@@ -78,18 +83,18 @@ const FAQSection = () => {
               <AccordionItem 
                 key={index}
                 value={`item-${index}`}
-                className="bg-background border border-border rounded-xl px-6 data-[state=open]:border-primary/30"
+                className="bg-background border border-border rounded-xl px-5 data-[state=open]:border-primary/30"
               >
-                <AccordionTrigger className="text-left font-semibold hover:text-primary transition-colors py-5 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg">
+                <AccordionTrigger className="text-left font-semibold hover:text-primary transition-colors py-4 text-foreground text-base">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                <AccordionContent className="text-muted-foreground pb-4 leading-relaxed text-sm">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
