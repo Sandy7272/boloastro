@@ -1,64 +1,67 @@
 import { Check, Star, Sparkles, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const WHATSAPP_BASE = "https://wa.me/917261969798?text=";
 
-const plans = [
-  {
-    name: "Free",
-    price: "₹0",
-    description: "Basic horoscope to get started",
-    icon: Star,
-    features: [
-      "Daily Rashifal",
-      "Basic Zodiac Info",
-      "General Predictions",
-      "WhatsApp Access",
-    ],
-    buttonText: "Start Free",
-    featured: false,
-    whatsappMsg: "Hi%20BoloAstro!%20I%20want%20to%20try%20the%20Free%20plan",
-  },
-  {
-    name: "Premium",
-    price: "₹199",
-    period: "/month",
-    description: "Complete kundali analysis",
-    icon: Sparkles,
-    features: [
-      "Everything in Free",
-      "Detailed Kundali PDF",
-      "Birth Chart Analysis",
-      "Dasha Predictions",
-      "Marriage Timing",
-      "Career Guidance",
-    ],
-    buttonText: "Get Premium",
-    featured: true,
-    whatsappMsg: "Hi%20BoloAstro!%20I%20want%20to%20get%20the%20Premium%20plan",
-  },
-  {
-    name: "VIP",
-    price: "₹499",
-    period: "/month",
-    description: "Priority support & guidance",
-    icon: Crown,
-    features: [
-      "Everything in Premium",
-      "Personal AI Guidance",
-      "Unlimited Questions",
-      "Priority Support",
-      "Monthly Predictions",
-      "Remedies & Solutions",
-    ],
-    buttonText: "Go VIP",
-    featured: false,
-    whatsappMsg: "Hi%20BoloAstro!%20I%20want%20the%20VIP%20plan",
-  },
-];
-
 const PricingSection = () => {
+  const { t } = useTranslation();
+
+  const plans = [
+    {
+      name: t('pricing.free'),
+      price: "₹0",
+      description: t('pricing.freeDesc'),
+      icon: Star,
+      features: [
+        t('pricing.dailyRashifal'),
+        t('pricing.basicZodiac'),
+        t('pricing.generalPredictions'),
+        t('pricing.whatsappAccess'),
+      ],
+      buttonText: t('pricing.startFree'),
+      featured: false,
+      whatsappMsg: "Hi%20BoloAstro!%20I%20want%20to%20try%20the%20Free%20plan",
+    },
+    {
+      name: t('pricing.premium'),
+      price: "₹199",
+      period: t('pricing.perMonth'),
+      description: t('pricing.premiumDesc'),
+      icon: Sparkles,
+      features: [
+        t('pricing.everythingFree'),
+        t('pricing.detailedKundali'),
+        t('pricing.birthChart'),
+        t('pricing.dashaPredictions'),
+        t('pricing.marriageTiming'),
+        t('pricing.careerGuidance'),
+      ],
+      buttonText: t('pricing.getPremium'),
+      featured: true,
+      whatsappMsg: "Hi%20BoloAstro!%20I%20want%20to%20get%20the%20Premium%20plan",
+    },
+    {
+      name: t('pricing.vip'),
+      price: "₹499",
+      period: t('pricing.perMonth'),
+      description: t('pricing.vipDesc'),
+      icon: Crown,
+      features: [
+        t('pricing.everythingPremium'),
+        t('pricing.personalGuidance'),
+        t('pricing.unlimitedQuestions'),
+        t('pricing.prioritySupport'),
+        t('pricing.monthlyPredictions'),
+        t('pricing.remediesSolutions'),
+      ],
+      buttonText: t('pricing.goVip'),
+      featured: false,
+      whatsappMsg: "Hi%20BoloAstro!%20I%20want%20the%20VIP%20plan",
+    },
+  ];
+
   return (
     <section className="py-24 lg:py-32" id="pricing">
       <div className="container mx-auto px-4 lg:px-8">
@@ -70,12 +73,14 @@ const PricingSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">Pricing</p>
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">
+            {t('pricing.badge')}
+          </p>
           <h2 className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
-            Simple Pricing
+            {t('pricing.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Start free and upgrade when you need more features.
+            {t('pricing.subtitle')}
           </p>
         </motion.div>
 
@@ -97,7 +102,7 @@ const PricingSection = () => {
               {/* Popular Badge */}
               {plan.featured && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-primary text-primary-foreground rounded-full text-sm font-semibold">
-                  Most Popular
+                  {t('pricing.popular')}
                 </div>
               )}
 
