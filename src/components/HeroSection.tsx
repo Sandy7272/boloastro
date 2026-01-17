@@ -1,11 +1,27 @@
+/**
+ * HeroSection Component - Phase 1: Value-First Flow
+ * 
+ * Purpose: Capture birth details and show teaser results before WhatsApp redirect
+ * Flow: Form → Teaser Results → WhatsApp CTA
+ * 
+ * Key features:
+ * - sessionStorage persistence (data survives refresh within session)
+ * - Bilingual placeholders (English + Hindi)
+ * - Inline validation with visual feedback
+ * - Mobile-first responsive design
+ */
+
 import { useState, useEffect } from "react";
-import { MessageCircle, ArrowRight } from "lucide-react";
+import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle, Edit3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import KundaliTeaserResults from "@/components/KundaliTeaserResults";
+
+// Storage key for sessionStorage persistence
+const STORAGE_KEY = "boloastro_birth_details";
 
 interface FormData {
   name: string;
@@ -14,42 +30,159 @@ interface FormData {
   placeOfBirth: string;
 }
 
+// Validation state for each field
+interface ValidationState {
+  isValid: boolean;
+  touched: boolean;
+}
+
 const HeroSection = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  
+  // Form state
   const [formData, setFormData] = useState<FormData>({
     name: "",
     dateOfBirth: "",
     timeOfBirth: "",
     placeOfBirth: "",
   });
+  
+  // Validation state per field
+  const [validation, setValidation] = useState<Record<keyof FormData, ValidationState>>({
+    name: { isValid: false, touched: false },
+    dateOfBirth: { isValid: false, touched: false },
+    timeOfBirth: { isValid: false, touched: false },
+    placeOfBirth: { isValid: false, touched: false },
+  });
+  
+  // Results display state
   const [showResults, setShowResults] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
 
-  // Load saved data on mount
+  // Load saved data from sessionStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem("boloastro_birth_details");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
+    try {
+      const saved = sessionStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed: FormData = JSON.parse(saved);
         setFormData(parsed);
-      } catch (e) {
-        // Invalid data
+        
+        // Validate loaded data
+        setValidation({
+          name: { isValid: parsed.name.trim().length >= 2, touched: true },
+          dateOfBirth: { isValid: !!parsed.dateOfBirth, touched: true },
+          timeOfBirth: { isValid: !!parsed.timeOfBirth, touched: true },
+          placeOfBirth: { isValid: parsed.placeOfBirth.trim().length >= 2, touched: true },
+        });
+        
+        // If all fields are valid, show results automatically
+        const allValid = parsed.name.trim().length >= 2 && 
+                        !!parsed.dateOfBirth && 
+                        !!parsed.timeOfBirth && 
+                        parsed.placeOfBirth.trim().length >= 2;
+        
+        if (allValid) {
+          setSubmittedData(parsed);
+          setShowResults(true);
+        }
       }
+    } catch (e) {
+      console.error("Failed to load saved birth details:", e);
     }
   }, []);
 
+  // Validate a single field
+  const validateField = (field: keyof FormData, value: string): boolean => {
+    switch (field) {
+      case "name":
+        return value.trim().length >= 2;
+      case "dateOfBirth":
+        return !!value && new Date(value) <= new Date();
+      case "timeOfBirth":
+        return !!value;
+      case "placeOfBirth":
+        return value.trim().length >= 2;
+      default:
+        return false;
+    }
+  };
+
+  // Handle field change with validation
+  const handleFieldChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    
+    // Update validation if field was already touched
+    if (validation[field].touched) {
+      setValidation(prev => ({
+        ...prev,
+        [field]: { isValid: validateField(field, value), touched: true }
+      }));
+    }
+  };
+
+  // Handle field blur for validation
+  const handleFieldBlur = (field: keyof FormData) => {
+    setValidation(prev => ({
+      ...prev,
+      [field]: { isValid: validateField(field, formData[field]), touched: true }
+    }));
+  };
+
+  // Check if entire form is valid
+  const isFormValid = (): boolean => {
+    return Object.keys(formData).every(field => 
+      validateField(field as keyof FormData, formData[field as keyof FormData])
+    );
+  };
+
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Save to localStorage
-    localStorage.setItem("boloastro_birth_details", JSON.stringify(formData));
+    
+    // Mark all fields as touched for validation display
+    setValidation({
+      name: { isValid: validateField("name", formData.name), touched: true },
+      dateOfBirth: { isValid: validateField("dateOfBirth", formData.dateOfBirth), touched: true },
+      timeOfBirth: { isValid: validateField("timeOfBirth", formData.timeOfBirth), touched: true },
+      placeOfBirth: { isValid: validateField("placeOfBirth", formData.placeOfBirth), touched: true },
+    });
+
+    if (!isFormValid()) {
+      return;
+    }
+
+    // Save to sessionStorage for persistence within session
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+    
     // Show teaser results instead of redirecting to WhatsApp
     setSubmittedData(formData);
     setShowResults(true);
   };
 
+  // Reset to show form again (Edit details)
   const handleReset = () => {
     setShowResults(false);
-    setSubmittedData(null);
+    // Keep submitted data in state so form stays prefilled
+  };
+
+  // Get validation icon for a field
+  const getValidationIcon = (field: keyof FormData) => {
+    if (!validation[field].touched) return null;
+    
+    return validation[field].isValid ? (
+      <CheckCircle2 className="w-4 h-4 text-green-500" />
+    ) : (
+      <AlertCircle className="w-4 h-4 text-red-500" />
+    );
+  };
+
+  // Get input border class based on validation
+  const getInputClass = (field: keyof FormData): string => {
+    const base = "h-12 bg-background focus:border-primary text-base";
+    if (!validation[field].touched) return `${base} border-border`;
+    return validation[field].isValid 
+      ? `${base} border-green-500 focus:border-green-500` 
+      : `${base} border-red-500 focus:border-red-500`;
   };
 
   return (
@@ -67,7 +200,11 @@ const HeroSection = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <KundaliTeaserResults details={submittedData} onReset={handleReset} />
+              <KundaliTeaserResults 
+                details={submittedData} 
+                onReset={handleReset}
+                lang={i18n.language}
+              />
             </motion.div>
           ) : (
             <motion.div
@@ -148,60 +285,97 @@ const HeroSection = () => {
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Name Field */}
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="text-sm font-medium">{t("form.fullName")}</Label>
+                      <Label htmlFor="name" className="text-sm font-medium flex items-center justify-between">
+                        <span>{t("form.fullName")}</span>
+                        {getValidationIcon("name")}
+                      </Label>
                       <Input
                         id="name"
                         type="text"
-                        placeholder={t("form.namePlaceholder")}
+                        placeholder="Apna naam / अपना नाम"
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="h-12 bg-background border-border focus:border-primary"
+                        onChange={(e) => handleFieldChange("name", e.target.value)}
+                        onBlur={() => handleFieldBlur("name")}
+                        className={getInputClass("name")}
                         required
+                        autoComplete="name"
                       />
+                      {validation.name.touched && !validation.name.isValid && (
+                        <p className="text-xs text-red-500">{t("form.nameError") || "कृपया अपना नाम दर्ज करें (Please enter your name)"}</p>
+                      )}
                     </div>
 
+                    {/* Date of Birth Field */}
                     <div className="space-y-2">
-                      <Label htmlFor="dob" className="text-sm font-medium">{t("form.dateOfBirth")}</Label>
+                      <Label htmlFor="dob" className="text-sm font-medium flex items-center justify-between">
+                        <span>{t("form.dateOfBirth")}</span>
+                        {getValidationIcon("dateOfBirth")}
+                      </Label>
                       <Input
                         id="dob"
                         type="date"
                         value={formData.dateOfBirth}
-                        onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-                        className="h-12 bg-background border-border focus:border-primary"
+                        onChange={(e) => handleFieldChange("dateOfBirth", e.target.value)}
+                        onBlur={() => handleFieldBlur("dateOfBirth")}
+                        className={getInputClass("dateOfBirth")}
                         required
+                        max={new Date().toISOString().split("T")[0]}
                       />
+                      {validation.dateOfBirth.touched && !validation.dateOfBirth.isValid && (
+                        <p className="text-xs text-red-500">{t("form.dobError") || "जन्म तिथि चुनें (Select date of birth)"}</p>
+                      )}
                     </div>
 
+                    {/* Time of Birth Field */}
                     <div className="space-y-2">
-                      <Label htmlFor="tob" className="text-sm font-medium">{t("form.timeOfBirth")}</Label>
+                      <Label htmlFor="tob" className="text-sm font-medium flex items-center justify-between">
+                        <span>{t("form.timeOfBirth")}</span>
+                        {getValidationIcon("timeOfBirth")}
+                      </Label>
                       <Input
                         id="tob"
                         type="time"
                         value={formData.timeOfBirth}
-                        onChange={(e) => setFormData({ ...formData, timeOfBirth: e.target.value })}
-                        className="h-12 bg-background border-border focus:border-primary"
+                        onChange={(e) => handleFieldChange("timeOfBirth", e.target.value)}
+                        onBlur={() => handleFieldBlur("timeOfBirth")}
+                        className={getInputClass("timeOfBirth")}
                         required
                       />
+                      <p className="text-xs text-muted-foreground">
+                        {t("form.timeHint") || "Tip: Check birth certificate / जन्म प्रमाणपत्र देखें"}
+                      </p>
                     </div>
 
+                    {/* Place of Birth Field */}
                     <div className="space-y-2">
-                      <Label htmlFor="pob" className="text-sm font-medium">{t("form.placeOfBirth")}</Label>
+                      <Label htmlFor="pob" className="text-sm font-medium flex items-center justify-between">
+                        <span>{t("form.placeOfBirth")}</span>
+                        {getValidationIcon("placeOfBirth")}
+                      </Label>
                       <Input
                         id="pob"
                         type="text"
-                        placeholder={t("form.placePlaceholder")}
+                        placeholder="City, State / शहर, राज्य"
                         value={formData.placeOfBirth}
-                        onChange={(e) => setFormData({ ...formData, placeOfBirth: e.target.value })}
-                        className="h-12 bg-background border-border focus:border-primary"
+                        onChange={(e) => handleFieldChange("placeOfBirth", e.target.value)}
+                        onBlur={() => handleFieldBlur("placeOfBirth")}
+                        className={getInputClass("placeOfBirth")}
                         required
+                        autoComplete="address-level2"
                       />
+                      {validation.placeOfBirth.touched && !validation.placeOfBirth.isValid && (
+                        <p className="text-xs text-red-500">{t("form.placeError") || "जन्म स्थान दर्ज करें (Enter place of birth)"}</p>
+                      )}
                     </div>
 
+                    {/* Submit Button */}
                     <Button 
                       type="submit" 
                       size="lg" 
                       className="w-full btn-gold text-lg py-6 rounded-xl gap-2 mt-6"
+                      disabled={!isFormValid()}
                     >
                       <MessageCircle className="w-5 h-5" />
                       {t("form.submit")}
