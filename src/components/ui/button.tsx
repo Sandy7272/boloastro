@@ -4,8 +4,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+// Phase 6: Larger touch targets (min 48px) for elderly users
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-base font-semibold ring-offset-background transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -23,11 +24,12 @@ const buttonVariants = cva(
         cosmic: "bg-gradient-to-r from-royal to-cosmic-purple text-foreground font-bold hover:shadow-xl hover:shadow-cosmic-purple/30",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-12 rounded-xl px-8 text-base",
-        xl: "h-14 rounded-xl px-10 text-lg",
-        icon: "h-10 w-10",
+        // Phase 6: Min 48px touch targets for elderly users
+        default: "h-12 px-5 py-3",
+        sm: "h-10 rounded-md px-4",
+        lg: "h-14 rounded-xl px-8 text-lg",
+        xl: "h-16 rounded-xl px-10 text-xl",
+        icon: "h-12 w-12",
       },
     },
     defaultVariants: {
