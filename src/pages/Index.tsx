@@ -1,32 +1,41 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import HomeDashboard from "@/components/HomeDashboard";
-import ServicesSection from "@/components/ServicesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
-import WhatsAppSection from "@/components/WhatsAppSection";
-import SampleReportsSection from "@/components/SampleReportsSection";
+import ServicesSection from "@/components/ServicesSection";
 import WhyBoloAstroSection from "@/components/WhyBoloAstroSection";
-import PricingSection from "@/components/PricingSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-0">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <main>
+        {/* 1. Hero with form */}
         <HeroSection />
-        <HomeDashboard />
-        <ServicesSection />
+        
+        {/* 2. How it works */}
         <HowItWorksSection />
-        <WhatsAppSection />
-        <SampleReportsSection />
+        
+        {/* 3. Services */}
+        <ServicesSection />
+        
+        {/* 4. Why trust us */}
         <WhyBoloAstroSection />
-        <PricingSection />
+        
+        {/* 5. Testimonials */}
         <TestimonialsSection />
+        
+        {/* 6. Pricing */}
+        <PricingSection />
+        
+        {/* 7. FAQ */}
         <FAQSection />
       </main>
+      
+      {/* 8. Footer with Final CTA */}
       <Footer />
     </div>
   );

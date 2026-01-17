@@ -1,68 +1,113 @@
-import { Sparkles, Zap, Shield, Users, IndianRupee } from "lucide-react";
-import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
+import { Shield, Zap, IndianRupee, Users, Clock } from "lucide-react";
+import { motion } from "framer-motion";
 
 const trustPoints = [
-  { icon: Sparkles, title: "AI + Vedic Astrology", description: "Modern technology meets ancient wisdom for accurate predictions" },
-  { icon: Zap, title: "Instant Response", description: "Get your readings in seconds, not days" },
-  { icon: IndianRupee, title: "Affordable Pricing", description: "Premium astrology at pocket-friendly prices" },
-  { icon: Shield, title: "Indian Astrology System", description: "Authentic Vedic methods used by generations" },
-  { icon: Users, title: "Thousands of Users", description: "Trusted by 10,000+ satisfied customers across India" },
+  { 
+    icon: Shield, 
+    title: "Authentic Vedic Methods", 
+    description: "Traditional astrology passed down through generations" 
+  },
+  { 
+    icon: Zap, 
+    title: "Instant Results", 
+    description: "Get readings in seconds, not days" 
+  },
+  { 
+    icon: IndianRupee, 
+    title: "Affordable Prices", 
+    description: "Premium quality at pocket-friendly rates" 
+  },
+  { 
+    icon: Users, 
+    title: "10,000+ Trusted Users", 
+    description: "Join our growing community of believers" 
+  },
+  { 
+    icon: Clock, 
+    title: "24/7 Available", 
+    description: "Ask questions anytime, anywhere" 
+  },
+];
+
+const stats = [
+  { value: "10K+", label: "Happy Users" },
+  { value: "50K+", label: "Predictions" },
+  { value: "4.9", label: "Rating" },
+  { value: "24/7", label: "Available" },
 ];
 
 const WhyBoloAstroSection = () => {
   return (
-    <section className="py-28 lg:py-36 relative overflow-hidden" id="why-us">
-      <div className="nebula-bg opacity-40" />
-      <div className="absolute inset-0 stars-bg opacity-20" />
-      
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <ScrollReveal direction="left">
-            <div className="space-y-10">
-              <div>
-                <div className="ornament-divider mb-8 justify-start">✦</div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-                  Why Choose <span className="text-gradient-saffron">BoloAstro?</span>
-                </h2>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  We combine the timeless wisdom of Vedic astrology with cutting-edge AI technology 
-                  to deliver accurate, instant, and affordable predictions that you can trust.
-                </p>
-              </div>
-              
-              <StaggerContainer className="space-y-5" staggerDelay={0.1}>
-                {trustPoints.map((point, index) => (
-                  <StaggerItem key={index} direction="left">
-                    <div className="flex items-start gap-5 group p-4 rounded-2xl hover:bg-gold/5 transition-all duration-300">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gold/25 to-saffron/15 border border-gold/25 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:border-gold/50 group-hover:shadow-lg group-hover:shadow-gold/15 transition-all duration-400">
-                        <point.icon className="w-7 h-7 text-gold" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground text-lg group-hover:text-gold transition-colors">{point.title}</h3>
-                        <p className="text-base text-muted-foreground">{point.description}</p>
-                      </div>
-                    </div>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
+    <section className="py-24 lg:py-32" id="why-us">
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left - Content */}
+          <motion.div 
+            className="space-y-8"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div>
+              <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">Why Choose Us</p>
+              <h2 className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
+                Why BoloAstro?
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                We combine ancient Vedic wisdom with modern AI technology for accurate, instant predictions.
+              </p>
             </div>
-          </ScrollReveal>
-          
-          <StaggerContainer className="grid grid-cols-2 gap-6" staggerDelay={0.15}>
-            {[
-              { value: "10K+", label: "Happy Users", gradient: "saffron" },
-              { value: "50K+", label: "Predictions Made", gradient: "gold" },
-              { value: "4.9", label: "User Rating", gradient: "saffron" },
-              { value: "24/7", label: "Available", gradient: "gold" },
-            ].map((stat, index) => (
-              <StaggerItem key={index} direction="right">
-                <div className="bg-glass-premium rounded-3xl p-10 text-center space-y-3 border-gradient hover-lift">
-                  <div className={`text-5xl md:text-6xl font-display font-bold text-gradient-${stat.gradient}`}>{stat.value}</div>
-                  <div className="text-muted-foreground text-base font-medium">{stat.label}</div>
+
+            {/* Trust Points */}
+            <div className="space-y-4">
+              {trustPoints.map((point, index) => (
+                <motion.div 
+                  key={index}
+                  className="flex items-start gap-4 p-4 rounded-xl hover:bg-card transition-colors"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                    <point.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">{point.title}</h3>
+                    <p className="text-sm text-muted-foreground">{point.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right - Stats */}
+          <motion.div 
+            className="grid grid-cols-2 gap-4"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            {stats.map((stat, index) => (
+              <motion.div 
+                key={index}
+                className="bg-card border border-border rounded-2xl p-8 text-center"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <div className="text-4xl lg:text-5xl font-semibold text-gradient-gold mb-2">
+                  {stat.value}
                 </div>
-              </StaggerItem>
+                <div className="text-muted-foreground text-sm font-medium">
+                  {stat.label}
+                </div>
+              </motion.div>
             ))}
-          </StaggerContainer>
+          </motion.div>
         </div>
       </div>
     </section>

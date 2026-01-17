@@ -1,98 +1,108 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
-import { Star, Quote } from "lucide-react";
+import { Star } from "lucide-react";
+import { motion } from "framer-motion";
 
 const testimonials = [
   {
     name: "Rahul Sharma",
     location: "Mumbai",
     rating: 5,
-    text: "BoloAstro ki prediction bahut accurate thi! Career change ke baare mein jo bataya, exactly wahi hua. Highly recommended!",
+    text: "BoloAstro ki prediction bahut accurate thi! Career change ke baare mein jo bataya, exactly wahi hua.",
     avatar: "R",
   },
   {
     name: "Priya Patel",
     location: "Delhi",
     rating: 5,
-    text: "Marriage prediction bilkul sahi nikli! Timing aur partner ki description dono match kiya. Thank you BoloAstro!",
+    text: "Marriage prediction bilkul sahi nikli! Timing aur partner ki description dono match kiya.",
     avatar: "P",
   },
   {
     name: "Amit Kumar",
     location: "Bangalore",
     rating: 5,
-    text: "Best WhatsApp astrology bot I've ever used. Instant replies aur detailed analysis milti hai. Ab doosra astrologer nahi dekhta.",
+    text: "Best WhatsApp astrology bot. Instant replies aur detailed analysis milti hai.",
     avatar: "A",
   },
   {
     name: "Sneha Gupta",
     location: "Jaipur",
     rating: 5,
-    text: "Kundali PDF download karke dekhi, bohot detailed thi. Dasha analysis se future planning mein bahut help mili.",
+    text: "Kundali PDF download karke dekhi, bohot detailed thi. Dasha analysis se future planning mein help mili.",
     avatar: "S",
   },
   {
     name: "Vikram Singh",
     location: "Lucknow",
     rating: 5,
-    text: "Affordable pricing mein premium quality. Jo kaam pandit ji hazaaron mein karte, yahan hundreds mein ho gaya!",
+    text: "Affordable pricing mein premium quality. Jo kaam pandit ji hazaaron mein karte, yahan hundreds mein!",
     avatar: "V",
   },
   {
     name: "Anjali Mehta",
     location: "Pune",
     rating: 5,
-    text: "24/7 available hona sabse bada plus point hai. Raat ko 2 baje bhi question poocha, instant reply mila!",
+    text: "24/7 available hona sabse bada plus point hai. Raat ko bhi question poocha, instant reply mila!",
     avatar: "A",
   },
 ];
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-28 lg:py-36 relative overflow-hidden" id="testimonials">
-      <div className="nebula-bg opacity-30" />
-      <div className="absolute inset-0 stars-bg opacity-20" />
-      
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <ScrollReveal className="text-center mb-20 space-y-6">
-          <div className="ornament-divider mb-8">✦</div>
-          <p className="text-gold font-semibold uppercase tracking-[0.2em] text-sm">Testimonials</p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold">
-            What Our <span className="text-gradient-saffron">Users Say</span>
+    <section className="py-24 lg:py-32 bg-card/50" id="testimonials">
+      <div className="container mx-auto px-4 lg:px-8">
+        {/* Header */}
+        <motion.div 
+          className="text-center mb-16 max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">Testimonials</p>
+          <h2 className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
+            What Users Say
           </h2>
-          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
-            Thousands of happy customers trust BoloAstro for their astrology needs.
+          <p className="text-muted-foreground text-lg">
+            Trusted by thousands of satisfied customers across India.
           </p>
-        </ScrollReveal>
-        
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" staggerDelay={0.1}>
+        </motion.div>
+
+        {/* Testimonials Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {testimonials.map((testimonial, index) => (
-            <StaggerItem key={index}>
-              <Card variant="testimonial" className="card-premium hover-lift h-full">
-                <CardContent className="p-8 space-y-5 relative z-10">
-                  <Quote className="w-10 h-10 text-gold/30" />
-                  <p className="text-foreground/90 text-lg leading-relaxed italic">
-                    "{testimonial.text}"
-                  </p>
-                  <div className="flex gap-1">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-gold fill-gold" />
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-4 pt-3">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-saffron flex items-center justify-center text-cosmic-dark font-bold text-lg shadow-lg shadow-gold/20">
-                      {testimonial.avatar}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-foreground text-lg">{testimonial.name}</div>
-                      <div className="text-sm text-muted-foreground">{testimonial.location}</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </StaggerItem>
+            <motion.div 
+              key={index}
+              className="bg-background border border-border rounded-xl p-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
+            >
+              {/* Rating */}
+              <div className="flex gap-1 mb-4">
+                {[...Array(testimonial.rating)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 text-primary fill-primary" />
+                ))}
+              </div>
+
+              {/* Text */}
+              <p className="text-foreground mb-6 leading-relaxed">
+                "{testimonial.text}"
+              </p>
+
+              {/* Author */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold">
+                  {testimonial.avatar}
+                </div>
+                <div>
+                  <div className="font-semibold text-foreground text-sm">{testimonial.name}</div>
+                  <div className="text-xs text-muted-foreground">{testimonial.location}</div>
+                </div>
+              </div>
+            </motion.div>
           ))}
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );
