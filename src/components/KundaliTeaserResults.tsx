@@ -1,5 +1,5 @@
 /**
- * KundaliTeaserResults Component - Phase 1: Value-First Flow
+ * KundaliTeaserResults Component - Phase 1 & 5
  * 
  * Purpose: Show teaser astrological insights before WhatsApp redirect
  * This builds trust by providing immediate value
@@ -10,8 +10,10 @@
  * - 1-line tips for Career, Love, Health
  * - Prominent WhatsApp CTA with Hindi text
  * - Edit details button to go back to form
+ * - Phase 5: Analytics tracking for WhatsApp clicks
  */
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
   Sun, Moon, Star, Heart, Briefcase, 
@@ -23,6 +25,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ZODIAC_SIGNS } from "@/components/ui/planetary-icons";
 import { useTranslation } from "react-i18next";
 import { getWhatsAppLinkWithDetails } from "@/config/constants";
+import { trackWhatsAppClick, trackTeaserView } from "@/lib/analytics";
 
 interface BirthDetails {
   name: string;
@@ -103,6 +106,16 @@ const KundaliTeaserResults = ({ details, onReset, lang = "en" }: KundaliTeaserRe
     ...details,
     lang,
   });
+
+  // Track teaser view on mount - Phase 5
+  useEffect(() => {
+    trackTeaserView(results.sunSign.name);
+  }, [results.sunSign.name]);
+
+  // Handle WhatsApp CTA click with tracking
+  const handleWhatsAppClick = () => {
+    trackWhatsAppClick("teaser_results", "detailed_kundali");
+  };
 
   return (
     <motion.div
@@ -277,6 +290,7 @@ const KundaliTeaserResults = ({ details, onReset, lang = "en" }: KundaliTeaserRe
                 href={whatsAppLink}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={handleWhatsAppClick}
               >
                 <MessageCircle className="w-5 h-5" />
                 {t("teaser.whatsappCta") || "Pandit ji se baat karein"}
