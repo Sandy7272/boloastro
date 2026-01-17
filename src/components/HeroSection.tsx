@@ -1,5 +1,5 @@
 /**
- * HeroSection Component - Phase 1: Value-First Flow
+ * HeroSection Component - Phase 1 & 5
  * 
  * Purpose: Capture birth details and show teaser results before WhatsApp redirect
  * Flow: Form → Teaser Results → WhatsApp CTA
@@ -9,16 +9,18 @@
  * - Bilingual placeholders (English + Hindi)
  * - Inline validation with visual feedback
  * - Mobile-first responsive design
+ * - Phase 5: Analytics tracking for form submission
  */
 
 import { useState, useEffect } from "react";
-import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle, Edit3 } from "lucide-react";
+import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import KundaliTeaserResults from "@/components/KundaliTeaserResults";
+import { trackFormSubmit } from "@/lib/analytics";
 
 // Storage key for sessionStorage persistence
 const STORAGE_KEY = "boloastro_birth_details";
@@ -150,6 +152,9 @@ const HeroSection = () => {
     if (!isFormValid()) {
       return;
     }
+
+    // Phase 5: Track form submission
+    trackFormSubmit(true, i18n.language);
 
     // Save to sessionStorage for persistence within session
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));

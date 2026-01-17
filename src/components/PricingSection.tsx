@@ -1,12 +1,22 @@
+/**
+ * PricingSection - Phase 5: Added analytics tracking
+ */
 import { Check, Star, Sparkles, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { trackPlanSelect, trackWhatsAppClick } from "@/lib/analytics";
 
 const WHATSAPP_BASE = "https://wa.me/917261969798?text=";
 
 const PricingSection = () => {
   const { t } = useTranslation();
+
+  // Track plan click with analytics
+  const handlePlanClick = (planName: string, planPrice: string) => {
+    trackPlanSelect(planName, planPrice);
+    trackWhatsAppClick("pricing", planName.toLowerCase());
+  };
 
   const plans = [
     {
@@ -140,7 +150,12 @@ const PricingSection = () => {
                 }`}
                 asChild
               >
-                <a href={`${WHATSAPP_BASE}${plan.whatsappMsg}`} target="_blank" rel="noopener noreferrer">
+                <a 
+                  href={`${WHATSAPP_BASE}${plan.whatsappMsg}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => handlePlanClick(plan.name, plan.price)}
+                >
                   {plan.buttonText}
                 </a>
               </Button>
