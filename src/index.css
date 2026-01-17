@@ -122,7 +122,24 @@
 
   html {
     scroll-behavior: smooth;
-    font-size: 16px;
+    /* Phase 6: Increased base font for elderly users */
+    font-size: 18px;
+  }
+
+  /* Phase 6: Minimum touch targets for accessibility */
+  button, 
+  a, 
+  [role="button"],
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  /* Exception for inline links */
+  p a, span a, li a {
+    min-height: auto;
+    min-width: auto;
   }
 
   body {
