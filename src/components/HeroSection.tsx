@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,19 @@ const HeroSection = () => {
   const [showResults, setShowResults] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
 
+  // Load saved data on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("boloastro_birth_details");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setFormData(parsed);
+      } catch (e) {
+        // Invalid data
+      }
+    }
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Save to localStorage
@@ -38,19 +51,6 @@ const HeroSection = () => {
     setShowResults(false);
     setSubmittedData(null);
   };
-
-  // Load saved data on mount
-  useState(() => {
-    const saved = localStorage.getItem("boloastro_birth_details");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setFormData(parsed);
-      } catch (e) {
-        // Invalid data
-      }
-    }
-  });
 
   return (
     <section className="min-h-screen flex items-center pt-28 pb-20 relative">
