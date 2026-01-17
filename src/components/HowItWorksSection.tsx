@@ -1,5 +1,13 @@
+/**
+ * HowItWorksSection - Phase 4: Hinglish Steps
+ * 
+ * Features:
+ * - Simple 3-step process in Hinglish
+ * - Clean icons and cards
+ * - No heavy animations
+ */
+
 import { MessageCircle, Calendar, Sparkles } from "lucide-react";
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
 const HowItWorksSection = () => {
@@ -11,78 +19,79 @@ const HowItWorksSection = () => {
       step: "1",
       title: t('howItWorks.step1Title'),
       description: t('howItWorks.step1Desc'),
+      emoji: "📝",
     },
     {
       icon: Sparkles,
       step: "2",
       title: t('howItWorks.step2Title'),
       description: t('howItWorks.step2Desc'),
+      emoji: "🔮",
     },
     {
       icon: MessageCircle,
       step: "3",
       title: t('howItWorks.step3Title'),
       description: t('howItWorks.step3Desc'),
+      emoji: "📱",
     },
   ];
 
   return (
-    <section className="py-24 lg:py-32" id="how-it-works" aria-labelledby="how-it-works-heading">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section 
+      className="py-16 lg:py-20 bg-background" 
+      id="how-it-works" 
+      aria-labelledby="how-it-works-heading"
+    >
+      <div className="container mx-auto px-4">
         {/* Header */}
-        <motion.div 
-          className="text-center mb-16 max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4" role="doc-subtitle">
+        <div className="text-center mb-12 max-w-2xl mx-auto">
+          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-3">
             {t('howItWorks.badge')}
           </p>
-          <h2 id="how-it-works-heading" className="text-4xl lg:text-5xl font-semibold text-foreground mb-4">
+          <h2 
+            id="how-it-works-heading" 
+            className="text-3xl lg:text-4xl font-semibold text-foreground mb-3"
+          >
             {t('howItWorks.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
             {t('howItWorks.subtitle')}
           </p>
-        </motion.div>
+        </div>
 
-        {/* Steps */}
-        <ol className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-5xl mx-auto list-none" aria-label="Steps to get started">
+        {/* Steps - Simple Cards */}
+        <ol 
+          className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto list-none" 
+          aria-label="Steps to get started"
+        >
           {steps.map((step, index) => (
-            <motion.li 
+            <li 
               key={index}
-              className="relative text-center"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
+              className="relative text-center bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors"
             >
-              {/* Connector line */}
-              {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-16 left-[60%] w-full h-px bg-gradient-to-r from-border to-transparent" aria-hidden="true" />
-              )}
+              {/* Step Number Badge */}
+              <div 
+                className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm"
+                aria-hidden="true"
+              >
+                {step.step}
+              </div>
 
-              {/* Step number & Icon */}
-              <div className="relative inline-block mb-6">
-                <div className="w-32 h-32 rounded-2xl bg-card border border-border flex items-center justify-center" aria-hidden="true">
-                  <step.icon className="w-12 h-12 text-primary" aria-hidden="true" />
-                </div>
-                <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-lg" aria-hidden="true">
-                  {step.step}
-                </div>
+              {/* Emoji Icon */}
+              <div className="text-4xl mb-4 mt-2" aria-hidden="true">
+                {step.emoji}
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-semibold text-foreground mb-3">
+              <h3 className="text-lg font-semibold text-foreground mb-2">
                 <span className="sr-only">Step {step.step}: </span>
                 {step.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed max-w-xs mx-auto">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
-            </motion.li>
+            </li>
           ))}
         </ol>
       </div>
