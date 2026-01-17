@@ -11,6 +11,7 @@
  * - Prominent WhatsApp CTA with Hindi text
  * - Edit details button to go back to form
  * - Phase 5: Analytics tracking for WhatsApp clicks
+ * - Now supports real API data via kundaliData prop
  */
 
 import { useEffect } from "react";
@@ -26,6 +27,7 @@ import { ZODIAC_SIGNS } from "@/components/ui/planetary-icons";
 import { useTranslation } from "react-i18next";
 import { getWhatsAppLinkWithDetails } from "@/config/constants";
 import { trackWhatsAppClick, trackTeaserView } from "@/lib/analytics";
+import type { KundaliData } from "@/pdf/types";
 
 interface BirthDetails {
   name: string;
@@ -38,23 +40,21 @@ interface KundaliTeaserResultsProps {
   details: BirthDetails;
   onReset: () => void;
   lang?: string;
+  kundaliData?: KundaliData | null;
 }
 
 /**
  * Generate simulated astrological results based on birth details
- * Note: This is a simplified calculation for demo purposes
- * Real Vedic astrology requires precise astronomical calculations
+ * Used as fallback when API data is not available
  */
-const generateResults = (details: BirthDetails) => {
+const generateFallbackResults = (details: BirthDetails) => {
   const date = new Date(details.dateOfBirth);
   const month = date.getMonth();
   const day = date.getDate();
   
-  // Simple calculation for demo - maps birth month to zodiac
   const sunSignIndex = month;
   const moonSignIndex = (month + (day > 15 ? 1 : 0)) % 12;
   
-  // Generate lucky elements based on birth date
   const luckyNumber = (day % 9) + 1;
   const luckyColors = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Pink"];
   const luckyColorIndex = day % 7;
@@ -65,41 +65,102 @@ const generateResults = (details: BirthDetails) => {
     luckyNumber,
     luckyColor: luckyColors[luckyColorIndex],
     luckyColorHindi: ["लाल", "नारंगी", "पीला", "हरा", "नीला", "बैंगनी", "गुलाबी"][luckyColorIndex],
+    nakshatra: undefined as string | undefined,
+    rashi: undefined as string | undefined,
   };
 };
 
 /**
- * Generate simple one-line predictions
- * These are intentionally simple and positive to build trust
+ * Extract display data from real API response
  */
-const generateTeaserPredictions = (t: (key: string) => string) => [
-  {
-    icon: Heart,
-    label: t("results.love"),
-    tip: t("teaser.loveTip") || "Relationships look favorable this month",
-    tipHindi: "इस महीने रिश्तों में अनुकूलता दिखती है",
-    color: "text-pink-500",
-  },
-  {
-    icon: Briefcase,
-    label: t("results.career"),
-    tip: t("teaser.careerTip") || "Good opportunities for growth ahead",
-    tipHindi: "आगे विकास के अच्छे अवसर हैं",
-    color: "text-blue-500",
-  },
-  {
-    icon: Activity,
-    label: t("results.health"),
-    tip: t("teaser.healthTip") || "Focus on mental wellness and rest",
-    tipHindi: "मानसिक स्वास्थ्य और आराम पर ध्यान दें",
-    color: "text-green-500",
-  },
-];
+const extractFromKundaliData = (kundaliData: KundaliData) => {
+  const { userData, luckyFactors } = kundaliData;
+  
+  // Find moon sign from rashi
+  const rashiToZodiac: Record<string, number> = {
+    "मेष": 0, "वृषभ": 1, "मिथुन": 2, "कर्क": 3,
+    "सिंह": 4, "कन्या": 5, "तुला": 6, "वृश्चिक": 7,
+    "धनु": 8, "मकर": 9, "कुंभ": 10, "मीन": 11,
+  };
+  
+  const moonSignIndex = rashiToZodiac[userData.rashi || ""] ?? 0;
+  const sunSignIndex = rashiToZodiac[userData.lagnaRashi || ""] ?? 0;
+  
+  return {
+    sunSign: ZODIAC_SIGNS[sunSignIndex],
+    moonSign: ZODIAC_SIGNS[moonSignIndex],
+    luckyNumber: luckyFactors.number,
+    luckyColor: luckyFactors.color,
+    luckyColorHindi: luckyFactors.colorHindi || luckyFactors.color,
+    nakshatra: userData.nakshatra,
+    rashi: userData.rashi,
+  };
+};
 
-const KundaliTeaserResults = ({ details, onReset, lang = "en" }: KundaliTeaserResultsProps) => {
+/**
+ * Generate predictions from real API data or fallback
+ */
+const generatePredictions = (t: (key: string) => string, kundaliData?: KundaliData | null) => {
+  if (kundaliData) {
+    return [
+      {
+        icon: Heart,
+        label: t("results.love"),
+        tip: kundaliData.marriage.highlights?.[0] || "Relationships look favorable",
+        tipHindi: "रिश्तों में अनुकूलता दिखती है",
+        color: "text-pink-500",
+      },
+      {
+        icon: Briefcase,
+        label: t("results.career"),
+        tip: kundaliData.career.highlights?.[0] || "Good opportunities for growth",
+        tipHindi: "विकास के अच्छे अवसर हैं",
+        color: "text-blue-500",
+      },
+      {
+        icon: Activity,
+        label: t("results.health"),
+        tip: kundaliData.health.highlights?.[0] || "Focus on wellness",
+        tipHindi: "स्वास्थ्य पर ध्यान दें",
+        color: "text-green-500",
+      },
+    ];
+  }
+  
+  return [
+    {
+      icon: Heart,
+      label: t("results.love"),
+      tip: t("teaser.loveTip") || "Relationships look favorable this month",
+      tipHindi: "इस महीने रिश्तों में अनुकूलता दिखती है",
+      color: "text-pink-500",
+    },
+    {
+      icon: Briefcase,
+      label: t("results.career"),
+      tip: t("teaser.careerTip") || "Good opportunities for growth ahead",
+      tipHindi: "आगे विकास के अच्छे अवसर हैं",
+      color: "text-blue-500",
+    },
+    {
+      icon: Activity,
+      label: t("results.health"),
+      tip: t("teaser.healthTip") || "Focus on mental wellness and rest",
+      tipHindi: "मानसिक स्वास्थ्य और आराम पर ध्यान दें",
+      color: "text-green-500",
+    },
+  ];
+};
+
+const KundaliTeaserResults = ({ details, onReset, lang = "en", kundaliData }: KundaliTeaserResultsProps) => {
   const { t } = useTranslation();
-  const results = generateResults(details);
-  const predictions = generateTeaserPredictions(t);
+  
+  // Use real API data if available, otherwise fallback
+  const results = kundaliData 
+    ? extractFromKundaliData(kundaliData)
+    : generateFallbackResults(details);
+  
+  const predictions = generatePredictions(t, kundaliData);
 
   // Generate WhatsApp link with all details
   const whatsAppLink = getWhatsAppLinkWithDetails({
@@ -230,6 +291,22 @@ const KundaliTeaserResults = ({ details, onReset, lang = "en" }: KundaliTeaserRe
               <p className="text-sm text-muted-foreground">{results.luckyColorHindi}</p>
             </motion.div>
           </div>
+
+          {/* Nakshatra display if available from API */}
+          {results.nakshatra && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.65 }}
+              className="p-4 rounded-xl bg-primary/5 border border-primary/20 text-center"
+            >
+              <p className="text-xs text-muted-foreground mb-1">नक्षत्र (Nakshatra)</p>
+              <p className="text-xl font-semibold text-primary">{results.nakshatra}</p>
+              {results.rashi && (
+                <p className="text-sm text-muted-foreground">राशि: {results.rashi}</p>
+              )}
+            </motion.div>
+          )}
 
           {/* Quick Predictions - Simple One-Liners */}
           <div className="space-y-3">
