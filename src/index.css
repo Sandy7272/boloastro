@@ -1,5 +1,15 @@
+/**
+ * BoloAstro Global Styles - Phase 2: Light Theme
+ * 
+ * Design Philosophy:
+ * - Warm, trustworthy light theme for mass Indian audience
+ * - Cream background (#FFF9F1) with gold accents (#D4AF37)
+ * - Subtle mandala pattern at low opacity
+ * - Large, readable typography
+ */
+
 /* GOOGLE FONTS - Premium Typography */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 /* TAILWIND */
 @tailwind base;
@@ -8,69 +18,100 @@
 
 @layer base {
   :root {
-    /* MINIMAL 3-COLOR PALETTE */
-    /* Deep Charcoal - Background */
-    --background: 220 15% 6%;
-    --foreground: 40 20% 95%;
+    /* ========== LIGHT THEME (DEFAULT) ========== */
+    
+    /* Background - Warm cream */
+    --background: 35 60% 98%;
+    --foreground: 220 25% 10%;
 
-    /* Cards - Subtle lift from background */
-    --card: 220 12% 9%;
-    --card-foreground: 40 20% 95%;
+    /* Cards - Pure white with warmth */
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 10%;
 
-    --popover: 220 12% 9%;
-    --popover-foreground: 40 20% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 10%;
 
-    /* Primary - Royal Gold #d4af37 */
+    /* Primary - Royal Gold #D4AF37 */
     --primary: 43 66% 52%;
-    --primary-foreground: 220 15% 6%;
+    --primary-foreground: 220 25% 10%;
 
-    /* Secondary - Subtle dark */
-    --secondary: 220 12% 12%;
-    --secondary-foreground: 40 20% 95%;
+    /* Secondary - Soft warm gray */
+    --secondary: 35 20% 95%;
+    --secondary-foreground: 220 25% 20%;
 
-    /* Muted - Soft gray */
-    --muted: 220 10% 14%;
-    --muted-foreground: 220 10% 55%;
+    /* Muted - Light warm gray */
+    --muted: 35 15% 93%;
+    --muted-foreground: 220 10% 45%;
 
-    /* Accent - Soft Saffron */
-    --accent: 32 70% 50%;
-    --accent-foreground: 220 15% 6%;
+    /* Accent - Saffron (used sparingly) */
+    --accent: 32 85% 55%;
+    --accent-foreground: 220 25% 10%;
 
-    --destructive: 0 72% 55%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 10% 15%;
-    --input: 220 10% 12%;
+    /* Borders - Subtle warm */
+    --border: 35 20% 88%;
+    --input: 35 15% 92%;
     --ring: 43 66% 52%;
 
     --radius: 0.75rem;
 
-    /* Semantic Colors - ONLY 3 */
+    /* ========== SEMANTIC COLORS ========== */
     --gold: 43 66% 52%;
     --gold-light: 43 70% 62%;
     --gold-dark: 43 60% 42%;
     
-    --saffron: 32 70% 50%;
-    --saffron-light: 32 65% 60%;
-    --saffron-dark: 32 65% 40%;
+    --saffron: 32 85% 55%;
+    --saffron-light: 32 75% 65%;
+    --saffron-dark: 32 75% 45%;
     
-    --charcoal: 220 15% 6%;
-    --charcoal-light: 220 12% 12%;
+    /* Deep charcoal for text */
+    --charcoal: 220 25% 10%;
+    --charcoal-light: 220 15% 25%;
 
-    /* Soft Shadows - Minimal */
+    /* Cream backgrounds */
+    --cream: 35 60% 98%;
+    --cream-dark: 35 40% 94%;
+
+    /* ========== SHADOWS - Soft for light theme ========== */
+    --shadow-sm: 0 1px 3px hsl(220 15% 50% / 0.08);
+    --shadow-md: 0 4px 12px hsl(220 15% 50% / 0.12);
+    --shadow-lg: 0 8px 24px hsl(220 15% 50% / 0.15);
+    --shadow-gold: 0 4px 20px hsl(43 66% 52% / 0.2);
+
+    /* Sidebar (same as main for consistency) */
+    --sidebar-background: 35 60% 98%;
+    --sidebar-foreground: 220 25% 10%;
+    --sidebar-primary: 43 66% 52%;
+    --sidebar-primary-foreground: 220 25% 10%;
+    --sidebar-accent: 35 20% 95%;
+    --sidebar-accent-foreground: 220 25% 20%;
+    --sidebar-border: 35 20% 88%;
+    --sidebar-ring: 43 66% 52%;
+  }
+
+  /* Optional dark mode class - not default */
+  .dark {
+    --background: 220 15% 6%;
+    --foreground: 40 20% 95%;
+    --card: 220 12% 9%;
+    --card-foreground: 40 20% 95%;
+    --popover: 220 12% 9%;
+    --popover-foreground: 40 20% 95%;
+    --primary: 43 66% 52%;
+    --primary-foreground: 220 15% 6%;
+    --secondary: 220 12% 12%;
+    --secondary-foreground: 40 20% 95%;
+    --muted: 220 10% 14%;
+    --muted-foreground: 220 10% 55%;
+    --accent: 32 70% 50%;
+    --accent-foreground: 220 15% 6%;
+    --border: 220 10% 15%;
+    --input: 220 10% 12%;
     --shadow-sm: 0 2px 8px hsl(220 15% 3% / 0.3);
     --shadow-md: 0 4px 16px hsl(220 15% 3% / 0.4);
     --shadow-lg: 0 8px 32px hsl(220 15% 3% / 0.5);
-    --shadow-gold: 0 4px 20px hsl(43 66% 52% / 0.15);
-
-    --sidebar-background: 220 15% 6%;
-    --sidebar-foreground: 40 20% 95%;
-    --sidebar-primary: 43 66% 52%;
-    --sidebar-primary-foreground: 220 15% 6%;
-    --sidebar-accent: 220 12% 12%;
-    --sidebar-accent-foreground: 40 20% 95%;
-    --sidebar-border: 220 10% 15%;
-    --sidebar-ring: 43 66% 52%;
   }
 }
 
@@ -86,17 +127,28 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
-    background: hsl(var(--background));
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     line-height: 1.6;
     letter-spacing: 0.01em;
+    
+    /* Subtle mandala pattern using radial gradients */
+    background-color: hsl(var(--background));
+    background-image: 
+      /* Center mandala-like radial pattern */
+      radial-gradient(circle at 50% 0%, hsl(var(--gold) / 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 0% 50%, hsl(var(--saffron) / 0.02) 0%, transparent 40%),
+      radial-gradient(circle at 100% 50%, hsl(var(--saffron) / 0.02) 0%, transparent 40%),
+      radial-gradient(circle at 50% 100%, hsl(var(--gold) / 0.03) 0%, transparent 50%);
+    background-attachment: fixed;
   }
 
+  /* Headings - Playfair Display for elegance */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
     letter-spacing: -0.02em;
     font-weight: 600;
     line-height: 1.2;
+    color: hsl(var(--foreground));
   }
 
   p {
@@ -105,7 +157,7 @@
 }
 
 @layer components {
-  /* Premium Text Gradient - Gold only */
+  /* ========== GOLD TEXT GRADIENT ========== */
   .text-gradient-gold {
     background: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-light)) 100%);
     -webkit-background-clip: text;
@@ -113,19 +165,36 @@
     background-clip: text;
   }
 
-  /* Clean Card Styles */
+  /* Saffron gradient text */
+  .text-gradient-saffron {
+    background: linear-gradient(135deg, hsl(var(--saffron)) 0%, hsl(var(--gold)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ========== CARD STYLES ========== */
   .card-minimal {
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
   }
 
   .card-minimal:hover {
-    border-color: hsl(var(--gold) / 0.3);
+    border-color: hsl(var(--gold) / 0.4);
     box-shadow: var(--shadow-gold);
   }
 
-  /* Premium Button */
+  /* Card with gold border accent */
+  .card-gold-border {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--gold) / 0.3);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ========== BUTTON STYLES ========== */
+  /* Primary gold button */
   .btn-gold {
     background: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--saffron)) 100%);
     color: hsl(var(--charcoal));
@@ -138,7 +207,56 @@
     transform: translateY(-1px);
   }
 
-  /* Subtle Hover Lift */
+  .btn-gold:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Outline gold button */
+  .btn-gold-outline {
+    background: transparent;
+    border: 2px solid hsl(var(--gold));
+    color: hsl(var(--gold-dark));
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .btn-gold-outline:hover {
+    background: hsl(var(--gold) / 0.1);
+  }
+
+  /* ========== DECORATIVE ELEMENTS ========== */
+  /* Section divider with gold gradient */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, hsl(var(--gold) / 0.4) 50%, transparent 100%);
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  /* Mandala-inspired decorative circle */
+  .mandala-circle {
+    position: relative;
+  }
+
+  .mandala-circle::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      hsl(var(--gold) / 0.3),
+      hsl(var(--saffron) / 0.2),
+      hsl(var(--gold) / 0.3),
+      hsl(var(--saffron) / 0.2),
+      hsl(var(--gold) / 0.3)
+    );
+    z-index: -1;
+  }
+
+  /* ========== HOVER EFFECTS ========== */
   .hover-lift {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
@@ -148,28 +266,33 @@
     box-shadow: var(--shadow-md);
   }
 
-  /* Section Divider - Minimal */
-  .section-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, hsl(var(--gold) / 0.3) 50%, transparent 100%);
-    max-width: 200px;
-    margin: 0 auto;
-  }
-
-  /* Focus States */
+  /* ========== FOCUS STATES ========== */
   .focus-gold:focus {
     outline: none;
-    box-shadow: 0 0 0 2px hsl(var(--gold) / 0.3);
+    box-shadow: 0 0 0 3px hsl(var(--gold) / 0.3);
+  }
+
+  /* ========== NORTH INDIAN CHART STYLES ========== */
+  .north-indian-chart {
+    --chart-border: hsl(var(--gold));
+    --chart-bg: hsl(var(--card));
+    --chart-text: hsl(var(--foreground));
+  }
+
+  /* ========== PANCHANG CARD ========== */
+  .panchang-highlight {
+    background: linear-gradient(135deg, hsl(var(--saffron) / 0.15) 0%, hsl(var(--saffron) / 0.05) 100%);
+    border: 1px solid hsl(var(--saffron) / 0.3);
   }
 }
 
-/* Premium Scrollbar - Minimal */
+/* ========== SCROLLBAR - Light Theme ========== */
 ::-webkit-scrollbar { 
   width: 8px; 
 }
 
 ::-webkit-scrollbar-track { 
-  background: hsl(var(--charcoal)); 
+  background: hsl(var(--cream-dark)); 
 }
 
 ::-webkit-scrollbar-thumb {
@@ -181,17 +304,24 @@
   background: hsl(var(--gold) / 0.6);
 }
 
-/* Selection Styling */
+/* ========== TEXT SELECTION ========== */
 ::selection {
-  background: hsl(var(--gold) / 0.3);
+  background: hsl(var(--gold) / 0.25);
   color: hsl(var(--foreground));
 }
 
-/* Reduced Motion */
+/* ========== REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========== PRINT STYLES ========== */
+@media print {
+  body {
+    background: white !important;
   }
 }
