@@ -32,8 +32,15 @@ interface ShlokaRotatorProps {
   variant?: "default" | "compact" | "card";
 }
 
-// Collection of auspicious shlokas
+// Collection of auspicious shlokas - famous verses for loading states
 const SHLOKAS: Shloka[] = [
+  {
+    sanskrit: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन",
+    transliteration: "Karmanye Vadhikaraste Ma Phaleshu Kadachana",
+    english: "You have the right to work, but never to its fruits",
+    hindi: "कर्म करो, फल की चिंता मत करो",
+    source: "Bhagavad Gita 2.47",
+  },
   {
     sanskrit: "सिद्धिर्भवतु कर्मणि",
     transliteration: "Siddhir Bhavatu Karmani",
@@ -44,7 +51,7 @@ const SHLOKAS: Shloka[] = [
   {
     sanskrit: "ॐ गं गणपतये नमः",
     transliteration: "Om Gam Ganapataye Namaha",
-    english: "Salutations to Lord Ganesha, the remover of obstacles",
+    english: "Salutations to Lord Ganesha, remover of obstacles",
     hindi: "विघ्नहर्ता गणेश जी को नमन",
     source: "Ganesha Mantra",
   },
@@ -56,18 +63,18 @@ const SHLOKAS: Shloka[] = [
     source: "Brihadaranyaka Upanishad",
   },
   {
-    sanskrit: "असतो मा सद्गमय",
-    transliteration: "Asato Ma Sadgamaya",
-    english: "Lead me from untruth to truth",
-    hindi: "असत्य से सत्य की ओर ले चलो",
-    source: "Brihadaranyaka Upanishad",
-  },
-  {
     sanskrit: "योगः कर्मसु कौशलम्",
     transliteration: "Yogah Karmasu Kaushalam",
     english: "Yoga is skill in action",
     hindi: "योग कर्मों में कुशलता है",
     source: "Bhagavad Gita 2.50",
+  },
+  {
+    sanskrit: "विद्या ददाति विनयं",
+    transliteration: "Vidya Dadati Vinayam",
+    english: "Knowledge gives humility",
+    hindi: "विद्या विनम्रता देती है",
+    source: "Hitopadesha",
   },
 ];
 
