@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-// Translation resources
+// Translation resources - Phase 3: Full localization for EN, HI, MR
 const resources = {
   en: {
     translation: {
@@ -188,14 +188,39 @@ const resources = {
         q7: "Do I need to download any app?",
         a7: "No! BoloAstro works entirely on WhatsApp. There's no app to download. Just start chatting and get your readings instantly.",
       },
-      // Footer
+      // Footer - Phase 3: Complete footer translations
       footer: {
         tagline: "Your trusted AI-powered Vedic astrology companion.",
         quickLinks: "Quick Links",
+        services: "Services",
         legal: "Legal",
         contact: "Contact",
         copyright: "All rights reserved.",
         startChat: "Start WhatsApp Chat",
+        ctaTitle: "Ready to Know Your Destiny?",
+        ctaSubtitle: "Start your astrology journey today. Get your free kundali and personalized guidance.",
+        ctaButton: "Generate Free Kundali",
+        freeKundali: "Free Kundali",
+        dailyHoroscope: "Daily Horoscope",
+        marriagePrediction: "Marriage Prediction",
+        careerGuidance: "Career Guidance",
+        privacy: "Privacy",
+        terms: "Terms",
+        refund: "Refund",
+      },
+      // Panchang - Phase 3: Daily Panchang translations
+      panchang: {
+        title: "Today's Panchang",
+        tithi: "Tithi",
+        nakshatra: "Nakshatra",
+        yoga: "Yoga",
+        sun: "Sun",
+        rahuKaal: "Rahu Kaal (Inauspicious Period)",
+        rahuKaalNote: "Avoid starting new ventures during this time",
+      },
+      // Shloka - Phase 3: Shloka rotator translations
+      shloka: {
+        loading: "Reading the cosmic patterns...",
       },
       // Common
       common: {
@@ -214,6 +239,13 @@ const resources = {
         faq: "FAQ",
         chatNow: "Chat Now",
         chatOnWhatsApp: "Chat on WhatsApp",
+      },
+      // Language - Phase 3
+      language: {
+        select: "Select Language",
+        en: "English",
+        hi: "Hindi",
+        mr: "Marathi",
       },
     },
   },
@@ -401,6 +433,45 @@ const resources = {
         chatNow: "अभी चैट करें",
         chatOnWhatsApp: "WhatsApp पर चैट करें",
       },
+      // Footer - Phase 3: Hindi footer
+      footer: {
+        tagline: "आपका विश्वसनीय AI-संचालित वैदिक ज्योतिष साथी।",
+        quickLinks: "त्वरित लिंक",
+        services: "सेवाएं",
+        legal: "कानूनी",
+        contact: "संपर्क",
+        copyright: "सर्वाधिकार सुरक्षित।",
+        startChat: "WhatsApp चैट शुरू करें",
+        ctaTitle: "अपनी किस्मत जानने को तैयार?",
+        ctaSubtitle: "आज ही अपनी ज्योतिष यात्रा शुरू करें। मुफ्त कुंडली और व्यक्तिगत मार्गदर्शन प्राप्त करें।",
+        ctaButton: "मुफ्त कुंडली बनाएं",
+        freeKundali: "मुफ्त कुंडली",
+        dailyHoroscope: "दैनिक राशिफल",
+        marriagePrediction: "विवाह भविष्यवाणी",
+        careerGuidance: "करियर मार्गदर्शन",
+        privacy: "गोपनीयता",
+        terms: "नियम",
+        refund: "वापसी",
+      },
+      // Panchang - Phase 3: Hindi Panchang
+      panchang: {
+        title: "आज का पंचांग",
+        tithi: "तिथि",
+        nakshatra: "नक्षत्र",
+        yoga: "योग",
+        sun: "सूर्य",
+        rahuKaal: "राहु काल (अशुभ समय)",
+        rahuKaalNote: "इस समय नए कार्य शुरू करने से बचें",
+      },
+      shloka: {
+        loading: "ब्रह्मांडीय पैटर्न पढ़ रहे हैं...",
+      },
+      language: {
+        select: "भाषा चुनें",
+        en: "अंग्रेज़ी",
+        hi: "हिंदी",
+        mr: "मराठी",
+      },
     },
   },
   mr: {
@@ -586,6 +657,45 @@ const resources = {
         faq: "प्रश्न",
         chatNow: "आता चॅट करा",
         chatOnWhatsApp: "WhatsApp वर चॅट करा",
+      },
+      // Footer - Phase 3: Marathi footer
+      footer: {
+        tagline: "तुमचा विश्वसनीय AI-संचालित वैदिक ज्योतिष साथी।",
+        quickLinks: "द्रुत लिंक",
+        services: "सेवा",
+        legal: "कायदेशीर",
+        contact: "संपर्क",
+        copyright: "सर्व हक्क राखीव.",
+        startChat: "WhatsApp चॅट सुरू करा",
+        ctaTitle: "तुमचे नशीब जाणून घ्यायला तयार?",
+        ctaSubtitle: "आजच तुमचा ज्योतिष प्रवास सुरू करा. मोफत कुंडली आणि वैयक्तिक मार्गदर्शन मिळवा.",
+        ctaButton: "मोफत कुंडली बनवा",
+        freeKundali: "मोफत कुंडली",
+        dailyHoroscope: "दैनिक राशीफल",
+        marriagePrediction: "विवाह भविष्य",
+        careerGuidance: "करिअर मार्गदर्शन",
+        privacy: "गोपनीयता",
+        terms: "अटी",
+        refund: "परतावा",
+      },
+      // Panchang - Phase 3: Marathi Panchang
+      panchang: {
+        title: "आजचा पंचांग",
+        tithi: "तिथी",
+        nakshatra: "नक्षत्र",
+        yoga: "योग",
+        sun: "सूर्य",
+        rahuKaal: "राहू काळ (अशुभ वेळ)",
+        rahuKaalNote: "या वेळी नवीन कार्य सुरू करणे टाळा",
+      },
+      shloka: {
+        loading: "ब्रह्मांडीय नमुने वाचत आहे...",
+      },
+      language: {
+        select: "भाषा निवडा",
+        en: "इंग्रजी",
+        hi: "हिंदी",
+        mr: "मराठी",
       },
     },
   },
