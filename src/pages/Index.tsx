@@ -1,12 +1,17 @@
 /**
- * Index Page - Phase 4: SEO Enhanced
+ * Index Page - Phase 3: Reorganized Page Flow
  * 
- * Main landing page for BoloAstro with:
- * - Full SEO meta tags via SEO component
- * - Organization + SoftwareApplication structured data
- * - Hero section with form
- * - Daily Panchang (Phase 2)
- * - How it works, Services, Trust, Testimonials, Pricing, FAQ sections
+ * Page order (per brief):
+ * 1. Hero (with form)
+ * 2. Trust Section
+ * 3. Daily Panchang
+ * 4. How It Works
+ * 5. Services
+ * 6. Testimonials
+ * 7. Pricing
+ * 8. FAQ
+ * 9. Final WhatsApp CTA
+ * 10. Footer
  */
 
 import Navbar from "@/components/Navbar";
@@ -15,10 +20,10 @@ import TrustSection from "@/components/TrustSection";
 import DailyPanchang from "@/components/DailyPanchang";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import ServicesSection from "@/components/ServicesSection";
-import WhyBoloAstroSection from "@/components/WhyBoloAstroSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
+import FinalCTASection from "@/components/FinalCTASection";
 import Footer from "@/components/Footer";
 import SEO, { SEO_CONFIGS } from "@/components/SEO";
 import SkipToContent from "@/components/SkipToContent";
@@ -114,20 +119,20 @@ const Index = () => {
         {/* 5. Services */}
         <ServicesSection />
         
-        {/* 6. Why trust us (detailed) */}
-        <WhyBoloAstroSection />
-        
-        {/* 7. Testimonials */}
+        {/* 6. Testimonials */}
         <TestimonialsSection />
         
-        {/* 8. Pricing */}
+        {/* 7. Pricing */}
         <PricingSection />
         
-        {/* 9. FAQ */}
+        {/* 8. FAQ */}
         <FAQSection />
+        
+        {/* 9. Final WhatsApp CTA */}
+        <FinalCTASection />
       </main>
       
-      {/* 8. Footer with Final CTA */}
+      {/* 10. Footer */}
       <Footer />
     </div>
   );
