@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import KundaliTeaserResults from "@/components/KundaliTeaserResults";
+import OmLoader from "@/components/OmLoader";
 import { trackFormSubmit } from "@/lib/analytics";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
@@ -66,6 +67,7 @@ const HeroSection = () => {
   
   // Results display state
   const [showResults, setShowResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
 
   // Load saved data from sessionStorage on mount
@@ -168,9 +170,15 @@ const HeroSection = () => {
     // Save to sessionStorage for persistence within session
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
     
-    // Show teaser results instead of redirecting to WhatsApp
+    // Show loading state with Om animation
+    setIsLoading(true);
     setSubmittedData(formData);
-    setShowResults(true);
+    
+    // Simulate kundali generation time (2-3 seconds for spiritual effect)
+    setTimeout(() => {
+      setIsLoading(false);
+      setShowResults(true);
+    }, 2500);
   };
 
   // Reset to show form again (Edit details)
@@ -210,7 +218,24 @@ const HeroSection = () => {
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <AnimatePresence mode="wait">
-          {showResults && submittedData ? (
+          {isLoading ? (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.4 }}
+              className="flex items-center justify-center min-h-[60vh]"
+              role="status"
+              aria-label="Generating your Kundali"
+            >
+              <OmLoader 
+                size="lg" 
+                message="Kundali taiyaar ho rahi hai..."
+                showShlokas={true}
+              />
+            </motion.div>
+          ) : showResults && submittedData ? (
             <motion.div
               key="results"
               initial={{ opacity: 0, y: 20 }}
