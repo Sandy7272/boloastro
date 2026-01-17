@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Clock, MapPin, Sparkles, ArrowRight, Check } from "lucide-react";
+import { Calendar, Clock, MapPin, Sparkles, ArrowRight, Check, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 
 interface BirthDetails {
   name: string;
@@ -18,8 +19,12 @@ interface BirthDetailsFormProps {
   isLoading?: boolean;
 }
 
+const STORAGE_KEY = "boloastro_birth_details";
+
 const BirthDetailsForm = ({ onSubmit, isLoading = false }: BirthDetailsFormProps) => {
+  const { toast } = useToast();
   const [step, setStep] = useState(1);
+  const [hasSavedData, setHasSavedData] = useState(false);
   const [details, setDetails] = useState<BirthDetails>({
     name: "",
     date: "",
@@ -28,6 +33,28 @@ const BirthDetailsForm = ({ onSubmit, isLoading = false }: BirthDetailsFormProps
   });
 
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  // Load saved data on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsedDetails = JSON.parse(saved);
+        setDetails(parsedDetails);
+        setHasSavedData(true);
+      } catch (e) {
+        console.error("Failed to parse saved birth details");
+      }
+    }
+  }, []);
+
+  const clearSavedData = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setDetails({ name: "", date: "", time: "", place: "" });
+    setHasSavedData(false);
+    setStep(1);
+    toast({ title: "Saved data cleared", description: "Your birth details have been removed." });
+  };
 
   const updateField = (field: keyof BirthDetails, value: string) => {
     setDetails((prev) => ({ ...prev, [field]: value }));
@@ -56,6 +83,9 @@ const BirthDetailsForm = ({ onSubmit, isLoading = false }: BirthDetailsFormProps
     if (step < 4 && isStepValid(step)) {
       setStep(step + 1);
     } else if (step === 4 && isStepValid(4)) {
+      // Save to localStorage before submitting
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(details));
+      toast({ title: "Details saved!", description: "Your birth details have been saved for future use." });
       onSubmit(details);
     }
   };
@@ -74,12 +104,21 @@ const BirthDetailsForm = ({ onSubmit, isLoading = false }: BirthDetailsFormProps
   return (
     <Card variant="glass" className="w-full max-w-md mx-auto overflow-hidden">
       <CardHeader className="pb-4">
-        <CardTitle className="text-2xl font-display text-center">
-          Generate Your <span className="text-gradient-saffron">Kundali</span>
-        </CardTitle>
-        <CardDescription className="text-center">
-          Enter your birth details for accurate predictions
-        </CardDescription>
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <CardTitle className="text-2xl font-display text-center">
+              Generate Your <span className="text-gradient-saffron">Kundali</span>
+            </CardTitle>
+            <CardDescription className="text-center">
+              {hasSavedData ? `Welcome back, ${details.name}!` : "Enter your birth details for accurate predictions"}
+            </CardDescription>
+          </div>
+          {hasSavedData && (
+            <Button variant="ghost" size="icon" onClick={clearSavedData} className="text-muted-foreground hover:text-destructive">
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
       </CardHeader>
 
       <CardContent className="space-y-6">
