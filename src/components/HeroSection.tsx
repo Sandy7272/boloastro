@@ -27,9 +27,6 @@ import { useGenerateKundali } from "@/hooks/useGenerateKundali";
 import { useToast } from "@/hooks/use-toast";
 import type { KundaliData } from "@/pdf/types";
 
-// Storage key for sessionStorage persistence
-const STORAGE_KEY = "boloastro_birth_details";
-
 interface FormData {
   name: string;
   dateOfBirth: string;
@@ -76,38 +73,6 @@ const HeroSection = () => {
   const { mutateAsync: generateKundali, isPending: isLoading } = useGenerateKundali();
   const { toast } = useToast();
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
-
-  // Load saved data from sessionStorage on mount
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed: FormData = JSON.parse(saved);
-        setFormData(parsed);
-        
-        // Validate loaded data
-        setValidation({
-          name: { isValid: parsed.name.trim().length >= 2, touched: true },
-          dateOfBirth: { isValid: !!parsed.dateOfBirth, touched: true },
-          timeOfBirth: { isValid: !!parsed.timeOfBirth, touched: true },
-          placeOfBirth: { isValid: parsed.placeOfBirth.trim().length >= 2, touched: true },
-        });
-        
-        // If all fields are valid, show results automatically
-        const allValid = parsed.name.trim().length >= 2 && 
-                        !!parsed.dateOfBirth && 
-                        !!parsed.timeOfBirth && 
-                        parsed.placeOfBirth.trim().length >= 2;
-        
-        if (allValid) {
-          setSubmittedData(parsed);
-          setShowResults(true);
-        }
-      }
-    } catch (e) {
-      console.error("Failed to load saved birth details:", e);
-    }
-  }, []);
 
   // Validate a single field
   const validateField = (field: ValidatableField, value: string): boolean => {
@@ -173,9 +138,6 @@ const HeroSection = () => {
 
     // Phase 5: Track form submission
     trackFormSubmit(true, i18n.language);
-
-    // Save to sessionStorage for persistence within session
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
     
     setSubmittedData(formData);
     
