@@ -13,14 +13,15 @@
  */
 
 import { useState, useEffect } from "react";
-import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import KundaliTeaserResults from "@/components/KundaliTeaserResults";
 import { trackFormSubmit } from "@/lib/analytics";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 // Storage key for sessionStorage persistence
 const STORAGE_KEY = "boloastro_birth_details";
@@ -29,6 +30,8 @@ interface FormData {
   name: string;
   dateOfBirth: string;
   timeOfBirth: string;
+  timeFormat: "12h" | "24h";
+  timePeriod: "AM" | "PM";
   placeOfBirth: string;
 }
 
@@ -46,16 +49,20 @@ const HeroSection = () => {
     name: "",
     dateOfBirth: "",
     timeOfBirth: "",
+    timeFormat: "12h",
+    timePeriod: "AM",
     placeOfBirth: "",
   });
   
-  // Validation state per field
-  const [validation, setValidation] = useState<Record<keyof FormData, ValidationState>>({
+  // Validation state per field (only for required text fields)
+  const [validation, setValidation] = useState<Record<"name" | "dateOfBirth" | "timeOfBirth" | "placeOfBirth", ValidationState>>({
     name: { isValid: false, touched: false },
     dateOfBirth: { isValid: false, touched: false },
     timeOfBirth: { isValid: false, touched: false },
     placeOfBirth: { isValid: false, touched: false },
   });
+  
+  type ValidatableField = "name" | "dateOfBirth" | "timeOfBirth" | "placeOfBirth";
   
   // Results display state
   const [showResults, setShowResults] = useState(false);
@@ -94,7 +101,7 @@ const HeroSection = () => {
   }, []);
 
   // Validate a single field
-  const validateField = (field: keyof FormData, value: string): boolean => {
+  const validateField = (field: ValidatableField, value: string): boolean => {
     switch (field) {
       case "name":
         return value.trim().length >= 2;
@@ -113,17 +120,18 @@ const HeroSection = () => {
   const handleFieldChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     
-    // Update validation if field was already touched
-    if (validation[field].touched) {
+    // Update validation if field was already touched (only for validatable fields)
+    const validatableFields: ValidatableField[] = ["name", "dateOfBirth", "timeOfBirth", "placeOfBirth"];
+    if (validatableFields.includes(field as ValidatableField) && validation[field as ValidatableField]?.touched) {
       setValidation(prev => ({
         ...prev,
-        [field]: { isValid: validateField(field, value), touched: true }
+        [field]: { isValid: validateField(field as ValidatableField, value), touched: true }
       }));
     }
   };
 
   // Handle field blur for validation
-  const handleFieldBlur = (field: keyof FormData) => {
+  const handleFieldBlur = (field: ValidatableField) => {
     setValidation(prev => ({
       ...prev,
       [field]: { isValid: validateField(field, formData[field]), touched: true }
@@ -132,8 +140,9 @@ const HeroSection = () => {
 
   // Check if entire form is valid
   const isFormValid = (): boolean => {
-    return Object.keys(formData).every(field => 
-      validateField(field as keyof FormData, formData[field as keyof FormData])
+    const validatableFields: ValidatableField[] = ["name", "dateOfBirth", "timeOfBirth", "placeOfBirth"];
+    return validatableFields.every(field => 
+      validateField(field, formData[field])
     );
   };
 
@@ -171,7 +180,7 @@ const HeroSection = () => {
   };
 
   // Get validation icon for a field
-  const getValidationIcon = (field: keyof FormData) => {
+  const getValidationIcon = (field: ValidatableField) => {
     if (!validation[field].touched) return null;
     
     return validation[field].isValid ? (
@@ -182,8 +191,8 @@ const HeroSection = () => {
   };
 
   // Get input border class based on validation
-  const getInputClass = (field: keyof FormData): string => {
-    const base = "h-12 bg-background focus:border-primary text-base";
+  const getInputClass = (field: ValidatableField): string => {
+    const base = "h-14 bg-background focus:border-primary text-lg";
     if (!validation[field].touched) return `${base} border-border`;
     return validation[field].isValid 
       ? `${base} border-green-500 focus:border-green-500` 
@@ -237,13 +246,15 @@ const HeroSection = () => {
                   <span className="text-sm text-primary font-medium">{t("hero.badge")}</span>
                 </div>
                 
-                {/* Headline */}
+                {/* Headline - Simplified for mass users */}
                 <header className="space-y-4">
-                  <h1 id="hero-heading" className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-foreground leading-tight">
-                    {t("hero.headline")}{" "}
-                    <span className="text-gradient-gold">{t("hero.headlineHighlight")}</span>
+                  <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-foreground leading-tight">
+                    {t("hero.headline")}
                   </h1>
-                  <p className="text-xl text-muted-foreground max-w-lg">
+                  <p className="text-xl sm:text-2xl text-primary font-medium">
+                    {t("hero.headlineHighlight")}
+                  </p>
+                  <p className="text-lg text-muted-foreground max-w-lg">
                     {t("hero.subheadline")}
                   </p>
                 </header>
@@ -303,14 +314,14 @@ const HeroSection = () => {
                     
                     {/* Name Field */}
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="text-sm font-medium flex items-center justify-between">
+                      <Label htmlFor="name" className="text-base font-medium flex items-center justify-between">
                         <span>{t("form.fullName")} <span className="text-red-500" aria-hidden="true">*</span></span>
                         {getValidationIcon("name")}
                       </Label>
                       <Input
                         id="name"
                         type="text"
-                        placeholder="Apna naam / अपना नाम"
+                        placeholder={t("form.namePlaceholder")}
                         value={formData.name}
                         onChange={(e) => handleFieldChange("name", e.target.value)}
                         onBlur={() => handleFieldBlur("name")}
@@ -322,13 +333,13 @@ const HeroSection = () => {
                         aria-describedby={validation.name.touched && !validation.name.isValid ? "name-error" : undefined}
                       />
                       {validation.name.touched && !validation.name.isValid && (
-                        <p id="name-error" className="text-xs text-red-500" role="alert">{t("form.nameError") || "कृपया अपना नाम दर्ज करें (Please enter your name)"}</p>
+                        <p id="name-error" className="text-sm text-red-500" role="alert">{t("form.nameError")}</p>
                       )}
                     </div>
 
                     {/* Date of Birth Field */}
                     <div className="space-y-2">
-                      <Label htmlFor="dob" className="text-sm font-medium flex items-center justify-between">
+                      <Label htmlFor="dob" className="text-base font-medium flex items-center justify-between">
                         <span>{t("form.dateOfBirth")} <span className="text-red-500" aria-hidden="true">*</span></span>
                         {getValidationIcon("dateOfBirth")}
                       </Label>
@@ -346,43 +357,77 @@ const HeroSection = () => {
                         aria-describedby={validation.dateOfBirth.touched && !validation.dateOfBirth.isValid ? "dob-error" : undefined}
                       />
                       {validation.dateOfBirth.touched && !validation.dateOfBirth.isValid && (
-                        <p id="dob-error" className="text-xs text-red-500" role="alert">{t("form.dobError") || "जन्म तिथि चुनें (Select date of birth)"}</p>
+                        <p id="dob-error" className="text-sm text-red-500" role="alert">{t("form.dobError")}</p>
                       )}
                     </div>
 
-                    {/* Time of Birth Field */}
+                    {/* Time of Birth Field with AM/PM Toggle */}
                     <div className="space-y-2">
-                      <Label htmlFor="tob" className="text-sm font-medium flex items-center justify-between">
+                      <Label htmlFor="tob" className="text-base font-medium flex items-center justify-between">
                         <span>{t("form.timeOfBirth")} <span className="text-red-500" aria-hidden="true">*</span></span>
                         {getValidationIcon("timeOfBirth")}
                       </Label>
-                      <Input
-                        id="tob"
-                        type="time"
-                        value={formData.timeOfBirth}
-                        onChange={(e) => handleFieldChange("timeOfBirth", e.target.value)}
-                        onBlur={() => handleFieldBlur("timeOfBirth")}
-                        className={getInputClass("timeOfBirth")}
-                        required
-                        aria-required="true"
-                        aria-invalid={validation.timeOfBirth.touched && !validation.timeOfBirth.isValid}
-                        aria-describedby="tob-hint"
-                      />
+                      <div className="flex gap-2">
+                        <Input
+                          id="tob"
+                          type="time"
+                          value={formData.timeOfBirth}
+                          onChange={(e) => handleFieldChange("timeOfBirth", e.target.value)}
+                          onBlur={() => handleFieldBlur("timeOfBirth")}
+                          className={`flex-1 ${getInputClass("timeOfBirth")}`}
+                          required
+                          aria-required="true"
+                          aria-invalid={validation.timeOfBirth.touched && !validation.timeOfBirth.isValid}
+                          aria-describedby="tob-hint"
+                        />
+                        {/* Time Format Toggle */}
+                        <ToggleGroup 
+                          type="single" 
+                          value={formData.timeFormat}
+                          onValueChange={(value) => value && setFormData(prev => ({ ...prev, timeFormat: value as "12h" | "24h" }))}
+                          className="border border-border rounded-lg"
+                        >
+                          <ToggleGroupItem value="12h" className="px-3 h-14 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
+                            12H
+                          </ToggleGroupItem>
+                          <ToggleGroupItem value="24h" className="px-3 h-14 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
+                            24H
+                          </ToggleGroupItem>
+                        </ToggleGroup>
+                      </div>
+                      {formData.timeFormat === "12h" && formData.timeOfBirth && (
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-muted-foreground" />
+                          <ToggleGroup 
+                            type="single" 
+                            value={formData.timePeriod}
+                            onValueChange={(value) => value && setFormData(prev => ({ ...prev, timePeriod: value as "AM" | "PM" }))}
+                            className="border border-border rounded-lg"
+                          >
+                            <ToggleGroupItem value="AM" className="px-4 h-10 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
+                              AM (सुबह)
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="PM" className="px-4 h-10 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
+                              PM (शाम)
+                            </ToggleGroupItem>
+                          </ToggleGroup>
+                        </div>
+                      )}
                       <p id="tob-hint" className="text-xs text-muted-foreground">
-                        {t("form.timeHint") || "Tip: Check birth certificate / जन्म प्रमाणपत्र देखें"}
+                        {t("form.timeHint")}
                       </p>
                     </div>
 
                     {/* Place of Birth Field */}
                     <div className="space-y-2">
-                      <Label htmlFor="pob" className="text-sm font-medium flex items-center justify-between">
+                      <Label htmlFor="pob" className="text-base font-medium flex items-center justify-between">
                         <span>{t("form.placeOfBirth")} <span className="text-red-500" aria-hidden="true">*</span></span>
                         {getValidationIcon("placeOfBirth")}
                       </Label>
                       <Input
                         id="pob"
                         type="text"
-                        placeholder="City, State / शहर, राज्य"
+                        placeholder={t("form.placePlaceholder")}
                         value={formData.placeOfBirth}
                         onChange={(e) => handleFieldChange("placeOfBirth", e.target.value)}
                         onBlur={() => handleFieldBlur("placeOfBirth")}
@@ -394,7 +439,7 @@ const HeroSection = () => {
                         aria-describedby={validation.placeOfBirth.touched && !validation.placeOfBirth.isValid ? "pob-error" : undefined}
                       />
                       {validation.placeOfBirth.touched && !validation.placeOfBirth.isValid && (
-                        <p id="pob-error" className="text-xs text-red-500" role="alert">{t("form.placeError") || "जन्म स्थान दर्ज करें (Enter place of birth)"}</p>
+                        <p id="pob-error" className="text-sm text-red-500" role="alert">{t("form.placeError")}</p>
                       )}
                     </div>
 
@@ -402,18 +447,18 @@ const HeroSection = () => {
                     <Button 
                       type="submit" 
                       size="lg" 
-                      className="w-full btn-gold text-lg py-6 rounded-xl gap-2 mt-6 focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                      className="w-full btn-gold text-xl py-7 rounded-xl gap-3 mt-6 focus:ring-2 focus:ring-primary focus:ring-offset-2"
                       disabled={!isFormValid()}
                       aria-disabled={!isFormValid()}
                     >
-                      <MessageCircle className="w-5 h-5" aria-hidden="true" />
+                      <MessageCircle className="w-6 h-6" aria-hidden="true" />
                       {t("form.submit")}
-                      <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                      <ArrowRight className="w-6 h-6" aria-hidden="true" />
                     </Button>
                   </form>
 
-                  <p className="text-xs text-muted-foreground text-center mt-6">
-                    {t("hero.dataSecure")}
+                  <p className="text-sm text-muted-foreground text-center mt-6">
+                    🔒 {t("hero.dataSecure")}
                   </p>
                 </div>
               </motion.div>
