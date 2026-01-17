@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlanetaryIcon, PLANETS, ZODIAC_SIGNS } from "@/components/ui/planetary-icons";
 import { getWhatsAppLink, WHATSAPP_MESSAGES } from "@/config/constants";
-
+import NorthIndianChart from "@/components/NorthIndianChart";
 interface BirthDetails {
   name: string;
   date: string;
@@ -129,6 +129,31 @@ const KundaliResults = ({ details, onReset }: KundaliResultsProps) => {
         </CardHeader>
 
         <CardContent className="relative space-y-6">
+          {/* North Indian Lagna Chart */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.25 }}
+            className="flex justify-center"
+          >
+            <NorthIndianChart
+              planets={[
+                { house: 1, label: "As" },
+                { house: 1, label: "Su" },
+                { house: 2, label: "Me" },
+                { house: 4, label: "Ve" },
+                { house: 5, label: "Ma", isRetrograde: true },
+                { house: 7, label: "Mo" },
+                { house: 9, label: "Ju" },
+                { house: 10, label: "Sa" },
+                { house: 11, label: "Ra" },
+                { house: 5, label: "Ke" },
+              ]}
+              size={280}
+              title="Lagna Kundali"
+            />
+          </motion.div>
+
           {/* Quick Insights Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {quickInsights.map((insight, i) => (
