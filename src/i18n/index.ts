@@ -711,6 +711,12 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    // Critical for real-time language switching without page refresh
+    react: {
+      useSuspense: false,
+      bindI18n: 'languageChanged loaded',
+      bindI18nStore: 'added removed',
+    },
   });
 
 // Function to get and set saved language (called after React mounts)

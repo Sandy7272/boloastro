@@ -38,15 +38,8 @@ const LanguageToggle = ({ className = "" }: LanguageToggleProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   
-  const [currentLang, setCurrentLang] = useState<Language>(() => {
-    const saved = localStorage.getItem("boloastro_language");
-    return (saved as Language) || "en";
-  });
-
-  // Sync with i18n on mount
-  useEffect(() => {
-    i18n.changeLanguage(currentLang);
-  }, [currentLang, i18n]);
+  // Use i18n.language directly as single source of truth
+  const currentLang = (i18n.language as Language) || "en";
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -73,7 +66,6 @@ const LanguageToggle = ({ className = "" }: LanguageToggleProps) => {
   }, []);
 
   const changeLanguage = (lang: Language) => {
-    setCurrentLang(lang);
     i18n.changeLanguage(lang);
     localStorage.setItem("boloastro_language", lang);
     setIsOpen(false);
