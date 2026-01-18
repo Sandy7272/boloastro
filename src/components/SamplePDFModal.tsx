@@ -258,12 +258,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 6: PERSONALITY ============
+  // ============ PAGE 6: PERSONALITY ============
   {
     id: 6,
     title: "Personality",
     titleHindi: "व्यक्तित्व",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <p className="text-xs text-muted-foreground">
@@ -302,12 +302,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 7: CAREER ============
+  // ============ PAGE 7: CAREER ============
   {
     id: 7,
     title: "Career Prediction",
     titleHindi: "करियर भविष्यवाणी",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-xs text-muted-foreground mb-2">
@@ -346,12 +346,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 8: WEALTH ============
+  // ============ PAGE 8: WEALTH ============
   {
     id: 8,
     title: "Wealth & Finance",
     titleHindi: "धन और वित्त",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-xs text-muted-foreground mb-2">
@@ -390,12 +390,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 9: MARRIAGE ============
+  // ============ PAGE 9: MARRIAGE ============
   {
     id: 9,
     title: "Marriage & Love",
     titleHindi: "विवाह और प्रेम",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-xs text-muted-foreground mb-2">
@@ -430,12 +430,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 10: HEALTH ============
+  // ============ PAGE 10: HEALTH ============
   {
     id: 10,
     title: "Health",
     titleHindi: "स्वास्थ्य",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-xs text-muted-foreground mb-2">
@@ -473,12 +473,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 11: CHILDREN ============
+  // ============ PAGE 11: CHILDREN ============
   {
     id: 11,
     title: "Children",
     titleHindi: "संतान",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-xs text-muted-foreground mb-2">
@@ -510,12 +510,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 12: DOSHAS ============
+  // ============ PAGE 12: DOSHAS ============
   {
     id: 12,
     title: "Doshas",
     titleHindi: "दोष",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-xs text-muted-foreground mb-2">
@@ -556,12 +556,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 13: REMEDIES ============
+  // ============ PAGE 13: REMEDIES ============
   {
     id: 13,
     title: "Remedies",
     titleHindi: "उपाय",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-xs text-muted-foreground mb-2">
@@ -597,12 +597,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 14: GEMSTONE ============
+  // ============ PAGE 14: GEMSTONE ============
   {
     id: 14,
     title: "Gemstone",
     titleHindi: "रत्न",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3 text-center">
         <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center mx-auto border-2 border-dashed border-gray-400">
@@ -631,12 +631,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 15: LUCKY FACTORS ============
+  // ============ PAGE 15: LUCKY FACTORS ============
   {
     id: 15,
     title: "Lucky Factors",
     titleHindi: "शुभ तत्व",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-xs text-muted-foreground text-center mb-2">
@@ -667,12 +667,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 16: YEARLY PREDICTION ============
+  // ============ PAGE 16: YEARLY PREDICTION ============
   {
     id: 16,
     title: "Yearly Prediction",
     titleHindi: "वार्षिक भविष्यवाणी",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-2">
         <div className="text-xs font-medium text-amber-700 text-center">2025-2026 Overview</div>
@@ -703,12 +703,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 17: MUHURAT DATES ============
+  // ============ PAGE 17: MUHURAT DATES ============
   {
     id: 17,
     title: "Muhurat Dates",
     titleHindi: "शुभ मुहूर्त",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-xs text-muted-foreground text-center mb-2">
@@ -733,12 +733,12 @@ const previewPages = [
     ),
   },
 
-  // ============ LOCKED PAGE 18: FOREIGN TRAVEL ============
+  // ============ PAGE 18: FOREIGN TRAVEL ============
   {
     id: 18,
     title: "Foreign Travel",
     titleHindi: "विदेश यात्रा",
-    isBlurred: true,
+    isBlurred: false,
     content: (
       <div className="space-y-3">
         <div className="text-center text-2xl">✈️</div>
@@ -908,7 +908,7 @@ const SamplePDFModal: React.FC<SamplePDFModalProps> = ({ isOpen, onClose }) => {
           </div>
           
           {/* Page Preview */}
-          <div className="relative bg-gradient-to-b from-amber-50 to-orange-50 rounded-lg border-2 border-amber-200 overflow-hidden">
+          <div className="relative bg-gradient-to-b from-amber-50 to-orange-50 rounded-lg border-2 border-amber-200">
             {/* Page Header */}
             <div className="flex items-center justify-between px-4 py-2 border-b border-amber-200 bg-amber-100/50">
               <span className="text-xs text-amber-700">ॐ BoloAstro</span>
@@ -923,7 +923,7 @@ const SamplePDFModal: React.FC<SamplePDFModalProps> = ({ isOpen, onClose }) => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="p-6 min-h-[350px] relative"
+                className="p-6 min-h-[350px] max-h-[60vh] overflow-y-auto relative"
               >
                 <div className="text-center mb-4">
                   <h3 className="font-serif text-lg text-amber-700 border-b-2 border-amber-400 pb-2 inline-block">

@@ -488,21 +488,22 @@ const HeroSection = () => {
                     </div>
 
                     {/* Form Actions */}
-                    <div className="flex gap-3 mt-6">
+                    <div className="flex flex-col-reverse sm:flex-row gap-3 mt-6">
                       <Button 
                         type="button"
                         variant="outline"
                         size="lg"
-                        className="px-4 py-7 rounded-xl"
+                        className="w-full sm:w-auto px-4 py-7 rounded-xl"
                         onClick={handleClearForm}
                         aria-label="Clear form"
                       >
                         <RotateCcw className="w-5 h-5" aria-hidden="true" />
+                        <span className="sm:hidden ml-2">Clear Form</span>
                       </Button>
                       <Button 
                         type="submit" 
                         size="lg" 
-                        className="flex-1 btn-gold text-xl py-7 rounded-xl gap-3 focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        className="w-full sm:flex-1 btn-gold text-xl py-7 rounded-xl gap-3 focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         disabled={!isFormValid()}
                         aria-disabled={!isFormValid()}
                       >
