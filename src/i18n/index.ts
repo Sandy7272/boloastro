@@ -5,19 +5,20 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
-      // Hero Section - Phase 1: Updated for mass Indian users
+      // Hero Section - Updated for paid service clarity
       hero: {
-        badge: "Free Vedic Astrology",
-        headline: "Free Janam Kundali & Astrology Report",
-        headlineHighlight: "Apni kundali jaaniye – bilkul free",
-        subheadline: "WhatsApp par turant report milegi",
+        badge: "AI Vedic Astrology",
+        headline: "AI-Powered Vedic Astrology on WhatsApp",
+        headlineHighlight: "Apni kundali jaaniye – WhatsApp par",
+        subheadline: "Personalized Kundali, Kundali Milan & life insights delivered privately",
         users: "10,000+ Indians Trust Us",
         rating: "4.9 Rating",
         instant: "Instant WhatsApp",
-        cta: "Free Kundali Banaye",
-        formTitle: "Free Kundali Banaye",
-        formSubtitle: "Apni janam details bhariye",
+        cta: "Get Free Basic Report",
+        formTitle: "Get Your Kundali",
+        formSubtitle: "Enter your birth details",
         dataSecure: "Aapka data surakshit hai • Your data is secure",
+        dynamicCounter: "⚡ {{count}} people checked their Kundali today",
       },
       // Form Labels - Phase 1: Bilingual with examples
       form: {
@@ -148,39 +149,40 @@ const resources = {
         t4Location: "Jaipur",
         t4Text: "Pandit ji ka guidance bahut helpful tha. Remedies se life mein positive changes aaye.",
       },
-      // Pricing
+      // Pricing - Updated for clarity
       pricing: {
         badge: "Pricing",
         title: "Simple Pricing",
-        subtitle: "Start free and upgrade when you need more features.",
+        subtitle: "Start with a free basic report and upgrade for full features.",
         popular: "Most Popular",
-        free: "Free",
-        freeDesc: "Basic horoscope to get started",
+        free: "Basic",
+        freeDesc: "Basic Horoscope & Matchmaking",
         premium: "Premium",
-        premiumDesc: "Complete kundali analysis",
+        premiumDesc: "Full Downloadable Kundali PDF & Remedies",
         vip: "VIP",
-        vipDesc: "Priority support & guidance",
+        vipDesc: "Priority support & personal guidance",
         perMonth: "/month",
-        startFree: "Start Free",
-        getPremium: "Get Premium",
+        startFree: "Get Free Report",
+        getPremium: "Get Full Kundali (₹199)",
         goVip: "Go VIP",
         // Features
         dailyRashifal: "Daily Rashifal",
         basicZodiac: "Basic Zodiac Info",
         generalPredictions: "General Predictions",
         whatsappAccess: "WhatsApp Access",
-        everythingFree: "Everything in Free",
-        detailedKundali: "Detailed Kundali PDF",
-        birthChart: "Birth Chart Analysis",
+        everythingFree: "Everything in Basic",
+        detailedKundali: "Full Kundali PDF Download",
+        birthChart: "Complete Birth Chart Analysis",
         dashaPredictions: "Dasha Predictions",
         marriageTiming: "Marriage Timing",
         careerGuidance: "Career Guidance",
+        remedies: "Personalized Remedies",
         everythingPremium: "Everything in Premium",
         personalGuidance: "Personal AI Guidance",
         unlimitedQuestions: "Unlimited Questions",
         prioritySupport: "Priority Support",
         monthlyPredictions: "Monthly Predictions",
-        remediesSolutions: "Remedies & Solutions",
+        remediesSolutions: "Advanced Remedies & Solutions",
       },
       // FAQ - Phase 4: Indian questions in Hinglish
       faq: {
