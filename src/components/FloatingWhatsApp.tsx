@@ -53,10 +53,10 @@ const FloatingWhatsApp = () => {
                 initial={{ opacity: 0, x: 10, scale: 0.8 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: 10, scale: 0.8 }}
-                className="absolute right-20 bottom-3 bg-white text-gray-800 px-4 py-2 rounded-xl shadow-lg whitespace-nowrap font-medium text-sm"
+                className="absolute right-20 bottom-3 bg-card text-foreground px-4 py-2 rounded-xl shadow-lg whitespace-nowrap font-medium text-sm border border-border"
               >
-                💬 Chat with Astrologer
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-45 w-2 h-2 bg-white" />
+                💬 Chat Now
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-45 w-2 h-2 bg-card border-r border-t border-border" />
               </motion.div>
             )}
           </AnimatePresence>
@@ -69,7 +69,7 @@ const FloatingWhatsApp = () => {
             className="relative block w-16 h-16 bg-[#25D366] rounded-full shadow-2xl shadow-[#25D366]/40 hover:shadow-[#25D366]/60 transition-shadow duration-300"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            aria-label="Chat on WhatsApp"
+            aria-label="Chat Now on WhatsApp"
           >
             {/* Pulse ring */}
             <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-30" />
@@ -79,6 +79,11 @@ const FloatingWhatsApp = () => {
               <MessageCircle className="w-8 h-8 text-white" />
             </span>
           </motion.a>
+          
+          {/* Chat Now label for mobile */}
+          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-muted-foreground font-medium whitespace-nowrap">
+            Chat Now
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

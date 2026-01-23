@@ -21,6 +21,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import KundaliTeaserResults from "@/components/KundaliTeaserResults";
 import OmLoader from "@/components/OmLoader";
+import DynamicCounter from "@/components/DynamicCounter";
 import { trackFormSubmit } from "@/lib/analytics";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useGenerateKundali } from "@/hooks/useGenerateKundali";
@@ -517,6 +518,11 @@ const HeroSection = () => {
                   <p className="text-sm text-muted-foreground text-center mt-6">
                     🔒 {t("hero.dataSecure")}
                   </p>
+                  
+                  {/* Dynamic Counter */}
+                  <div className="mt-4">
+                    <DynamicCounter />
+                  </div>
                 </div>
               </motion.div>
             </motion.div>

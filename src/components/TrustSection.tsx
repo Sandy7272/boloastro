@@ -92,44 +92,45 @@ const TrustSection = () => {
           ))}
         </div>
 
-        {/* Pandit Profile Card */}
+        {/* AI Pandit Profile Card */}
         <div className="max-w-lg mx-auto">
-          <div className="bg-background border border-primary/20 rounded-2xl p-6 shadow-sm">
+          <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-primary/20 rounded-2xl p-6 shadow-sm">
             <div className="flex items-start gap-4">
-              {/* Pandit Avatar */}
+              {/* AI Pandit Avatar */}
               <div className="flex-shrink-0">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 flex items-center justify-center">
-                  <span className="text-3xl" role="img" aria-label="Pandit">🙏</span>
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 border-2 border-primary/40 flex items-center justify-center relative">
+                  <span className="text-3xl" role="img" aria-label="AI Pandit">🙏</span>
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                    <span className="text-xs">🤖</span>
+                  </div>
                 </div>
               </div>
               
-              {/* Pandit Info */}
+              {/* AI Pandit Info */}
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-foreground">
-                  Pandit Ramesh Sharma
+                  BoloAstro AI Pandit
                 </h3>
                 <p className="text-sm text-primary font-medium mb-1">
-                  पंडित रमेश शर्मा
+                  बोलोएस्ट्रो AI पंडित
                 </p>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                   <ShieldCheck className="w-4 h-4 text-green-600" aria-hidden="true" />
-                  <span>10+ Years Vedic Astrology</span>
+                  <span>Trained on 5,000+ Vedic Scriptures</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  10+ साल का वैदिक ज्योतिष अनुभव
+                  5,000+ वैदिक ग्रंथों पर प्रशिक्षित
                 </p>
               </div>
             </div>
             
-            {/* Trust Message */}
+            {/* AI Pandit Bio */}
             <div className="mt-4 pt-4 border-t border-border">
-              <p className="text-sm text-center text-foreground">
-                <span className="font-medium">Traditional Vedic Astrology</span>
-                {" "}+{" "}
-                <span className="text-primary font-medium">AI Analysis</span>
+              <p className="text-sm text-foreground leading-relaxed">
+                Our advanced <span className="text-primary font-medium">AI Pandit</span> is available 24/7 to answer your questions instantly, using traditional Vedic calculations for 100% accuracy.
               </p>
-              <p className="text-xs text-center text-muted-foreground mt-1">
-                पारंपरिक वैदिक ज्योतिष + AI विश्लेषण
+              <p className="text-xs text-muted-foreground mt-2">
+                हमारा AI पंडित 24/7 उपलब्ध है, पारंपरिक वैदिक गणनाओं के साथ 100% सटीकता।
               </p>
             </div>
           </div>
@@ -145,8 +146,8 @@ const TrustSection = () => {
               <span>Data Protected</span>
             </div>
             <div className="flex items-center gap-1">
-              <span>✅</span>
-              <span>Verified Pandit</span>
+              <span>🤖</span>
+              <span>AI Powered</span>
             </div>
           </div>
         </div>

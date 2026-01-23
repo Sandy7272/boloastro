@@ -20,7 +20,7 @@ import TrustSection from "@/components/TrustSection";
 import DailyPanchang from "@/components/DailyPanchang";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import ServicesSection from "@/components/ServicesSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+import WhatsAppChatTestimonials from "@/components/WhatsAppChatTestimonials";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import FinalCTASection from "@/components/FinalCTASection";
@@ -119,8 +119,8 @@ const Index = () => {
         {/* 5. Services */}
         <ServicesSection />
         
-        {/* 6. Testimonials */}
-        <TestimonialsSection />
+        {/* 6. Testimonials - WhatsApp chat style */}
+        <WhatsAppChatTestimonials />
         
         {/* 7. Pricing */}
         <PricingSection />
