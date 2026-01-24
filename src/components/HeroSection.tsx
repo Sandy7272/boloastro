@@ -1,32 +1,27 @@
 /**
- * HeroSection Component - Phase 1 & 5
+ * HeroSection Component
  * 
- * Purpose: Capture birth details and show teaser results before WhatsApp redirect
- * Flow: Form → Teaser Results → WhatsApp CTA
+ * Purpose: Capture birth details and redirect directly to WhatsApp
+ * Flow: Form → WhatsApp redirect with pre-filled details
  * 
  * Key features:
- * - sessionStorage persistence (data survives refresh within session)
  * - Bilingual placeholders (English + Hindi)
  * - Inline validation with visual feedback
  * - Mobile-first responsive design
- * - Phase 5: Analytics tracking for form submission
+ * - Direct WhatsApp redirect on submit
  */
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle, Clock, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import KundaliTeaserResults from "@/components/KundaliTeaserResults";
-import OmLoader from "@/components/OmLoader";
 import DynamicCounter from "@/components/DynamicCounter";
 import { trackFormSubmit } from "@/lib/analytics";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useGenerateKundali } from "@/hooks/useGenerateKundali";
-import { useToast } from "@/hooks/use-toast";
-import type { KundaliData } from "@/pdf/types";
+import { getWhatsAppLinkWithDetails } from "@/config/constants";
 
 interface FormData {
   name: string;
@@ -66,14 +61,6 @@ const HeroSection = () => {
   
   type ValidatableField = "name" | "dateOfBirth" | "timeOfBirth" | "placeOfBirth";
   
-  // Results display state
-  const [showResults, setShowResults] = useState(false);
-  const [kundaliData, setKundaliData] = useState<KundaliData | null>(null);
-  
-  // API hook for generating kundali
-  const { mutateAsync: generateKundali, isPending: isLoading } = useGenerateKundali();
-  const { toast } = useToast();
-  const [submittedData, setSubmittedData] = useState<FormData | null>(null);
 
   // Validate a single field
   const validateField = (field: ValidatableField, value: string): boolean => {
@@ -121,8 +108,8 @@ const HeroSection = () => {
     );
   };
 
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Handle form submission - redirect to WhatsApp
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Mark all fields as touched for validation display
@@ -137,53 +124,26 @@ const HeroSection = () => {
       return;
     }
 
-    // Phase 5: Track form submission
+    // Track form submission
     trackFormSubmit(true, i18n.language);
     
-    setSubmittedData(formData);
-    
-    try {
-      // Convert time to 24h format if needed
-      let time24h = formData.timeOfBirth;
-      if (formData.timeFormat === "12h" && formData.timeOfBirth) {
-        const [hours, minutes] = formData.timeOfBirth.split(":");
-        let hour = parseInt(hours, 10);
-        if (formData.timePeriod === "PM" && hour !== 12) {
-          hour += 12;
-        } else if (formData.timePeriod === "AM" && hour === 12) {
-          hour = 0;
-        }
-        time24h = `${hour.toString().padStart(2, "0")}:${minutes}`;
-      }
-      
-      // Call the edge function to generate kundali
-      const data = await generateKundali({
-        name: formData.name,
-        dob: formData.dateOfBirth,
-        time: time24h,
-        place: formData.placeOfBirth,
-      });
-      
-      setKundaliData(data);
-      setShowResults(true);
-      
-      // Also save kundali data to session storage for PDF generation
-      sessionStorage.setItem("boloastro_kundali_data", JSON.stringify(data));
-      
-    } catch (error) {
-      console.error("Failed to generate kundali:", error);
-      toast({
-        title: "कुंडली बनाने में समस्या",
-        description: error instanceof Error ? error.message : "कृपया पुनः प्रयास करें",
-        variant: "destructive",
-      });
+    // Format time for display
+    let displayTime = formData.timeOfBirth;
+    if (formData.timeFormat === "12h" && formData.timeOfBirth) {
+      displayTime = `${formData.timeOfBirth} ${formData.timePeriod}`;
     }
-  };
-
-  // Reset to show form again (Edit details)
-  const handleReset = () => {
-    setShowResults(false);
-    // Keep submitted data in state so form stays prefilled
+    
+    // Generate WhatsApp link with birth details
+    const whatsappUrl = getWhatsAppLinkWithDetails({
+      name: formData.name,
+      dateOfBirth: formData.dateOfBirth,
+      timeOfBirth: displayTime,
+      placeOfBirth: formData.placeOfBirth,
+      lang: i18n.language,
+    });
+    
+    // Redirect to WhatsApp
+    window.open(whatsappUrl, "_blank");
   };
 
   // Clear the entire form
@@ -202,8 +162,6 @@ const HeroSection = () => {
       timeOfBirth: { isValid: false, touched: false },
       placeOfBirth: { isValid: false, touched: false },
     });
-    setSubmittedData(null);
-    setKundaliData(null);
   };
 
   // Get validation icon for a field
@@ -236,49 +194,11 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card/50" aria-hidden="true" />
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <AnimatePresence mode="wait">
-          {isLoading ? (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4 }}
-              className="flex items-center justify-center min-h-[60vh]"
-              role="status"
-              aria-label="Generating your Kundali"
-            >
-              <OmLoader 
-                size="lg" 
-                message="Kundali taiyaar ho rahi hai..."
-                showShlokas={true}
-              />
-            </motion.div>
-          ) : showResults && submittedData ? (
-            <motion.div
-              key="results"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              role="region"
-              aria-label="Your Kundali Results"
-            >
-              <KundaliTeaserResults 
-                details={submittedData} 
-                onReset={handleReset}
-                lang={i18n.language}
-                kundaliData={kundaliData}
-              />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="form"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center"
-            >
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+        >
               {/* Left - Content */}
               <motion.div 
                 className="space-y-8"
@@ -525,9 +445,7 @@ const HeroSection = () => {
                   </div>
                 </div>
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );
