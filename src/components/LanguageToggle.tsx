@@ -1,12 +1,12 @@
 /**
- * LanguageToggle Component - Phase 3: Enhanced Language Selector
+ * LanguageToggle Component - Mobile-Optimized Language Selector
  * 
  * Features:
+ * - Compact design for mobile navbar
  * - Dropdown with EN, HI, MR options
  * - Persists selection in localStorage
  * - Shows native language names
  * - Accessible with ARIA labels
- * - Animated dropdown with framer-motion
  */
 
 import { useState, useEffect, useRef } from "react";
@@ -20,13 +20,13 @@ interface LanguageOption {
   code: Language;
   label: string;
   nativeLabel: string;
-  flag: string; // Emoji flag for visual identification
+  flag: string;
 }
 
 const languages: LanguageOption[] = [
-  { code: "en", label: "English", nativeLabel: "English", flag: "🇬🇧" },
-  { code: "hi", label: "Hindi", nativeLabel: "हिंदी", flag: "🇮🇳" },
-  { code: "mr", label: "Marathi", nativeLabel: "मराठी", flag: "🇮🇳" },
+  { code: "en", label: "English", nativeLabel: "EN", flag: "🇬🇧" },
+  { code: "hi", label: "Hindi", nativeLabel: "हिं", flag: "🇮🇳" },
+  { code: "mr", label: "Marathi", nativeLabel: "मरा", flag: "🇮🇳" },
 ];
 
 interface LanguageToggleProps {
@@ -80,16 +80,15 @@ const LanguageToggle = ({ className = "" }: LanguageToggleProps) => {
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-border hover:border-primary/40 transition-all duration-300 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/50"
+        className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 rounded-lg bg-card border border-border hover:border-primary/40 transition-all duration-300 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 min-w-0"
         aria-label={t("language.select") || "Select language"}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <Globe className="w-4 h-4 text-primary" />
-        <span className="text-foreground hidden sm:inline">{currentLanguage?.nativeLabel}</span>
-        <span className="text-foreground sm:hidden">{currentLanguage?.code.toUpperCase()}</span>
+        <Globe className="w-4 h-4 text-primary flex-shrink-0" />
+        <span className="text-foreground text-xs sm:text-sm">{currentLanguage?.nativeLabel}</span>
         <ChevronDown
-          className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+          className={`w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground transition-transform duration-200 flex-shrink-0 ${
             isOpen ? "rotate-180" : ""
           }`}
         />
@@ -102,7 +101,7 @@ const LanguageToggle = ({ className = "" }: LanguageToggleProps) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-full mt-2 z-50 min-w-[180px] bg-card border border-border rounded-xl shadow-xl overflow-hidden"
+            className="absolute right-0 top-full mt-2 z-[100] min-w-[160px] sm:min-w-[180px] bg-card border border-border rounded-xl shadow-xl overflow-hidden"
             role="listbox"
             aria-label={t("language.select") || "Select language"}
           >
@@ -110,23 +109,22 @@ const LanguageToggle = ({ className = "" }: LanguageToggleProps) => {
               <button
                 key={lang.code}
                 onClick={() => changeLanguage(lang.code)}
-                className={`w-full px-4 py-3 text-left flex items-center justify-between hover:bg-muted/50 transition-colors focus:outline-none focus:bg-muted/50 ${
+                className={`w-full px-3 sm:px-4 py-3 text-left flex items-center justify-between hover:bg-muted/50 transition-colors focus:outline-none focus:bg-muted/50 ${
                   currentLang === lang.code ? "bg-primary/10" : ""
                 }`}
                 role="option"
                 aria-selected={currentLang === lang.code}
               >
-                <div className="flex items-center gap-3">
-                  <span className="text-lg">{lang.flag}</span>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="text-base sm:text-lg">{lang.flag}</span>
                   <div>
                     <p className="text-sm font-medium text-foreground">
-                      {lang.nativeLabel}
+                      {lang.label}
                     </p>
-                    <p className="text-xs text-muted-foreground">{lang.label}</p>
                   </div>
                 </div>
                 {currentLang === lang.code && (
-                  <Check className="w-4 h-4 text-primary" />
+                  <Check className="w-4 h-4 text-primary flex-shrink-0" />
                 )}
               </button>
             ))}

@@ -122,24 +122,45 @@
 
   html {
     scroll-behavior: smooth;
-    /* Phase 6: Increased base font for elderly users */
-    font-size: 18px;
+    /* Mobile-first responsive font size */
+    font-size: 16px;
+  }
+  
+  /* Larger font on tablets and up */
+  @media (min-width: 640px) {
+    html {
+      font-size: 17px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    html {
+      font-size: 18px;
+    }
   }
 
-  /* Phase 6: Minimum touch targets for accessibility */
+  /* Minimum touch targets for accessibility - mobile optimized */
   button, 
-  a, 
-  [role="button"],
-  input[type="checkbox"],
-  input[type="radio"] {
-    min-height: 48px;
-    min-width: 48px;
+  [role="button"] {
+    min-height: 44px;
+  }
+  
+  /* Links don't need minimum size unless they're standalone */
+  a:not(.inline-link) {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
   
   /* Exception for inline links */
-  p a, span a, li a {
+  p a, span a, li a, .inline-link {
     min-height: auto;
-    min-width: auto;
+    display: inline;
+  }
+  
+  /* Prevent horizontal overflow on mobile */
+  body {
+    overflow-x: hidden;
   }
 
   body {
