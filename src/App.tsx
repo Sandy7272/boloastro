@@ -20,6 +20,8 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Refund = lazy(() => import("./pages/Refund"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Login = lazy(() => import("./pages/Login"));
+const Admin = lazy(() => import("./pages/Admin"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -65,6 +67,8 @@ const App = () => {
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/refund" element={<Refund />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

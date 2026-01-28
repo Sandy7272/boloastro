@@ -1,8 +1,9 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 // Pro Kerala API configuration
@@ -19,6 +20,10 @@ interface BirthDetails {
   place: string;
   latitude?: number;
   longitude?: number;
+  language?: string;
+  userId?: string;
+  guestSessionId?: string;
+  saveToDB?: boolean;
 }
 
 // Get Pro Kerala access token with caching
@@ -104,10 +109,18 @@ async function generatePredictions(astroData: any, userData: BirthDetails): Prom
     throw new Error('LOVABLE_API_KEY is not configured');
   }
   
+  const language = userData.language || 'en';
+  const languageInstruction = language === 'hi' 
+    ? 'Respond in Hindi (use Devanagari script).' 
+    : language === 'mr' 
+    ? 'Respond in Marathi (use Devanagari script).'
+    : 'Respond in English.';
+  
   const systemPrompt = `You are an expert Vedic astrologer with deep knowledge of Indian astrology, Jyotish Shastra, and traditional remedies. 
 Based on the birth chart data provided, generate comprehensive and personalized predictions.
 Be specific, insightful, and culturally authentic. Include Hindi terms where appropriate.
-Your predictions should be positive yet realistic, offering practical guidance.`;
+Your predictions should be positive yet realistic, offering practical guidance.
+${languageInstruction}`;
 
   const userPrompt = `Generate a complete Kundali analysis for:
 Name: ${userData.name}
@@ -251,7 +264,7 @@ Return a JSON object with this EXACT structure (respond ONLY with valid JSON, no
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'google/gemini-2.5-pro',
+      model: 'google/gemini-3-flash-preview',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
@@ -294,18 +307,6 @@ Return a JSON object with this EXACT structure (respond ONLY with valid JSON, no
 
 // Map Pro Kerala planet data to our format
 function mapPlanets(proKeralaData: any): any[] {
-  const planetMap: Record<string, string> = {
-    'Sun': 'सूर्य',
-    'Moon': 'चंद्र',
-    'Mars': 'मंगल',
-    'Mercury': 'बुध',
-    'Jupiter': 'गुरु',
-    'Venus': 'शुक्र',
-    'Saturn': 'शनि',
-    'Rahu': 'राहु',
-    'Ketu': 'केतु',
-  };
-  
   const zodiacSigns = [
     'Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo',
     'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'
@@ -343,11 +344,80 @@ function mapPlanets(proKeralaData: any): any[] {
   });
 }
 
+// Save data to database
+async function saveToDatabase(
+  supabase: any,
+  birthDetails: BirthDetails,
+  proKeralaData: any,
+  kundaliData: any
+) {
+  const startTime = Date.now();
+  
+  try {
+    // Save raw kundali data
+    const { data: rawData, error: rawError } = await supabase
+      .from('kundali_raw')
+      .insert({
+        user_id: birthDetails.userId || null,
+        guest_session_id: birthDetails.guestSessionId || null,
+        name: birthDetails.name,
+        dob: birthDetails.dob,
+        birth_time: birthDetails.time,
+        birth_place: birthDetails.place,
+        latitude: birthDetails.latitude,
+        longitude: birthDetails.longitude,
+        prokerala_json: proKeralaData,
+      })
+      .select()
+      .single();
+    
+    if (rawError) {
+      console.error('Error saving kundali_raw:', rawError);
+    } else {
+      console.log('Saved kundali_raw:', rawData.id);
+      
+      // Save AI report
+      const { data: reportData, error: reportError } = await supabase
+        .from('kundali_ai_reports')
+        .insert({
+          kundali_raw_id: rawData.id,
+          user_id: birthDetails.userId || null,
+          ai_text: kundaliData,
+          language: birthDetails.language || 'en',
+          is_premium: false,
+        })
+        .select()
+        .single();
+      
+      if (reportError) {
+        console.error('Error saving kundali_ai_reports:', reportError);
+      } else {
+        console.log('Saved kundali_ai_reports:', reportData.id);
+      }
+    }
+    
+    // Log API call
+    await supabase.from('api_logs').insert({
+      endpoint: '/generate-kundali',
+      method: 'POST',
+      request_body: { name: birthDetails.name, place: birthDetails.place },
+      response_status: 200,
+      response_time_ms: Date.now() - startTime,
+      user_id: birthDetails.userId || null,
+    });
+    
+  } catch (dbError) {
+    console.error('Database save error:', dbError);
+  }
+}
+
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+  
+  const startTime = Date.now();
   
   try {
     const birthDetails: BirthDetails = await req.json();
@@ -361,6 +431,11 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+    
+    // Initialize Supabase client for database operations
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
     
     // Default coordinates for India if not provided
     const latitude = birthDetails.latitude || 28.6139; // Delhi
@@ -450,11 +525,16 @@ serve(async (req) => {
       luckyFactors: predictions.luckyFactors,
       yearlyPrediction: predictions.yearlyPrediction,
       muhurats: predictions.muhurats,
-      panditName: 'Pt. Raj Sharma',
+      panditName: 'BoloAstro AI Pandit',
       panditMessage: predictions.panditMessage,
     };
     
-    console.log('Kundali generation complete for:', birthDetails.name);
+    // Save to database if requested
+    if (birthDetails.saveToDB !== false) {
+      await saveToDatabase(supabase, birthDetails, proKeralaData, kundaliData);
+    }
+    
+    console.log('Kundali generation complete for:', birthDetails.name, 'in', Date.now() - startTime, 'ms');
     
     return new Response(
       JSON.stringify(kundaliData),
@@ -463,6 +543,23 @@ serve(async (req) => {
     
   } catch (error) {
     console.error('Error generating kundali:', error);
+    
+    // Log error to database
+    try {
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const supabase = createClient(supabaseUrl, supabaseServiceKey);
+      
+      await supabase.from('api_logs').insert({
+        endpoint: '/generate-kundali',
+        method: 'POST',
+        response_status: 500,
+        response_time_ms: Date.now() - startTime,
+        error_message: error instanceof Error ? error.message : 'Unknown error',
+      });
+    } catch (logError) {
+      console.error('Failed to log error:', logError);
+    }
     
     return new Response(
       JSON.stringify({ 
