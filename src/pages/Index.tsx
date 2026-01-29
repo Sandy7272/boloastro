@@ -25,6 +25,7 @@ import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import FinalCTASection from "@/components/FinalCTASection";
 import Footer from "@/components/Footer";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import SEO, { SEO_CONFIGS } from "@/components/SEO";
 import SkipToContent from "@/components/SkipToContent";
 
@@ -131,6 +132,9 @@ const Index = () => {
       
       {/* 10. Footer */}
       <Footer />
+      
+      {/* Floating WhatsApp CTA - All screens */}
+      <FloatingWhatsApp />
     </div>
   );
 };
