@@ -133,7 +133,7 @@ const ServicesSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.06 }}
             >
-              <div className="h-full flex flex-col bg-card border border-border rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group-hover:-translate-y-1">
+              <div className="h-full min-h-[200px] sm:min-h-[280px] lg:min-h-[300px] flex flex-col bg-card border border-border rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group-hover:-translate-y-1">
                 {/* Icon */}
                 <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-3 sm:mb-4 flex-shrink-0`}>
                   <service.icon className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 ${service.iconColor}`} />
