@@ -120,22 +120,22 @@ const ServicesSection = () => {
         </motion.div>
 
         {/* Services Grid - 2 columns on mobile, 3 on desktop */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 auto-rows-fr">
           {services.map((service, index) => (
             <motion.a
               key={index}
               href={`${WHATSAPP_LINK}${service.query}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block"
+              className="group block h-full"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.06 }}
             >
-              <div className="h-full bg-card border border-border rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group-hover:-translate-y-1">
+              <div className="h-full flex flex-col bg-card border border-border rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group-hover:-translate-y-1">
                 {/* Icon */}
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-3 sm:mb-4`}>
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-3 sm:mb-4 flex-shrink-0`}>
                   <service.icon className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 ${service.iconColor}`} />
                 </div>
 
@@ -145,13 +145,13 @@ const ServicesSection = () => {
                 </h3>
                 <p className="text-xs sm:text-sm text-primary/80 mb-2">{service.titleHi}</p>
 
-                {/* Description - Hidden on mobile for space */}
-                <p className="hidden sm:block text-muted-foreground text-xs sm:text-sm mb-3 leading-relaxed line-clamp-2">
+                {/* Description - Hidden on mobile, fixed height on desktop */}
+                <p className="hidden sm:block text-muted-foreground text-xs sm:text-sm mb-3 leading-relaxed line-clamp-2 min-h-[2.5rem]">
                   {service.description}
                 </p>
 
                 {/* Benefits - Simplified on mobile */}
-                <ul className="space-y-1 mb-3 sm:mb-4">
+                <ul className="space-y-1 mb-3 sm:mb-4 flex-grow">
                   {service.benefits.slice(0, 2).map((benefit, idx) => (
                     <li key={idx} className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-primary flex-shrink-0" />
@@ -160,8 +160,8 @@ const ServicesSection = () => {
                   ))}
                 </ul>
 
-                {/* CTA */}
-                <div className="flex items-center text-xs sm:text-sm font-medium text-primary group-hover:gap-2 gap-1 transition-all">
+                {/* CTA - Always at bottom */}
+                <div className="flex items-center text-xs sm:text-sm font-medium text-primary group-hover:gap-2 gap-1 transition-all mt-auto pt-2">
                   <span className="hidden sm:inline">Ask on WhatsApp</span>
                   <span className="sm:hidden">Ask Now</span>
                   <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
