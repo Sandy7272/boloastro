@@ -120,21 +120,21 @@ const ServicesSection = () => {
         </motion.div>
 
         {/* Services Grid - 1 column mobile, 2 tablet, 3 desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-4 sm:gap-5 lg:gap-6">
           {services.map((service, index) => (
             <motion.a
               key={index}
               href={`${WHATSAPP_LINK}${service.query}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block"
+              className="group block h-full"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.06 }}
             >
               {/* Fixed height card with consistent structure */}
-              <div className="h-[280px] sm:h-[300px] lg:h-[320px] flex flex-col bg-card border border-border rounded-2xl p-5 sm:p-6 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group-hover:-translate-y-1">
+              <div className="h-full min-h-[280px] flex flex-col bg-card border border-border rounded-2xl p-5 sm:p-6 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group-hover:-translate-y-1">
                 {/* Icon - Fixed size */}
                 <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-4 flex-shrink-0`}>
                   <service.icon className={`w-6 h-6 sm:w-7 sm:h-7 ${service.iconColor}`} />
