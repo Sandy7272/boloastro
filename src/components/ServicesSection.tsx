@@ -96,7 +96,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-20 lg:py-28 bg-gradient-to-b from-background to-card/30" id="services" aria-labelledby="services-heading">
+    <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-background via-card/20 to-background" id="services" aria-labelledby="services-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div 
@@ -119,52 +119,52 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        {/* Services Grid - 2 columns on mobile, 3 on desktop */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 auto-rows-fr">
+        {/* Services Grid - 1 column mobile, 2 tablet, 3 desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           {services.map((service, index) => (
             <motion.a
               key={index}
               href={`${WHATSAPP_LINK}${service.query}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block h-full"
+              className="group block"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.06 }}
             >
-              <div className="h-full min-h-[200px] sm:min-h-[280px] lg:min-h-[300px] flex flex-col bg-card border border-border rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group-hover:-translate-y-1">
-                {/* Icon */}
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-3 sm:mb-4 flex-shrink-0`}>
-                  <service.icon className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 ${service.iconColor}`} />
+              {/* Fixed height card with consistent structure */}
+              <div className="h-[280px] sm:h-[300px] lg:h-[320px] flex flex-col bg-card border border-border rounded-2xl p-5 sm:p-6 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group-hover:-translate-y-1">
+                {/* Icon - Fixed size */}
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-4 flex-shrink-0`}>
+                  <service.icon className={`w-6 h-6 sm:w-7 sm:h-7 ${service.iconColor}`} />
                 </div>
 
-                {/* Title */}
-                <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-foreground mb-0.5 group-hover:text-primary transition-colors line-clamp-1">
+                {/* Title - Consistent sizing */}
+                <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-primary/80 mb-2">{service.titleHi}</p>
+                <p className="text-xs sm:text-sm text-primary/70 mb-3">{service.titleHi}</p>
 
-                {/* Description - Hidden on mobile, fixed height on desktop */}
-                <p className="hidden sm:block text-muted-foreground text-xs sm:text-sm mb-3 leading-relaxed line-clamp-2 min-h-[2.5rem]">
+                {/* Description - Fixed height */}
+                <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-2 h-10">
                   {service.description}
                 </p>
 
-                {/* Benefits - Simplified on mobile */}
-                <ul className="space-y-1 mb-3 sm:mb-4 flex-grow">
-                  {service.benefits.slice(0, 2).map((benefit, idx) => (
-                    <li key={idx} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-primary flex-shrink-0" />
+                {/* Benefits - Flex grow to push CTA down */}
+                <ul className="space-y-1.5 flex-1">
+                  {service.benefits.slice(0, 3).map((benefit, idx) => (
+                    <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
                       <span className="line-clamp-1">{benefit}</span>
                     </li>
                   ))}
                 </ul>
 
-                {/* CTA - Always at bottom */}
-                <div className="flex items-center text-xs sm:text-sm font-medium text-primary group-hover:gap-2 gap-1 transition-all mt-auto pt-2">
-                  <span className="hidden sm:inline">Ask on WhatsApp</span>
-                  <span className="sm:hidden">Ask Now</span>
-                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+                {/* CTA Button - Always at bottom */}
+                <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/50">
+                  <span className="text-sm font-medium text-primary">Ask on WhatsApp</span>
+                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </motion.a>
