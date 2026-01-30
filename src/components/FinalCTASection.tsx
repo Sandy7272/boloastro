@@ -60,7 +60,7 @@ const FinalCTASection = () => {
           
           <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-xl mx-auto">
             Join 10,000+ Indians who trust BoloAstro for life guidance. 
-            Start your journey today – it's free!
+            Start your astrology journey today!
           </p>
 
           {/* CTAs - Stacked on mobile */}

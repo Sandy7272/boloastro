@@ -7,7 +7,7 @@
  * - Bilingual text support
  */
 
-import { FileText, Sparkles, MessageCircle, Download, CheckCircle } from "lucide-react";
+import { FileText, Sparkles, MessageCircle, CheckCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 
@@ -16,35 +16,35 @@ const HowItWorksSection = () => {
 
   const steps = [
     {
-      icon: FileText,
+      icon: MessageCircle,
       step: "1",
       title: t('howItWorks.step1Title'),
-      titleHi: "जन्म विवरण भरें",
+      titleHi: "WhatsApp बटन पर क्लिक करें",
       description: t('howItWorks.step1Desc'),
+      color: "from-green-500 to-emerald-500",
+    },
+    {
+      icon: FileText,
+      step: "2",
+      title: t('howItWorks.step2Title'),
+      titleHi: "जन्म विवरण भेजें",
+      description: t('howItWorks.step2Desc'),
       color: "from-blue-500 to-indigo-500",
     },
     {
       icon: Sparkles,
-      step: "2",
-      title: t('howItWorks.step2Title'),
-      titleHi: "AI कुंडली बनाता है",
-      description: t('howItWorks.step2Desc'),
+      step: "3",
+      title: t('howItWorks.step3Title'),
+      titleHi: "AI प्रोफाइल बनाता है",
+      description: t('howItWorks.step3Desc'),
       color: "from-purple-500 to-pink-500",
     },
     {
       icon: MessageCircle,
-      step: "3",
-      title: t('howItWorks.step3Title') || "Choose Report or Chat",
-      titleHi: "रिपोर्ट या चैट चुनें",
-      description: "Get detailed PDF report or ask questions live",
-      color: "from-green-500 to-emerald-500",
-    },
-    {
-      icon: Download,
       step: "4",
-      title: "Receive on WhatsApp",
-      titleHi: "WhatsApp पर पाएं",
-      description: "Get instant results delivered to your WhatsApp",
+      title: t('howItWorks.step4Title'),
+      titleHi: "असीमित सवाल पूछें",
+      description: t('howItWorks.step4Desc'),
       color: "from-amber-500 to-orange-500",
     },
   ];

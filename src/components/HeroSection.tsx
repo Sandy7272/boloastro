@@ -1,15 +1,15 @@
 /**
- * HeroSection Component - Mobile-First Responsive Design
+ * HeroSection Component - Redesigned for Clarity & Conversions
  * 
  * Features:
- * - Fully responsive for all screen sizes
- * - Clear value proposition with simple language
- * - Dual CTAs (Generate Kundali + WhatsApp)
- * - Mobile-optimized form with large touch targets
+ * - Clear value proposition with benefit bullets
+ * - Birth details form for WhatsApp redirect
+ * - Mobile-first responsive design
+ * - WhatsApp icon in CTA
  */
 
 import { useState } from "react";
-import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle, Clock, RotateCcw, Sparkles, Shield, Zap, Users } from "lucide-react";
+import { MessageCircle, ArrowRight, CheckCircle2, AlertCircle, Clock, RotateCcw, Shield, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -171,6 +171,13 @@ const HeroSection = () => {
 
   const progress = calculateProgress();
 
+  // Benefits list
+  const benefits = [
+    { text: t('hero.benefit1'), textHi: "अपनी भाषा में सवाल पूछें" },
+    { text: t('hero.benefit2'), textHi: "तेज़ और व्यक्तिगत उत्तर" },
+    { text: t('hero.benefit3'), textHi: "सीधे WhatsApp पर – कोई app नहीं" },
+  ];
+
   return (
     <section 
       className="min-h-screen flex items-center pt-20 sm:pt-24 pb-24 sm:pb-16 relative overflow-hidden"
@@ -181,7 +188,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" aria-hidden="true" />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left - Content */}
           <motion.div 
             className="space-y-6 sm:space-y-8 text-center lg:text-left"
@@ -196,46 +203,46 @@ const HeroSection = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <Sparkles className="w-4 h-4 text-primary" />
+              <MessageCircle className="w-4 h-4 text-primary" />
               <span className="text-xs sm:text-sm text-primary font-medium">{t('hero.badge')}</span>
             </motion.div>
             
             {/* Main Headline */}
-            <header className="space-y-4 sm:space-y-6">
-              <h1 id="hero-heading" className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold text-foreground leading-[1.15] tracking-tight">
+            <header className="space-y-4 sm:space-y-5">
+              <h1 id="hero-heading" className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground leading-tight tracking-tight">
                 {t('hero.headline')}
-                <span className="block text-primary mt-1">{t('hero.headlineHighlight')}</span>
+                <span className="block text-primary mt-2 text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-semibold">
+                  {t('hero.headlineHighlight')}
+                </span>
               </h1>
-              <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground font-medium max-w-xl mx-auto lg:mx-0">
+              <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 {t('hero.subheadline')}
               </p>
             </header>
 
-            {/* Value Propositions - Mobile optimized grid */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-4">
-              {[
-                { icon: Zap, text: t('hero.instant'), subtext: "तुरंत रिपोर्ट" },
-                { icon: Shield, text: "100% Safe", subtext: "डेटा सुरक्षित" },
-                { icon: Users, text: t('hero.users').split(' ')[0], subtext: "भरोसेमंद" },
-              ].map((item, i) => (
+            {/* Benefits Bullets */}
+            <div className="space-y-3 sm:space-y-4 text-left max-w-md mx-auto lg:mx-0">
+              {benefits.map((benefit, i) => (
                 <motion.div 
                   key={i}
-                  className="flex flex-col items-center p-2 sm:p-3 rounded-xl bg-card/50 border border-border/50"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-start gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 + i * 0.1 }}
                 >
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-1 sm:mb-2">
-                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                  <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-green-600" />
                   </div>
-                  <p className="font-medium text-foreground text-xs sm:text-sm text-center">{item.text}</p>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground text-center">{item.subtext}</p>
+                  <div>
+                    <p className="text-sm sm:text-base text-foreground font-medium">{benefit.text}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{benefit.textHi}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
 
-            {/* Trust Indicators - Hidden on mobile to save space */}
-            <div className="hidden sm:flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 pt-2">
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 pt-2">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                 <span className="text-xs sm:text-sm text-muted-foreground">{t('hero.users')}</span>
@@ -246,16 +253,16 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Secondary CTA - Direct WhatsApp (Hidden on mobile, shown below form) */}
+            {/* Direct WhatsApp Button - Desktop */}
             <div className="hidden lg:block pt-2">
               <Button 
                 size="lg"
-                variant="outline"
-                className="gap-2 py-6 px-6 rounded-xl border-green-500/30 text-green-600 hover:bg-green-500/10"
-                onClick={() => window.open(getWhatsAppLink("Hi! I want to ask about my horoscope"), "_blank")}
+                className="gap-2 py-6 px-8 rounded-xl bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-600/20"
+                onClick={() => window.open(getWhatsAppLink("Hi! I want astrology guidance"), "_blank")}
               >
                 <MessageCircle className="w-5 h-5" />
-                {t('nav.chatOnWhatsApp')}
+                {t('hero.directCta')}
+                <ArrowRight className="w-5 h-5" />
               </Button>
             </div>
           </motion.div>
@@ -269,12 +276,12 @@ const HeroSection = () => {
             className="w-full max-w-md mx-auto lg:max-w-none"
           >
             <div className="bg-card border border-border rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 shadow-xl shadow-primary/5">
-              {/* Form Header - More compact on mobile */}
+              {/* Form Header */}
               <div className="text-center mb-4 sm:mb-6">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                  <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                  <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
                 </div>
-                <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-1">
+                <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-1">
                   {t('hero.formTitle')}
                 </h2>
                 <p className="text-muted-foreground text-xs sm:text-sm">
@@ -291,7 +298,7 @@ const HeroSection = () => {
                 <Progress value={progress} className="h-2" />
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" noValidate>
                 {/* Name Field */}
                 <div className="space-y-1.5">
                   <Label htmlFor="name" className="text-sm font-medium flex items-center justify-between">
@@ -409,7 +416,7 @@ const HeroSection = () => {
                   <Button 
                     type="submit" 
                     size="lg" 
-                    className="w-full btn-gold text-base sm:text-lg py-6 sm:py-7 rounded-xl gap-2 order-1 sm:order-2 sm:flex-1"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white text-base sm:text-lg py-6 sm:py-7 rounded-xl gap-2 order-1 sm:order-2 sm:flex-1 shadow-lg shadow-green-600/20"
                     disabled={!isFormValid()}
                   >
                     <MessageCircle className="w-5 h-5" />
@@ -443,12 +450,12 @@ const HeroSection = () => {
             <div className="mt-4 lg:hidden">
               <Button 
                 size="lg"
-                variant="outline"
-                className="w-full gap-2 py-5 rounded-xl border-green-500/30 text-green-600 hover:bg-green-500/10"
-                onClick={() => window.open(getWhatsAppLink("Hi! I want to ask about my horoscope"), "_blank")}
+                className="w-full gap-2 py-5 rounded-xl bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-600/20"
+                onClick={() => window.open(getWhatsAppLink("Hi! I want astrology guidance"), "_blank")}
               >
                 <MessageCircle className="w-5 h-5" />
-                {t('nav.chatOnWhatsApp')}
+                {t('hero.directCta')}
+                <ArrowRight className="w-5 h-5" />
               </Button>
             </div>
           </motion.div>
