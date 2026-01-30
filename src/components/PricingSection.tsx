@@ -212,7 +212,7 @@ const PricingSection = () => {
             viewport={{ once: true }}
           >
             <p className="text-xs sm:text-sm text-muted-foreground">
-              🔒 Secure payment via WhatsApp • 7-day satisfaction guarantee
+              🔒 Secure payment via WhatsApp • Digital service - no refunds after delivery
             </p>
           </motion.div>
         </div>

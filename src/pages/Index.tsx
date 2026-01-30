@@ -18,6 +18,8 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import TrustSection from "@/components/TrustSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
+import ChatPreviewSection from "@/components/ChatPreviewSection";
+import WhyTrustSection from "@/components/WhyTrustSection";
 import ServicesSection from "@/components/ServicesSection";
 import SampleReportPreview from "@/components/SampleReportPreview";
 import WhatsAppChatTestimonials from "@/components/WhatsAppChatTestimonials";
@@ -111,22 +113,28 @@ const Index = () => {
         {/* 3. How it works - visual step flow */}
         <HowItWorksSection />
         
-        {/* 4. Services - benefit-focused cards */}
+        {/* 4. Chat Preview - show conversation mockup */}
+        <ChatPreviewSection />
+        
+        {/* 5. Why Trust BoloAstro - trust cards */}
+        <WhyTrustSection />
+        
+        {/* 6. Services - benefit-focused cards */}
         <ServicesSection />
         
-        {/* 5. Sample Report Preview - show value */}
+        {/* 7. Sample Report Preview - show value */}
         <SampleReportPreview />
         
-        {/* 6. Testimonials - WhatsApp chat style */}
+        {/* 8. Testimonials - WhatsApp chat style */}
         <WhatsAppChatTestimonials />
         
-        {/* 7. Pricing - clear tiers */}
+        {/* 9. Pricing - clear tiers */}
         <PricingSection />
         
-        {/* 8. FAQ - common questions */}
+        {/* 10. FAQ - common questions */}
         <FAQSection />
         
-        {/* 9. Final WhatsApp CTA */}
+        {/* 11. Final WhatsApp CTA */}
         <FinalCTASection />
       </main>
       

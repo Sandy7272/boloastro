@@ -128,9 +128,9 @@ export default SEO;
  */
 export const SEO_CONFIGS = {
   home: {
-    title: "Free Kundali on WhatsApp – AI Vedic Astrology",
-    description: "Get your free kundali and AI-powered Vedic astrology predictions on WhatsApp. Accurate janam kundali, rashifal, career, marriage, and life guidance. Trusted by 10,000+ Indians.",
-    keywords: "kundali, janam kundali, free kundali, rashifal, horoscope, vedic astrology, career astrology, love marriage, panchang, AI astrology, कुंडली, राशिफल",
+    title: "BoloAstro – AI Vedic Astrology on WhatsApp",
+    description: "Get instant personalized astrology guidance on WhatsApp with BoloAstro AI. Ask about love, career, marriage, money & health. Simple, accurate Vedic predictions.",
+    keywords: "kundali, vedic astrology, whatsapp astrology, AI astrology, horoscope, rashifal, career astrology, marriage prediction, कुंडली, राशिफल",
     path: "",
   },
   about: {
